@@ -22,8 +22,8 @@ app.get('/api/hello', (req, res) => {
     res.json('Hello :)')
 })
 
-app.get('/api/users', (req, res) => {
-    const user = Users.find()
+app.get('/api/users', async(req, res) => {
+    const user = await Users.find()
     res.status(200).json(user)
 })
 
