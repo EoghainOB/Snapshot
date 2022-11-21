@@ -7,7 +7,7 @@
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
-    "server": "cd backend && npm install && nodemon app.js",
+    "server": "cd backend && npm install && node app.js",
     "develop": "npm run server && npm run start --prefix client",
     "start": "npm run server && npm run start --prefix client"
   },
