@@ -7,15 +7,17 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get('/api/hello');
+      const res = await axios.get('/api/users');
       setPost(res.data)
     }
 
     getData()
   },[])
+  
+  console.log(post)
   return (
     <div className="App">
-      <p>{post}</p>
+      <p>HELLO</p>
     </div>
   );
 }
