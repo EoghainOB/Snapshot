@@ -22,5 +22,7 @@
   "bugs": {
     "url": "https://github.com/alexcheban89/snapshot/issues"
   },
-  "homepage": "https://github.com/alexcheban89/snapshot#readme"
+  "homepage": "https://github.com/alexcheban89/snapshot#readme",
+  "dependencies": {
+  }
 }
