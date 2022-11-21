@@ -8,8 +8,8 @@
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
     "server": "cd backend && npm install && nodemon app.js",
-    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
-    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
+    "develop": "npm run server && npm run start --prefix client",
+    "start": "npm run server && npm run start --prefix client"
   },
   "repository": {
     "type": "git",
