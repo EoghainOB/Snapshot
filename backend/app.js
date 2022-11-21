@@ -27,6 +27,11 @@ app.get('/api/users', async(req, res) => {
     res.status(200).json(user)
 })
 
+app.post('/api/auth', async (req, res) => {
+  await Users.create(req.body)
+  res.send('Successful')
+})
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
