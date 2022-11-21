@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json());
 
-app.use(cors())
+app.use(cors());
 
 app.get('/api/hello', (req, res) => {
     Users.create({id: "1", name: "Nastaran", email:"n@gmail.com"})
