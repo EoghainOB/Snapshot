@@ -38,7 +38,7 @@ function Map({ posts, position }) {
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "300px" }}
         >
-            {posts.map(({ id, location, title, description }) => {
+            {posts.map(({ id, location, title, description, imageUrl: imageLink }) => {
                 console.log('marker',location);
                 return (            
                 <Marker
@@ -50,6 +50,7 @@ function Map({ posts, position }) {
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                             <div>
                                 <h2 className="map__title" >
+                                    <img src={imageLink} alt={title}/>
                                     <p>{title}</p>
                                     <p>{description}</p>
                                 </h2>
