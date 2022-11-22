@@ -9,6 +9,17 @@ const userSchema = new mongoose.Schema({
     familyName: String,
 });
 
-const Users = mongoose.model('User', userSchema);
+const postSchema = new mongoose.Schema({
+    id: String,
+    title: String,
+    description: String,
+    tags: Array,
+    author: String,
+    imageLink: String,
+    location: Object,
+})
 
-module.exports = Users;
+const Users = mongoose.model('User', userSchema);
+const Posts = mongoose.model('Post', postSchema);
+
+module.exports = {Users, Posts};

@@ -2,15 +2,14 @@ import './App.css';
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import Map from './Map'
-import Map2 from './Map2'
 import { useLoadScript } from "@react-google-maps/api";
 import Header from './components/header';
 import Profile from './components/profile';
-import { Routes, Route, Link } from "react-router-dom";
+import PostForm from './components/postForm';
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [position, setPosition] = useState(null)
-
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -48,6 +47,7 @@ function App() {
       <Route path='/' element={isLoaded && position && <Map post={post} position={position}/>} />
       {/* <Route path='/' element={isLoaded  && <Map2/>} /> */}
       {user && <Route path={`/users/:id`} element={<Profile user={user}/>}/>}
+      {user && <Route path={`/post`} element={<PostForm user={user} position={position}/>}/>}
     </Routes>
     </div>
   );

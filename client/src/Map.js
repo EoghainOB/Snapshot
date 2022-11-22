@@ -3,26 +3,15 @@ import './App.css'
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 
 function Map({ post, position }) {
-    // const markers = post.map(p => (
-    //     {
-    //         position: {
-    //             lat: 52.3676,
-    //             lng: 4.9041,
-    //         },
-    //         // id: p.partyId,
-    //         // name: p.name,
-    //         // image: p.image,
-    //     }
-    // ))
     const markers = [
         {
         id: 1,
         position: {
-            lat: position.lat,
-            lng: position.lng,
-        },
+            lat: +(position.lat),
+            lng: +(position.lng),
+            },
         }, 
-];
+    ];
 
     const [activeMarker, setActiveMarker] = useState(null);
 
@@ -35,15 +24,15 @@ function Map({ post, position }) {
 
     const handleOnLoad = (map) => {
         const bounds = new window.google.maps.LatLngBounds();
-        bounds.extend(position)
-        // markers.forEach(({ position }) => bounds.extend(position));
+        // bounds.extend(position)
+        markers.forEach(({ position }) => bounds.extend(position));
         map.fitBounds(bounds);
     };
 
     return (
         <GoogleMap
             position={position}
-            zoom={2}
+            zoom={5}
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "300px" }}
@@ -70,5 +59,15 @@ function Map({ post, position }) {
         </GoogleMap>
     );
 }
+
+// function Map() {
+//     const center = { lat: 44, lng: -80 };
+  
+//     return (
+//       <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
+//         <Marker position={center} />
+//       </GoogleMap>
+//     );
+//   }
 
 export default Map;
