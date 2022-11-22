@@ -1,12 +1,14 @@
 import React from 'react'
 import Login from '../login'
+import { Link } from "react-router-dom";
 
-const Header = ({login, loginHandler}) => {
+const Header = ({setUser, user}) => {
   return (
     <header>
-        <span>SnapShot</span>
+        <Link to='/'>SnapShot</Link>
         <nav>
-            <Login login={login} loginHandler={loginHandler}/>
+            <Login setUser={setUser} user={user}/>
+            {user && <Link to={`/users/${user.googleId}`}>User</Link>}
         </nav>
     </header>
   )

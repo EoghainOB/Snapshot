@@ -4,6 +4,8 @@ import axios from 'axios'
 import Map from './Map'
 import { useLoadScript } from "@react-google-maps/api";
 import Header from './components/header';
+import Profile from './components/profile';
+import { Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const { isLoaded } = useLoadScript({
@@ -11,9 +13,7 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_API_GOOGLE_API
   });
   const [post, setPost] = useState('');
-  const [login, setLogin] = useState(false);
-
-  const loginHandler = () => setLogin(prev => !prev);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -22,12 +22,16 @@ function App() {
     }
     getData()
   },[])
-  
+
+  console.log('LOGGED IN USER', user)
   console.log(post)
   return (
     <div className="App">
-      <Header login={login} loginHandler={loginHandler}/>
-      {isLoaded && <Map post={post} />}
+      <Header setUser={setUser} user={user}/>
+    <Routes >
+      <Route path='/' element={isLoaded && <Map post={post} />} />
+      {user && <Route path={`/users/:id`} element={<Profile user={user}/>}/>}
+    </Routes>
     </div>
   );
 }
