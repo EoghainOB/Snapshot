@@ -43,7 +43,7 @@ function Map({ post, position }) {
     return (
         <GoogleMap
             position={position}
-            zoom={-10}
+            zoom={2}
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "300px" }}
@@ -60,7 +60,6 @@ function Map({ post, position }) {
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                             <div>
                                 <h2 className="map__title" >
-                                
                                 </h2>
                             </div>
                         </InfoWindow>

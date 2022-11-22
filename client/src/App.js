@@ -11,6 +11,7 @@ import { Routes, Route, Link } from "react-router-dom";
 function App() {
   const [position, setPosition] = useState(null)
 
+
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
       setPosition({
