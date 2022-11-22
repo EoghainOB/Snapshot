@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const PostForm = ({position, user}) => {
   const [file, setFile] = useState();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [tags, setTags] = useState();
+
+  const navigate = useNavigate();
 
   const changeFileHandler = (e) => {
     setFile(e.target.files[0])
@@ -33,7 +36,7 @@ const PostForm = ({position, user}) => {
     formData.append('tags', tags);
     formData.append('location', JSON.stringify(position));
     await axios.post('/api/posts', formData)
-    console.log(formData, title, description, tags)
+    await navigate('/')
   }
 
   return (
