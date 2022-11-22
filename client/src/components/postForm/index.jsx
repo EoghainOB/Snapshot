@@ -36,7 +36,7 @@ const PostForm = ({position, user}) => {
     formData.append('tags', tags);
     formData.append('location', JSON.stringify(position));
     await axios.post('/api/posts', formData)
-    await navigate('/')
+    navigate('/')
   }
 
   return (

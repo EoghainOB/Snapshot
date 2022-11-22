@@ -56,6 +56,7 @@ return new Promise((resolve, reject) => {
       if (result) {
         resolve(result);
       } else {
+        console.log(error)
         reject(error);
       }
     }
