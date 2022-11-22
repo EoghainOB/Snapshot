@@ -47,7 +47,6 @@ const uploadFile = (file, id) => {
 //   }
 // );
 return new Promise((resolve, reject) => {
-
   let stream = cloudinary.uploader.upload_stream(
     {
       folder: 'SnapShot',
@@ -64,9 +63,6 @@ return new Promise((resolve, reject) => {
   streamifier.createReadStream(file).pipe(stream);
 });
 }
-
-
-const filename = 'fca74c71-67d5-4c17-b5ac-9003e886ede8'
 
 app.post('/api/posts', async(req, res) => {
     const {file} = req.files;

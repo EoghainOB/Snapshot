@@ -36,7 +36,7 @@ function Map({ posts, position }) {
             zoom={5}
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
-            mapContainerStyle={{ width: "100%", height: "300px" }}
+            mapContainerStyle={{ width: "100%", height: "500px" }}
         >
             {posts.map(({ id, location, title, description, imageLink }) => {
                 console.log('marker',imageLink);

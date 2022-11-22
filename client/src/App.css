@@ -1,4 +1,8 @@
-.gm-style-iw {
-  height: 100px;
-  width: 300px;
+.gm-style .gm-style-iw-c {
+  height: fit-content;
+  width: 500px;
+}
+
+.gm-style img {
+  width: 500px;
 }
