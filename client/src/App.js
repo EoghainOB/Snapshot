@@ -20,32 +20,29 @@ function App() {
     }
   )
   }
-  console.log('position', position)
 
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_API_GOOGLE_API
   });
-  const [post, setPost] = useState('');
+  const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get('/api/posts');
-      setPost(res.data)
+      // console.log('res:', res.data)
+      setPosts(res.data)
     }
     getLocation()
     getData()
   },[])
 
-  console.log('LOGGED IN USER', user)
-  console.log(post)
   return (
     <div className="App">
       <Header setUser={setUser} user={user}/>
     <Routes >
-      <Route path='/' element={isLoaded && position && <Map post={post} position={position}/>} />
-      {/* <Route path='/' element={isLoaded  && <Map2/>} /> */}
+      <Route path='/' element={isLoaded && position && <Map posts={posts} position={position}/>} />
       {user && <Route path={`/users/:id`} element={<Profile user={user}/>}/>}
       {user && <Route path={`/post`} element={<PostForm user={user} position={position}/>}/>}
     </Routes>

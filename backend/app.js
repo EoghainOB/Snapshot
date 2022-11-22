@@ -32,7 +32,8 @@ app.get('/api/users/:id', async(req, res) => {
 })
 
 app.get('/api/posts', async(req, res) => {
-  res.status(200).send('successful')
+  const posts = await Posts.find();
+  res.json(posts)
 })
 
 const uploadFile = (file, id) => {

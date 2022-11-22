@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import './App.css'
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 
-function Map({ post, position }) {
-    const markers = [
-        {
-        id: 1,
-        position: {
-            lat: +(position.lat),
-            lng: +(position.lng),
-            },
-        }, 
-    ];
+function Map({ posts, position }) {
+    // const markers = [
+    //     {
+    //     id: 1,
+    //     position: {
+    //         lat: +(position.lat),
+    //         lng: +(position.lng),
+    //         },
+    //     }, 
+    // ];
+    // const markers = post.map(p => p)
 
     const [activeMarker, setActiveMarker] = useState(null);
 
@@ -25,7 +26,7 @@ function Map({ post, position }) {
     const handleOnLoad = (map) => {
         const bounds = new window.google.maps.LatLngBounds();
         // bounds.extend(position)
-        markers.forEach(({ position }) => bounds.extend(position));
+        posts.forEach(({ location }) => bounds.extend(location));
         map.fitBounds(bounds);
     };
 
@@ -37,18 +38,20 @@ function Map({ post, position }) {
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "300px" }}
         >
-            {markers.map(({ id,position }) => {
+            {posts.map(({ id, location, title, description }) => {
                 console.log('marker',position);
                 return (            
                 <Marker
                     key={id}
-                    position={position}
+                    location={location}
                     onClick={() => handleActiveMarker(id)}
                 >
                     {activeMarker === id ? (
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                             <div>
                                 <h2 className="map__title" >
+                                    <p>{title}</p>
+                                    <p>{description}</p>
                                 </h2>
                             </div>
                         </InfoWindow>
