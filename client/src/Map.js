@@ -38,8 +38,8 @@ function Map({ posts, position }) {
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "300px" }}
         >
-            {posts.map(({ id, location, title, description, imageUrl: imageLink }) => {
-                console.log('marker',location);
+            {posts.map(({ id, location, title, description, imageLink }) => {
+                console.log('marker',imageLink);
                 return (            
                 <Marker
                     key={id}
@@ -63,15 +63,5 @@ function Map({ posts, position }) {
         </GoogleMap>
     );
 }
-
-// function Map() {
-//     const center = { lat: 44, lng: -80 };
-  
-//     return (
-//       <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
-//         <Marker position={center} />
-//       </GoogleMap>
-//     );
-//   }
 
 export default Map;
