@@ -55,6 +55,8 @@ function Map({ post, position }) {
 
     return (
         <GoogleMap
+            position={position}
+            zoom={10}
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "300px" }}
