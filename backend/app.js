@@ -37,17 +37,34 @@ app.get('/api/posts', async(req, res) => {
 })
 
 const uploadFile = (file, id) => {
-let cloudinaryStream = cloudinary.uploader.upload_stream(
-  {
-    folder: 'SnapShot',
-    public_id: id
-  },
-  function (error, result) {
-    console.log(error, result);
-  }
-);
-return streamifier.createReadStream(file).pipe(cloudinaryStream);
-};
+// let cloudinaryStream = cloudinary.uploader.upload_stream(
+//   {
+//     folder: 'SnapShot',
+//     public_id: id
+//   },
+//   function (error, result) {
+//     error ? console.log(error) : result;
+//   }
+// );
+return new Promise((resolve, reject) => {
+
+  let stream = cloudinary.uploader.upload_stream(
+    {
+      folder: 'SnapShot',
+      public_id: id
+    },
+    (error, result) => {
+      if (result) {
+        resolve(result);
+      } else {
+        reject(error);
+      }
+    }
+  );
+  streamifier.createReadStream(file).pipe(stream);
+});
+}
+
 
 const filename = 'fca74c71-67d5-4c17-b5ac-9003e886ede8'
 
@@ -56,12 +73,8 @@ app.post('/api/posts', async(req, res) => {
     const {title, description, tags, author} = req.body;
     const location = JSON.parse(req.body.location)
     const uniqueId = uuidv4();
-    const fileIMG = await uploadFile(file.data, uniqueId)
-    console.log(fileIMG)
-    // const imageUrl = await cloudinary.search.expression('filename:image AND folder:SnapShot').execute();
-    // const imageFound = await imageUrl.resources.find(image => console.log(image.filename === filename))
-    // console.log(imageFound)
-    const imageLink = `http://res.cloudinary.com/dx60pjprj/image/upload/v1669129167/SnapShot/${uniqueId}.png`
+    const fileUpload = await uploadFile(file.data, uniqueId)
+    const imageLink = fileUpload.secure_url
     const newPost = {
       id: uniqueId,
       title,
