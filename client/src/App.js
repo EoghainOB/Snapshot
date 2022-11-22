@@ -31,7 +31,6 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get('/api/posts');
-      // console.log('res:', res.data)
       setPosts(res.data)
     }
     getLocation()
