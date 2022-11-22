@@ -80,7 +80,7 @@ function Map({ post, position }) {
                 </Marker>)     */}  
 {/*             }
             )} */}
-            <Marker position={{lat: 51.507351, lng: -0.127758}}></Marker>
+            <Marker position={position}></Marker>
         </GoogleMap>
     );
 }
