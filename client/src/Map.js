@@ -22,20 +22,6 @@ function Map({ post, position }) {
             lng: position.lng,
         },
         }, 
-        {
-        id: 2,
-        position: {
-            lat: 52.391689,
-            lng: 4.611600,
-            },
-        },
-        {
-        id: 3,
-        position: {
-            lat: 51.507351,
-            lng: -0.127758,
-            }       
-        }
 ];
 
     const [activeMarker, setActiveMarker] = useState(null);
@@ -49,21 +35,23 @@ function Map({ post, position }) {
 
     const handleOnLoad = (map) => {
         const bounds = new window.google.maps.LatLngBounds();
-        markers.forEach(({ position }) => bounds.extend(position));
+        bounds.extend(position)
+        // markers.forEach(({ position }) => bounds.extend(position));
         map.fitBounds(bounds);
     };
 
     return (
         <GoogleMap
             position={position}
-            zoom={10}
+            zoom={-10}
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "300px" }}
         >
-{/*             {markers.map(({ id,position }) => {
+            {markers.map(({ id,position }) => {
                 console.log('marker',position);
-                return (            <Marker
+                return (            
+                <Marker
                     key={id}
                     position={position}
                     onClick={() => handleActiveMarker(id)}
@@ -77,10 +65,9 @@ function Map({ post, position }) {
                             </div>
                         </InfoWindow>
                     ) : null}
-                </Marker>)     */}  
-{/*             }
-            )} */}
-            <Marker position={position}></Marker>
+                </Marker>)      
+            }
+            )}
         </GoogleMap>
     );
 }
