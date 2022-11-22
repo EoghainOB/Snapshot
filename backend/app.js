@@ -22,14 +22,29 @@ app.get('/api/hello', (req, res) => {
     res.json('Hello :)')
 })
 
-app.get('/api/users', async(req, res) => {
-    const user = await Users.find()
-    res.status(200).json(user)
+app.get('/api/users/:id', async(req, res) => {
+  // user.length ? console.log('User found') : console.log('User NOT found')
+  // const user = await Users.find()
+  // res.status(200).json(user)
 })
 
-app.post('/api/auth', async (req, res) => {
-  await Users.create(req.body)
-  res.send('Successful')
+
+app.get('/api/posts', async(req, res) => {
+    // const user = await Users.find()
+    res.status(200)
+})
+
+app.post('/api/users', async (req, res) => {
+  const {googleId} = req.body;
+  const user = await Users.find({ googleId })
+  if (user.length) {
+    console.log('user found')
+    return res.json(user);
+  }
+  await Users.create(req.body);
+  console.log('user created')
+  const newUser = await Users.find({ googleId })
+  return res.json(newUser);
 })
 
 const PORT = process.env.PORT || 8000;

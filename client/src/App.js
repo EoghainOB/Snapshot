@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get('/api/users');
+      const res = await axios.get('/api/posts');
       setPost(res.data)
     }
     getData()

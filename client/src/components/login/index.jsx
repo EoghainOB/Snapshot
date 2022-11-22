@@ -17,15 +17,18 @@ useEffect(() => {
     gapi.load('client:auth2', initClient);
 
 });
-const onSuccess = (res) => {
-  axios.post('/api/auth', res.profileObj)
+const onSuccess = async(res) => {
+  // const response = await axios.get(`/api/users/${res.profileObj.googleId}`)
+  
+  await axios.post('/api/users', res.profileObj)
 
-  loginHandler();
-  console.log('success:', res);
+  await loginHandler();
 };
+
 const onFailure = (err) => {
   console.log('failed:', err);
 };
+
 return (
  <GoogleLogin
     clientId={clientId}
