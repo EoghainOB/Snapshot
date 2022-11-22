@@ -8,6 +8,19 @@ import Profile from './components/profile';
 import { Routes, Route, Link } from "react-router-dom";
 
 function App() {
+  const [position, setPosition] = useState(null)
+
+  const getLocation = () => { navigator.geolocation.getCurrentPosition(
+    (position) => {
+      setPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+    }
+  )
+  }
+  console.log('position', position)
+
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_API_GOOGLE_API
@@ -20,6 +33,7 @@ function App() {
       const res = await axios.get('/api/posts');
       setPost(res.data)
     }
+    getLocation()
     getData()
   },[])
 
@@ -29,7 +43,7 @@ function App() {
     <div className="App">
       <Header setUser={setUser} user={user}/>
     <Routes >
-      <Route path='/' element={isLoaded && <Map post={post} />} />
+      <Route path='/' element={isLoaded && position && <Map post={post} position={position}/>} />
       {user && <Route path={`/users/:id`} element={<Profile user={user}/>}/>}
     </Routes>
     </div>
