@@ -39,11 +39,11 @@ function Map({ posts, position }) {
             mapContainerStyle={{ width: "100%", height: "300px" }}
         >
             {posts.map(({ id, location, title, description }) => {
-                console.log('marker',position);
+                console.log('marker',location);
                 return (            
                 <Marker
                     key={id}
-                    location={location}
+                    position={location}
                     onClick={() => handleActiveMarker(id)}
                 >
                     {activeMarker === id ? (
