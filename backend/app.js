@@ -87,6 +87,7 @@ app.post('/api/posts', async(req, res) => {
       views: 0,
       rank: 0,
       date: new Date(),
+      comments: [],
   }
     Posts.create(newPost)
     res.status(200).send('successful')
