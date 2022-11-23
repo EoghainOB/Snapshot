@@ -44,7 +44,7 @@ function App() {
     <Routes >
       <Route path='/' element={
         <>
-        {isLoaded && <Map posts={posts} position={position}/>}
+        {isLoaded && position && <Map posts={posts} position={position}/>}
         <TopPosts posts={posts}/>
         </>} 
       />
