@@ -1,14 +1,30 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import Geocode from 'react-geocode';
+
+const getLocation = (location) => {
+    Geocode.setApiKey(process.env.REACT_APP_API_GOOGLE_API);
+    return Geocode.fromLatLng(location.lat, location.lng).then(
+    (response) => {
+      return response.results[0].formatted_address;
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+}
 
 const PostForm = ({position, user}) => {
   const [file, setFile] = useState();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [tags, setTags] = useState();
+  const [address, setAddress] = useState(null)
 
   const navigate = useNavigate();
+
+  getLocation(position).then(data => setAddress(data));
 
   const changeFileHandler = (e) => {
     setFile(Object.values(e.target.files))
@@ -35,6 +51,7 @@ const PostForm = ({position, user}) => {
     formData.append('author', user.name);
     formData.append('tags', tags);
     formData.append('location', JSON.stringify(position));
+    formData.append('address', address);
     await axios.post('/api/posts', formData)
     navigate('/')
   }

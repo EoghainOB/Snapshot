@@ -71,7 +71,7 @@ app.post('/api/posts', async(req, res) => {
     if(!Array.isArray(file)) {
       file = [file]
     }
-    const {title, description, tags, author} = req.body;
+    const {title, description, tags, author, address} = req.body;
     const location = JSON.parse(req.body.location)
     const uniqueId = uuidv4();
     const imageLink = await getImageLinks(file, uniqueId)
@@ -83,6 +83,9 @@ app.post('/api/posts', async(req, res) => {
       author,
       imageLink,
       location,
+      address,
+      views: 0,
+      rank: 0,
       date: new Date(),
   }
     Posts.create(newPost)

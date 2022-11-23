@@ -17,6 +17,7 @@ const postSchema = new mongoose.Schema({
     author: String,
     imageLink: Array,
     location: Object,
+    address: String,
     date: Date,
     views: Number,
     rank: Number,

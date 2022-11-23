@@ -1,23 +1,8 @@
-import React, {useState } from 'react'
-import Geocode from "react-geocode";
-
-const getLocation = (location) => {
-    Geocode.setApiKey(process.env.REACT_APP_API_GOOGLE_API);
-    return Geocode.fromLatLng(location.lat, location.lng).then(
-    (response) => {
-      return response.results[0].formatted_address;
-    },
-    (error) => {
-      console.error(error);
-    }
-  );
-}
+import React from 'react'
 
 const Post = ({post}) => {
-    const [address, setAddress] = useState(null)
-    const {title, description, tags, author, location, date, imageLink} = post;
+    const { title, description, tags, author, address, date, imageLink } = post;
     const newDate = new Date(date);
-    getLocation(location).then(data => setAddress(data));
 
   return (
     <div>

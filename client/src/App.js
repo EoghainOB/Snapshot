@@ -8,9 +8,14 @@ import Profile from './components/profile';
 import PostForm from './components/postForm';
 import { Routes, Route } from "react-router-dom";
 import TopPosts from './components/topPosts';
+import SearchBar from './components/SearchBar';
 
 function App() {
   const [position, setPosition] = useState(null)
+  const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(null);
+  const [sort, setSort] = useState(null);
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -26,8 +31,6 @@ function App() {
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_API_GOOGLE_API
   });
-  const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -38,14 +41,34 @@ function App() {
     getData()
   },[])
 
+  const filteredAndSorted = () => {
+    const filtered = searchTerm ? posts.filter(p => p.address?.toLowerCase().includes(searchTerm.toLowerCase())): posts ;
+   
+    switch (sort) {
+      case 'lowestRank':
+        return filtered.sort((a,b) => a.rank - b.rank);
+      case 'topViews':
+        return filtered.sort((a,b) => b.views - a.views);
+      case 'lowestViews':
+        return filtered.sort((a,b) => a.views - b.views);
+      case 'newest':
+        return filtered.sort((a,b) => new Date(b.date) - new Date(a.date));
+      case 'oldest':
+        return filtered.sort((a,b) => new Date(a.date) - new Date(b.date));
+      default: 
+      return filtered.sort((a,b) => b.rank - a.rank);
+    }
+  } 
+
   return (
     <div className="App">
       <Header setUser={setUser} user={user}/>
+      <SearchBar setSearchTerm={setSearchTerm}/>
     <Routes >
       <Route path='/' element={
         <>
-        {isLoaded && position && <Map posts={posts} position={position}/>}
-        <TopPosts posts={posts}/>
+        {isLoaded && position && <Map posts={filteredAndSorted()} position={position}/>}
+        <TopPosts setSort={setSort} posts={filteredAndSorted()}/>
         </>} 
       />
       {user && <Route path={`/users/:id`} element={<Profile user={user}/>}/>}
