@@ -7,7 +7,7 @@ import Header from './components/header';
 import Profile from './components/profile';
 import PostForm from './components/postForm';
 import { Routes, Route } from "react-router-dom";
-import TopPosts from './components/topPosts';
+import Dashboard from './components/dashboard';
 import SearchBar from './components/SearchBar';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
-  const [sort, setSort] = useState(null);
+  const [sort, setSort] = useState('Top Rank');
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -45,18 +45,18 @@ function App() {
     const filtered = searchTerm ? posts.filter(p => p.address?.toLowerCase().includes(searchTerm.toLowerCase())): posts ;
    
     switch (sort) {
-      case 'lowestRank':
-        return filtered.sort((a,b) => a.rank - b.rank);
-      case 'topViews':
-        return filtered.sort((a,b) => b.views - a.views);
-      case 'lowestViews':
-        return filtered.sort((a,b) => a.views - b.views);
-      case 'newest':
-        return filtered.sort((a,b) => new Date(b.date) - new Date(a.date));
-      case 'oldest':
-        return filtered.sort((a,b) => new Date(a.date) - new Date(b.date));
+      case 'Lowest Rank':
+        return filtered.sort((a, b) => a.rank - b.rank);
+      case 'Most Viewed':
+        return filtered.sort((a, b) => b.views - a.views);
+      case 'Lowest Views':
+        return filtered.sort((a, b) => a.views - b.views);
+      case 'Newest':
+        return filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+      case 'Oldest':
+        return filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
       default: 
-      return filtered.sort((a,b) => b.rank - a.rank);
+        return filtered.sort((a, b) => b.rank - a.rank);
     }
   } 
 
@@ -68,10 +68,10 @@ function App() {
       <Route path='/' element={
         <>
         {isLoaded && position && <Map posts={filteredAndSorted()} position={position}/>}
-        <TopPosts setSort={setSort} posts={filteredAndSorted()}/>
+        <Dashboard sort={sort} setSort={setSort} posts={filteredAndSorted()}/>
         </>} 
       />
-      {user && <Route path={`/users/:id`} element={<Profile user={user}/>}/>}
+      {user && <Route path={`/users/:id`} element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>}
       {user && position && <Route path={`/post`} element={<PostForm user={user} position={position}/>}/>}
     </Routes>
     </div>

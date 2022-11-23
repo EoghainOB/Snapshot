@@ -1,7 +1,7 @@
 import React from 'react'
 import Post from '../Post'
 
-const TopPosts = ({setSort, posts}) => {
+const Dashboard = ({setSort, posts}) => {
     const sortHandler = (e) => {
     setSort(e.target.value)
     }
@@ -24,4 +24,4 @@ const TopPosts = ({setSort, posts}) => {
   )
 }
 
-export default TopPosts
+export default Dashboard

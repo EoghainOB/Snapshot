@@ -92,16 +92,6 @@ app.post('/api/posts', async(req, res) => {
     res.status(200).send('successful')
 })
 
-/* 
-  const result = await cloudinary.search
-    .expression('resource_type:image AND folder:testing')
-    .execute();
-  const urls = result.resources.map(resource => {
-    return resource.secure_url;
-  });
-  res.send(urls);
-*/
-
 app.post('/api/users', async (req, res) => {
   const {googleId} = req.body;
   const user = await Users.find({ googleId })
@@ -113,6 +103,16 @@ app.post('/api/users', async (req, res) => {
   console.log('user created')
   const newUser = await Users.find({ googleId })
   return res.json(newUser);
+})
+
+app.patch('/api/posts/:id', async (req, res) => {
+  await Posts.findOneAndUpdate(req.params, req.body)
+  res.json('Updated')
+})
+
+app.delete('/api/posts/:id', async (req, res) => {
+  await Posts.findOneAndDelete(req.params)
+  res.json('Deleted')
 })
 
 const PORT = process.env.PORT || 8000;
