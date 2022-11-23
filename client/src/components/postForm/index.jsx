@@ -42,7 +42,7 @@ const PostForm = ({position, user}) => {
   return (
     <form onSubmit={submitHandler}>
       <label htmlFor='title'>Title</label>
-      <input id='title' type='text' onChange={changeTitleHandler}/>
+      <input id='title' type='text' onChange={changeTitleHandler} required/>
       <label htmlFor='description'>Description</label>
       <input id='description' type='text' onChange={changeDescriptionHandler}/>
       <label htmlFor='tags'>Tags</label>
