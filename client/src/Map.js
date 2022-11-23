@@ -32,7 +32,7 @@ function Map({ posts, position }) {
 
     return (
         <GoogleMap
-            position={position}
+            // position={position}
             zoom={5}
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
