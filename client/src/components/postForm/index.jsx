@@ -15,7 +15,7 @@ const getLocation = (location) => {
   );
 }
 
-const PostForm = ({position, user}) => {
+const PostForm = ({setPosts, position, user}) => {
   const [file, setFile] = useState();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -53,6 +53,8 @@ const PostForm = ({position, user}) => {
     formData.append('location', JSON.stringify(position));
     formData.append('address', address);
     await axios.post('/api/posts', formData)
+    const res = await axios.get('/api/posts');
+    setPosts(res.data)
     navigate('/')
   }
 

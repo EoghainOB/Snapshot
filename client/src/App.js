@@ -72,7 +72,7 @@ function App() {
         </>} 
       />
       {user && <Route path={`/users/:id`} element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>}
-      {user && position && <Route path={`/post`} element={<PostForm user={user} position={position}/>}/>}
+      {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
     </Routes>
     </div>
   );
