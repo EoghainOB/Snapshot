@@ -11,7 +11,7 @@ const PostForm = ({position, user}) => {
   const navigate = useNavigate();
 
   const changeFileHandler = (e) => {
-    setFile(e.target.files[0])
+    setFile(Object.values(e.target.files))
   }
   
   const changeTitleHandler = (e) => {
@@ -29,7 +29,7 @@ const PostForm = ({position, user}) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('file', file);
+    file.map(x => formData.append('file', x))
     formData.append('title', title);
     formData.append('description', description);
     formData.append('author', user.name);
@@ -47,7 +47,7 @@ const PostForm = ({position, user}) => {
       <input id='description' type='text' onChange={changeDescriptionHandler}/>
       <label htmlFor='tags'>Tags</label>
       <input id='tags' type='text' placeholder='cats, dogs, ...' onChange={changeTagsHandler}/>
-      <input type='file' onChange={changeFileHandler} required/>
+      <input type='file' onChange={changeFileHandler} required multiple/>
       <button type='submit'>Submit</button>
     </form>
   )

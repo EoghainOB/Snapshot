@@ -37,18 +37,10 @@ app.get('/api/posts', async(req, res) => {
 })
 
 const uploadFile = (file, id) => {
-// let cloudinaryStream = cloudinary.uploader.upload_stream(
-//   {
-//     folder: 'SnapShot',
-//     public_id: id
-//   },
-//   function (error, result) {
-//     error ? console.log(error) : result;
-//   }
-// );
 return new Promise((resolve, reject) => {
-  let stream = cloudinary.uploader.upload_stream(
+  let stream = cloudinary.uploader.upload_stream (
     {
+      resource_type: file.mimetype.includes('video') ? 'video' : '',
       folder: 'SnapShot',
       public_id: id
     },
@@ -61,17 +53,28 @@ return new Promise((resolve, reject) => {
       }
     }
   );
-  streamifier.createReadStream(file).pipe(stream);
+  streamifier.createReadStream(file.data).pipe(stream);
 });
 }
 
+const getImageLinks = async (file, uniqueId) => {
+  const imageLink = [];
+  for (let i = 0; i < file.length; i++) {
+    const uploaded = await uploadFile(file[i])
+    imageLink.push(uploaded.secure_url)
+  }
+  return imageLink;
+}
+
 app.post('/api/posts', async(req, res) => {
-    const {file} = req.files;
+    let {file} = req.files;
+    if(!Array.isArray(file)) {
+      file = [file]
+    }
     const {title, description, tags, author} = req.body;
     const location = JSON.parse(req.body.location)
     const uniqueId = uuidv4();
-    const fileUpload = await uploadFile(file.data, uniqueId)
-    const imageLink = fileUpload.secure_url
+    const imageLink = await getImageLinks(file, uniqueId)
     const newPost = {
       id: uniqueId,
       title,

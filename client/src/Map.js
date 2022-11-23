@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './App.css'
-import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
+import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
 function Map({ posts, position }) {
     // const markers = [
@@ -39,9 +39,8 @@ function Map({ posts, position }) {
             mapContainerStyle={{ width: "100%", height: "500px" }}
         >
             {posts.map(({ id, location, title, description, imageLink }) => {
-                console.log('marker',imageLink);
                 return (            
-                <Marker
+                <MarkerF
                     key={id}
                     position={location}
                     onClick={() => handleActiveMarker(id)}
@@ -50,14 +49,24 @@ function Map({ posts, position }) {
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                             <div>
                                 <h2 className="map__title" >
-                                    <img src={imageLink} alt={title}/>
+                                    {imageLink.map(x => {
+                                        if(x.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
+                                            return <img key={x} src={x} alt={title}/>
+                                        }
+                                        return (
+                                        <video key={x} width="100%" height="200px" controls>
+                                                    <source src={x}/>
+                                                </video>)
+                                            }
+                                        )
+                                    }
                                     <p>{title}</p>
                                     <p>{description}</p>
                                 </h2>
                             </div>
                         </InfoWindow>
                     ) : null}
-                </Marker>)      
+                </MarkerF>)      
             }
             )}
         </GoogleMap>

@@ -15,7 +15,7 @@ const postSchema = new mongoose.Schema({
     description: String,
     tags: Array,
     author: String,
-    imageLink: String,
+    imageLink: Array,
     location: Object,
 })
 
