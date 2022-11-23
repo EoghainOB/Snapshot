@@ -38,7 +38,8 @@ function Map({ posts, position }) {
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "500px" }}
         >
-            {posts.map(({ id, location, title, description, imageLink }) => {
+            {posts.map(({ id, location, title, description, imageLink, date }) => {
+                const newDate = new Date(date);
                 return (            
                 <MarkerF
                     key={id}
@@ -49,12 +50,14 @@ function Map({ posts, position }) {
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                             <div>
                                 <h2 className="map__title" >
+                                    
+                                    <span>{newDate.toLocaleString('nl')}</span>
                                     {imageLink.map(x => {
                                         if(x.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
                                             return <img key={x} src={x} alt={title}/>
                                         }
                                         return (
-                                        <video key={x} width="100%" height="200px" controls>
+                                                <video key={x} width="100%" height="200px" controls>
                                                     <source src={x}/>
                                                 </video>)
                                             }
@@ -62,6 +65,7 @@ function Map({ posts, position }) {
                                     }
                                     <p>{title}</p>
                                     <p>{description}</p>
+                                    
                                 </h2>
                             </div>
                         </InfoWindow>

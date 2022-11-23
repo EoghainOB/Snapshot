@@ -83,6 +83,7 @@ app.post('/api/posts', async(req, res) => {
       author,
       imageLink,
       location,
+      date: new Date(),
   }
     Posts.create(newPost)
     res.status(200).send('successful')

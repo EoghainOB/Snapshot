@@ -7,6 +7,7 @@ import Header from './components/header';
 import Profile from './components/profile';
 import PostForm from './components/postForm';
 import { Routes, Route } from "react-router-dom";
+import TopPosts from './components/topPosts';
 
 function App() {
   const [position, setPosition] = useState(null)
@@ -41,9 +42,14 @@ function App() {
     <div className="App">
       <Header setUser={setUser} user={user}/>
     <Routes >
-      <Route path='/' element={isLoaded && position && <Map posts={posts} position={position}/>} />
+      <Route path='/' element={
+        <>
+        {isLoaded && position && <Map posts={posts} position={position}/>}
+        <TopPosts posts={posts}/>
+        </>} 
+      />
       {user && <Route path={`/users/:id`} element={<Profile user={user}/>}/>}
-      {user && <Route path={`/post`} element={<PostForm user={user} position={position}/>}/>}
+      {user && position && <Route path={`/post`} element={<PostForm user={user} position={position}/>}/>}
     </Routes>
     </div>
   );

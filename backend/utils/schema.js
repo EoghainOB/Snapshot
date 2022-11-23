@@ -17,6 +17,10 @@ const postSchema = new mongoose.Schema({
     author: String,
     imageLink: Array,
     location: Object,
+    date: Date,
+    views: Number,
+    rank: Number,
+    comments: Array,
 })
 
 const Users = mongoose.model('User', userSchema);
