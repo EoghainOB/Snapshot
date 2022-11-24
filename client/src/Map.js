@@ -27,7 +27,7 @@ function Map({ searchTerm, posts, position }) {
 
     return (<GoogleMap
             center={position ? position : { lat: 52.341385609030034, lng: 4.823586345871511 }}
-            zoom={position ? 9 : 4}
+            zoom={position ? 9 : 4 && 5 && 6 && 7}
             mapTypeId="terrain"
             position={position}
             onLoad={handleOnLoad}
