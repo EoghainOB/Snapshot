@@ -67,8 +67,8 @@ function App() {
     <Routes >
       <Route path='/' element={
         <>
-        {isLoaded && position && <Map posts={filteredAndSorted()} position={position}/>}
-        <Dashboard sort={sort} setSort={setSort} posts={filteredAndSorted()}/>
+        {isLoaded && posts.length && <Map posts={filteredAndSorted()} position={position}/>}
+        <Dashboard user={user} sort={sort} setSort={setSort} posts={filteredAndSorted()}/>
         </>} 
       />
       {user && <Route path={`/users/:id`} element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>}

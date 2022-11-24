@@ -1,7 +1,7 @@
 import React from 'react'
-import Post from '../Post'
+import SmallPost from '../smallPost'
 
-const Dashboard = ({sort, setSort, posts}) => {
+const Dashboard = ({user, sort, setSort, posts}) => {
     const sortHandler = (e) => {
     setSort(e.target.value)
     }
@@ -17,11 +17,14 @@ const Dashboard = ({sort, setSort, posts}) => {
         <option value="Oldest">Oldest</option>
     </select>
     <h1>{sort}</h1>
+    <ul>
     {posts.map(p => {
       return (
-        <Post key={p.id} post={p}/>
+        <SmallPost user={user} key={p.id} post={p}/>
       )
-    })}</div>
+    })}
+    </ul>
+    </div>
   )
 }
 
