@@ -12,6 +12,7 @@ header {
     margin: 0;
     font-size: 3em;
     font-family: 'Fugaz One', cursive;
+    color:rgb(84, 84, 84);
 }
 
 .header__nav {
