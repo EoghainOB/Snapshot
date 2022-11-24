@@ -9,6 +9,7 @@ const Dashboard = ({user, sort, setSort, posts}) => {
 
   return (
     <div className='dashboard'>
+    <div className='dashboard__select'>
     <select name="sort" onChange={sortHandler}>
         <option value="Top Rank">Top Rank</option>
         <option value="Lowest Rank">Lowest Rank</option>
@@ -17,6 +18,7 @@ const Dashboard = ({user, sort, setSort, posts}) => {
         <option value="Newest">Newest</option>
         <option value="Oldest">Oldest</option>
     </select>
+    </div>
     <h1>{sort}</h1>
     <ul className='dashboard__list'>
     {posts.map(p => {

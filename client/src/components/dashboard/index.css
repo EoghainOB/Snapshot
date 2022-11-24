@@ -5,3 +5,9 @@
 .dashboard__list {
     padding:0;
 }
+
+.dashboard__select {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
