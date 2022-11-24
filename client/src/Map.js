@@ -4,7 +4,7 @@ import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
 function Map({ searchTerm, posts, position }) {
     const [activeMarker, setActiveMarker] = useState(null);
-    const [load, setLoad ] = useState(false)
+    const [map, setMap] = useState(null);
 
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
@@ -14,25 +14,25 @@ function Map({ searchTerm, posts, position }) {
     };
 
     const handleOnLoad = (map) => {
-        console.log('bounds')
-        const bounds = new window.google.maps.LatLngBounds();
-        posts.forEach(({ location }) => bounds.extend(location));
-        map.fitBounds(bounds);
+        setMap(map)
+        console.log(map)
     };
     
     useEffect(() => {
         if(searchTerm) {
-            setLoad(true)
+            const bounds = new window.google.maps.LatLngBounds();
+            posts.forEach(({ location }) => bounds.extend(location));
+            map.fitBounds(bounds);
         }
-    }, [searchTerm])
+    }, [searchTerm, map, posts])
 
     return (<GoogleMap
             // id='mapCanvas'
             center={position ? position : { lat: 52.341385609030034, lng: 4.823586345871511 }}
-            zoom={9}
+            zoom={position ? 9 : 4}
             mapTypeId="terrain"
             position={position}
-            onLoad={load && handleOnLoad}
+            onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "500px" }}
         >
