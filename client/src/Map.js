@@ -27,7 +27,6 @@ function Map({ searchTerm, posts, position }) {
     }, [searchTerm, map, posts])
 
     return (<GoogleMap
-            // id='mapCanvas'
             center={position ? position : { lat: 52.341385609030034, lng: 4.823586345871511 }}
             zoom={position ? 9 : 4}
             mapTypeId="terrain"
