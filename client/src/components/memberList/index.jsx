@@ -36,7 +36,7 @@ const MemberList = ({posts, user}) => {
           </li>
           <li className='member-list__username'>{user.name}</li>
           <li className='member-list__posts'>Posts: {getUserPosts(user).length}</li>
-          <li className='member-list__rank'>Rank: {getRanking(user)}</li>
+          <li className=' '>Rank: {getRanking(user)}</li>
         </ul>
         
         <hr/>

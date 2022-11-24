@@ -1,12 +1,14 @@
 import React from 'react'
 import Post from '../Post'
+import "./index.css";
 
 const Dashboard = ({setSort, posts}) => {
     const sortHandler = (e) => {
     setSort(e.target.value)
     }
-  return (
+  return ( 
     <div>
+    <div className='dashboard__select'>
     <select name="sort" onChange={sortHandler}>
         <option value="topRank">Top Rank</option>
         <option value="lowestRank">Lowest Rank</option>
@@ -15,12 +17,14 @@ const Dashboard = ({setSort, posts}) => {
         <option value="newest">Newest</option>
         <option value="oldest">Oldest</option>
     </select>
+    </div>
     <h1>TOP POSTS</h1>
     {posts.map(p => {
       return (
         <Post key={p.id} post={p}/>
       )
-    })}</div>
+    })}
+    </div>
   )
 }
 
