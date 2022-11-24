@@ -23,21 +23,27 @@ const MemberList = ({posts, user}) => {
     }
     getUsers();
   },[])
+  
   return (
     <>
-      <div className='member-list'>MemberList</div>
+      <div className='member-list'><h2>Users</h2>
       <ul className='member-list__list'>
         {users.map((user, i) => 
-        <div key={i} className='member-list__list_item'>
-          <li>
+        <>
+        <ul key={i} className='member-list__list_item'>
+          <li className='member-list__image'>
             <img src={user.imageUrl} alt=""/>
           </li>
-          <li>{user.name}</li>
-          <li>Posts: {getUserPosts(user).length}</li>
-          <li>Rank: {getRanking(user)}</li>
-        </div>
+          <li className='member-list__username'>{user.name}</li>
+          <li className='member-list__posts'>Posts: {getUserPosts(user).length}</li>
+          <li className='member-list__rank'>Rank: {getRanking(user)}</li>
+        </ul>
+        
+        <hr/>
+        </>
         )}
       </ul>
+      </div>
     </>
   )
 }
