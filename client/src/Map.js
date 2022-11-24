@@ -3,8 +3,8 @@ import './App.css'
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
 function Map({ posts, position }) {
-
     const [activeMarker, setActiveMarker] = useState(null);
+    const [load, setLoad ] = useState(false)
 
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
@@ -13,19 +13,25 @@ function Map({ posts, position }) {
         setActiveMarker(marker);
     };
 
-    useEffect(() => {
-        const handleOnLoad = () => {
-            let map = new window.google.maps.Map(document.getElementById("mapCanvas"))
-            const bounds = new window.google.maps.LatLngBounds();
-            posts.forEach(({ location }) => bounds.extend(location));
-            map.fitBounds(bounds);
-        };
-        handleOnLoad()
-    }, [posts])
+    
+    // useEffect(() => {
+    //     const handleOnLoad = async() => {
+    //         const options = {
+    //         center: new window.google.maps.LatLng(52.3508, 4.8526),
+    //         zoom: 8,
+    //         mapTypeId: window.google.maps.MapTypeId.TERRAIN,
+    //         }
+    //         const map = new window.google.maps.Map(document.getElementById("mapCanvas"), options)
+    //         const bounds = new window.google.maps.LatLngBounds();
+    //         await posts.forEach(({ location }) => bounds.extend(location));
+    //         map.fitBounds(bounds);
+    //     };
+    //     handleOnLoad()
+    //     setLoad(true)
+    // }, [posts])
 
-    return (
-        <GoogleMap
-            id='mapCanvas'
+    return (<GoogleMap
+            // id='mapCanvas'
             center={{ lat: 52.3508, lng: 4.8526 }}
             zoom={8}
             mapTypeId="terrain"
