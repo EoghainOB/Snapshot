@@ -15,7 +15,6 @@ function Map({ searchTerm, posts, position }) {
 
     const handleOnLoad = (map) => {
         setMap(map)
-        console.log(map)
     };
     
     useEffect(() => {
