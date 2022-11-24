@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css'
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
@@ -13,16 +13,24 @@ function Map({ posts, position }) {
         setActiveMarker(marker);
     };
 
-    const handleOnLoad = (map) => {
-        const bounds = new window.google.maps.LatLngBounds();
-        posts.forEach(({ location }) => bounds.extend(location));
-        map.fitBounds(bounds);
-    };
+    useEffect(() => {
+        const handleOnLoad = () => {
+            let map = new window.google.maps.Map(document.getElementById("mapCanvas"))
+            const bounds = new window.google.maps.LatLngBounds();
+            posts.forEach(({ location }) => bounds.extend(location));
+            map.fitBounds(bounds);
+        };
+        handleOnLoad()
+    }, [posts])
 
     return (
         <GoogleMap
+            id='mapCanvas'
+            center={{ lat: 52.3508, lng: 4.8526 }}
+            zoom={8}
+            mapTypeId="terrain"
             position={position}
-            onLoad={handleOnLoad}
+            // onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "500px" }}
         >
