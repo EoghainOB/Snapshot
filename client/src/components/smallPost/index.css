@@ -1,0 +1,14 @@
+.dashboard__post {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:1em;
+    margin:1em;
+    border:1px solid grey;
+}
+
+
+.dashboard__post img,
+.dashboard__post video {
+    width:150px;
+}

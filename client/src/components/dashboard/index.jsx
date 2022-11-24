@@ -1,5 +1,6 @@
 import React from 'react'
 import SmallPost from '../smallPost'
+import './index.css'
 
 const Dashboard = ({user, sort, setSort, posts}) => {
     const sortHandler = (e) => {
@@ -7,7 +8,7 @@ const Dashboard = ({user, sort, setSort, posts}) => {
     }
 
   return (
-    <div>
+    <div className='dashboard'>
     <select name="sort" onChange={sortHandler}>
         <option value="Top Rank">Top Rank</option>
         <option value="Lowest Rank">Lowest Rank</option>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios';
+import './index.css';
 
 const Post = ({post}) => {
     const { id, title, description, tags, author, address, date, imageLink, views, rank } = post;
