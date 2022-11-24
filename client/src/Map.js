@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './App.css'
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
-function Map({ posts, position }) {
+function Map({ searchTerm, posts, position }) {
     const [activeMarker, setActiveMarker] = useState(null);
     const [load, setLoad ] = useState(false)
 
@@ -13,30 +13,25 @@ function Map({ posts, position }) {
         setActiveMarker(marker);
     };
 
+    const handleOnLoad = (map) => {
+        const bounds = new window.google.maps.LatLngBounds();
+        posts.forEach(({ location }) => bounds.extend(location));
+        map.fitBounds(bounds);
+    };
     
-    // useEffect(() => {
-    //     const handleOnLoad = async() => {
-    //         const options = {
-    //         center: new window.google.maps.LatLng(52.3508, 4.8526),
-    //         zoom: 8,
-    //         mapTypeId: window.google.maps.MapTypeId.TERRAIN,
-    //         }
-    //         const map = new window.google.maps.Map(document.getElementById("mapCanvas"), options)
-    //         const bounds = new window.google.maps.LatLngBounds();
-    //         await posts.forEach(({ location }) => bounds.extend(location));
-    //         map.fitBounds(bounds);
-    //     };
-    //     handleOnLoad()
-    //     setLoad(true)
-    // }, [posts])
+    useEffect(() => {
+        if(searchTerm) {
+            setLoad(true)
+        }
+    }, [searchTerm])
 
     return (<GoogleMap
             // id='mapCanvas'
-            center={{ lat: 52.3508, lng: 4.8526 }}
-            zoom={8}
+            center={position ? position : { lat: 52.3508, lng: 4.8526 }}
+            zoom={9}
             mapTypeId="terrain"
             position={position}
-            // onLoad={handleOnLoad}
+            onLoad={load && handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "500px" }}
         >

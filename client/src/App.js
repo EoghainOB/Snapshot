@@ -69,7 +69,7 @@ function App() {
       <Route path='/' element={
         <>
         <SearchBar setSearchTerm={setSearchTerm}/>
-        {isLoaded && posts.length && <Map posts={filteredAndSorted()} position={position}/>}
+        {isLoaded && posts.length && <Map searchTerm={searchTerm} posts={filteredAndSorted()} position={position}/>}
         <Dashboard user={user} sort={sort} setSort={setSort} posts={filteredAndSorted()}/>
         </>} 
       />
