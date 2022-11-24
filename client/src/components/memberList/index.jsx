@@ -9,12 +9,17 @@ const MemberList = ({posts, user}) => {
     return userPosts;
   }
 
+  const getRanking = (user) => {
+    const posts = getUserPosts(user);
+    const rank = posts.map(post => post.rank);
+    return (rank.reduce((prev, curr) =>  prev + curr, 0));
+  }
+
   useEffect(() => {
     const getUsers = async() => {
       const res = await axios.get('/api/users');
       setUsers(res.data);
     }
-
     getUsers();
   },[])
   return (
@@ -24,10 +29,11 @@ const MemberList = ({posts, user}) => {
         {users.map(user => 
         <>
           <li>
-            <img src={user.imageUrl} alt=""/>
+            <img key={user.name} src={user.imageUrl} alt=""/>
           </li>
           <li>{user.name}</li>
-          <li>{getUserPosts(user).length}</li>
+          <li>Posts: {getUserPosts(user).length}</li>
+          <li>Rank: {getRanking(user)}</li>
         </>
         )}
       </ul>

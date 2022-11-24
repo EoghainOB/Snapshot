@@ -3,6 +3,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import './index.css'
 
 const Login = ({user, setUser}) => {
   
@@ -38,12 +39,14 @@ return (
   <>
   {user 
   ? (<GoogleLogout 
+  className='login'
   clientId={clientId} 
   buttonText="Log out"
   onLogoutSuccess={logOutSuccess}
   />)
   : 
   <GoogleLogin
+  className='login'
   clientId={clientId}
   buttonText="Sign in"
   onSuccess={onSuccess}

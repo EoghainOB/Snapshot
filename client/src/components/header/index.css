@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap');
+
+header {
+    margin-top: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header__title {
+    margin: 0;
+    font-size: 3em;
+    font-family: 'Fugaz One', cursive;
+}
+
+.header__nav {
+    margin: 0;
+    width: 100%;
+}
+
+.header__list {
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.header__item {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.header__item :active {
+    opacity: .5;
+}

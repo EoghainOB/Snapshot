@@ -6,3 +6,8 @@
 .gm-style img {
   width: 500px;
 }
+
+* {
+color: black;
+text-decoration: none;
+}
