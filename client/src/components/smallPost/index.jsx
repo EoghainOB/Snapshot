@@ -4,7 +4,7 @@ import "./index.css";
 import { Link } from "react-router-dom";
 
 const SmallPost = ({ user, post }) => {
-  const { id, title, author, address, date, imageLink, views, rank } = post;
+  const { id, title, address, date, imageLink, views, rank } = post;
   const [ranking, setRanking] = useState(rank);
 
   const increaseHandler = (e) => {
