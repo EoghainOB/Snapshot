@@ -1,13 +1,53 @@
+.dashboard__container {
+    width: 100%;
+    display: flex;
+    /* background-color: green */
+}
+.dashboard__right {
+    margin-left:.5em;
+    width: 20%;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:1em;
+    font-size: .9em;
+}
+
+.dashboard__right button {
+    font-size: 2em;
+    height:2em;
+    width:2em;
+    border-radius: 50%;
+    background: none;
+}
+
+.upvote-btn {
+    border: 2px solid green;
+    color:green;
+}
+
+.downvote-btn {
+    border: 2px solid red;
+    color: red;
+}
+
+.dashboard__left{
+    width: 80%;
+    /* background-color: green; */
+}
 .dashboard__post {
+    /* width: 100%; */
     display:flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding:1em;
     margin:1em 0;
-    border:1px solid grey;
     border-radius: 8px;
     text-align: center;
+    box-shadow: 0px 2px 5px rgb(212, 212, 212);
 }
 
 .dashboard__post__title {
@@ -35,6 +75,12 @@
 .dashboard__post img,
 .dashboard__post video {
     width:45%;
+}
+
+.dashboard__post__button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 

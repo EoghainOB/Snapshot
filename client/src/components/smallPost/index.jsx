@@ -24,23 +24,18 @@ const SmallPost = ({ user, post }) => {
   const newDate = new Date(date);
 
   return (
+    <div className="dashboard__container">
+    <div className="dashboard__left">
     <li className="dashboard__post">
       <Link to={`/posts/${post.id}`}>
         <p className="dashboard__post__title">{title}</p>
       </Link>
-      <span className="dashboard__post__author">Author: {author}</span>
       <span className="dashboard__post__location">
         Location: {address?.replace(/^([^,]*,*)/, "")}
       </span>
       <span className="dashboard__post__date">
         Date: {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
       </span>
-      <span className="dashboard__post__views">Views: {views}</span>
-      <div className="dashboard__post__button-container">
-        <span className="dashboard__post__rank">Rank: {ranking}</span>
-        {user && <button onClick={increaseHandler}>+</button>}
-        {user && <button onClick={decreaseHandler}>-</button>}
-      </div>
       <Link to={`/posts/${post.id}`}>
         <div className="dashboard__post__media-container">
           {imageLink.map((x) => {
@@ -60,6 +55,16 @@ const SmallPost = ({ user, post }) => {
         </div>
       </Link>
     </li>
+    </div>
+    <div className="dashboard__right">
+    <span className="dashboard__post__views">Views: {views}</span>
+      <div className="dashboard__post__button-container">
+        {user && <button className="upvote-btn" onClick={increaseHandler}>+</button>}
+        <span className="dashboard__post__rank">Rank: {ranking}</span>
+        {user && <button className="downvote-btn" onClick={decreaseHandler}>-</button>}
+      </div>
+    </div>
+    </div>
   );
 };
 
