@@ -14,6 +14,7 @@ function Map({ searchTerm, posts, position }) {
     };
 
     const handleOnLoad = (map) => {
+        console.log('bounds')
         const bounds = new window.google.maps.LatLngBounds();
         posts.forEach(({ location }) => bounds.extend(location));
         map.fitBounds(bounds);
@@ -27,7 +28,7 @@ function Map({ searchTerm, posts, position }) {
 
     return (<GoogleMap
             // id='mapCanvas'
-            center={position ? position : { lat: 52.3508, lng: 4.8526 }}
+            center={position ? position : { lat: 52.341385609030034, lng: 4.823586345871511 }}
             zoom={9}
             mapTypeId="terrain"
             position={position}
