@@ -1,14 +1,45 @@
 .dashboard__post {
     display:flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding:1em;
-    margin:1em;
+    margin:1em 0;
     border:1px solid grey;
+    text-align: center;
 }
 
+.dashboard__post__title {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.dashboard__post__title,
+.dashboard__post__author,
+.dashboard__post__location,
+.dashboard__post__date,
+.dashboard__post__views,
+.dashboard__post__rank {
+    margin: .5em 0;
+}
+
+
+.dashboard__post__media-container {
+    margin:1em 0;
+    width:100%;
+    display:flex;
+    justify-content: space-evenly;
+}
 
 .dashboard__post img,
 .dashboard__post video {
-    width:150px;
+    width:45%;
 }
+
+
+
+@media only screen and (min-width: 600px) {
+    .dashboard__post {
+        flex-direction: row;
+    }
+  }

@@ -18,7 +18,7 @@ const Dashboard = ({user, sort, setSort, posts}) => {
         <option value="Oldest">Oldest</option>
     </select>
     <h1>{sort}</h1>
-    <ul>
+    <ul className='dashboard__list'>
     {posts.map(p => {
       return (
         <SmallPost user={user} key={p.id} post={p}/>

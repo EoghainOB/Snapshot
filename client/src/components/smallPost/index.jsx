@@ -21,7 +21,6 @@ const SmallPost = ({user, post}) => {
     }
     
     const newDate = new Date(date);
-
     
     return (
         <li className='dashboard__post'>
@@ -35,6 +34,7 @@ const SmallPost = ({user, post}) => {
           {user && <button onClick={increaseHandler}>+</button>}
           {user && <button onClick={decreaseHandler}>-</button>}
         </div>
+        <div className='dashboard__post__media-container'>
         {imageLink.map(x => {
             const thumbnail = x.replace(/upload\//, 'upload/w_200,h_200,c_fill/');
             if(thumbnail.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
@@ -48,6 +48,7 @@ const SmallPost = ({user, post}) => {
                 }
             )
         }
+        </div>
     </li>
   )
 }
