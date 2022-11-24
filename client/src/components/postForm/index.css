@@ -1,0 +1,31 @@
+.upload__form {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.upload__input {
+    margin:.5em 0 1em 0;
+    padding:.5em;
+    border:1px solid #d3d3d3;
+    border-radius: .5em;
+    font-size: 16px;
+}
+
+.upload__submit__btn {
+    width: 80%;
+    align-self: center;
+    margin: 2em;
+    background-color: rgb(0, 0, 254);
+    color: white;
+    border: none;
+    border-radius: .5em;
+    padding: .5em;
+    font-size: 1.2em;
+}
+
+.upload__form label {
+    color: rgb(60, 59, 59);
+}
+
+

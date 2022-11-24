@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Geocode from 'react-geocode';
+import './index.css';
 
 const getLocation = (location) => {
     Geocode.setApiKey(process.env.REACT_APP_API_GOOGLE_API);
@@ -59,44 +60,19 @@ const PostForm = ({setPosts, position, user}) => {
   }
 
   return (
-    <form onSubmit={submitHandler}>
+    <form className='upload__form' onSubmit={submitHandler}>
       <label htmlFor='title'>Title</label>
-      <input id='title' type='text' onChange={changeTitleHandler} required/>
+      <input className='upload__input' id='title' type='text' onChange={changeTitleHandler} required/>
       <label htmlFor='description'>Description</label>
-      <input id='description' type='text' onChange={changeDescriptionHandler}/>
+      <input className='upload__input' id='description' type='text' onChange={changeDescriptionHandler}/>
       <label htmlFor='tags'>Tags</label>
-      <input id='tags' type='text' placeholder='cats, dogs, ...' onChange={changeTagsHandler}/>
-      <input type='file' onChange={changeFileHandler} required multiple/>
-      <button type='submit'>Submit</button>
+      <input className='upload__input' id='tags' type='text' placeholder='cats, dogs, ...' onChange={changeTagsHandler}/>
+      <label htmlFor='selectFiles'>Select Files</label>
+      <input className='upload__input' type='file' htmlFor='fileUpload' onChange={changeFileHandler} required multiple/>
+      <button className='upload__submit__btn' id='fileUpload' type='submit'>Submit</button>
     </form>
   )
 }
-
-/* 
-const Form = () => {
-    const [file, setFile] = useState();
-
-    const changeInput = (e) => {
-        setFile(e.target.files[0]);
-    }
-
-    const postImage = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('file', file);
-        axios.post('/api/upload', formData)
-    }
-
-  return (
-    <>
-    <form onSubmit={postImage}>
-        <input onChange={changeInput} type="file"/>
-        <button type='submit'>Submit</button>
-    </form>
-    </>
-  )
-}
-*/
 
 
 export default PostForm

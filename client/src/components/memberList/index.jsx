@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import './index.css';
 
 const MemberList = ({posts, user}) => {
   const [users, setUsers] = useState([])
@@ -24,17 +25,17 @@ const MemberList = ({posts, user}) => {
   },[])
   return (
     <>
-      <div>MemberList</div>
-      <ul>
-        {users.map(user => 
-        <>
+      <div className='member-list'>MemberList</div>
+      <ul className='member-list__list'>
+        {users.map((user, i) => 
+        <div key={i} className='member-list__list_item'>
           <li>
-            <img key={user.name} src={user.imageUrl} alt=""/>
+            <img src={user.imageUrl} alt=""/>
           </li>
           <li>{user.name}</li>
           <li>Posts: {getUserPosts(user).length}</li>
           <li>Rank: {getRanking(user)}</li>
-        </>
+        </div>
         )}
       </ul>
     </>
