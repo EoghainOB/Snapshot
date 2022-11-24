@@ -9,6 +9,8 @@ import PostForm from './components/postForm';
 import { Routes, Route } from "react-router-dom";
 import Dashboard from './components/dashboard';
 import SearchBar from './components/SearchBar';
+import Post from './components/Post';
+import MemberList from './components/memberList';
 
 function App() {
   const [position, setPosition] = useState(null)
@@ -63,16 +65,18 @@ function App() {
   return (
     <div className="App">
       <Header setUser={setUser} user={user}/>
-      <SearchBar setSearchTerm={setSearchTerm}/>
     <Routes >
       <Route path='/' element={
         <>
+        <SearchBar setSearchTerm={setSearchTerm}/>
         {isLoaded && posts.length && <Map posts={filteredAndSorted()} position={position}/>}
         <Dashboard user={user} sort={sort} setSort={setSort} posts={filteredAndSorted()}/>
         </>} 
       />
-      {user && <Route path={`/users/:id`} element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>}
+      {user && <Route path='/users/:id' element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>}
       {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
+      <Route path='/posts/:postId' element={<Post posts={posts} user={user}/>} />
+      <Route path='/users/' element={<MemberList posts={posts} user={user}/>} />
     </Routes>
     </div>
   );

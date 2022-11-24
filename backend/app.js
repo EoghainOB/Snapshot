@@ -25,10 +25,9 @@ app.get('/api/hello', (req, res) => {
     res.json('Hello :)')
 })
 
-app.get('/api/users/:id', async(req, res) => {
-  // user.length ? console.log('User found') : console.log('User NOT found')
-  // const user = await Users.find()
-  // res.status(200).json(user)
+app.get('/api/users', async(req, res) => {
+  const users = await Users.find()
+  res.status(200).json(users)
 })
 
 app.get('/api/posts', async(req, res) => {
@@ -109,6 +108,11 @@ app.post('/api/users', async (req, res) => {
 app.patch('/api/posts/:id', async (req, res) => {
   await Posts.findOneAndUpdate(req.params, req.body)
   res.json('Updated')
+})
+
+app.get('/api/posts/:id', async (req, res) => {
+  const post = await Posts.findOne(req.params)
+  res.json(post)
 })
 
 app.delete('/api/posts/:id', async (req, res) => {

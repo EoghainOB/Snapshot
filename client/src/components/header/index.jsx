@@ -10,6 +10,7 @@ const Header = ({setUser, user}) => {
             <Login setUser={setUser} user={user}/>
             {user && <Link to={`/users/${user.googleId}`}>User</Link>}
             {user && <Link to={`/post`}>Upload</Link>}
+            <Link to={`/users/`}>Users</Link>
         </nav>
     </header>
   )

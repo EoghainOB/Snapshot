@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios';
 
 const Profile = ({user, posts, setPosts}) => {
-  console.log('user:',user.imgUrl)
   const userPosts = posts.filter(p => p.author === user.name);
 
   const deleteHandler = async (id) => {

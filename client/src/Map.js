@@ -3,16 +3,6 @@ import './App.css'
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
 function Map({ posts, position }) {
-    // const markers = [
-    //     {
-    //     id: 1,
-    //     position: {
-    //         lat: +(position.lat),
-    //         lng: +(position.lng),
-    //         },
-    //     }, 
-    // ];
-    // const markers = post.map(p => p)
 
     const [activeMarker, setActiveMarker] = useState(null);
 
@@ -25,7 +15,6 @@ function Map({ posts, position }) {
 
     const handleOnLoad = (map) => {
         const bounds = new window.google.maps.LatLngBounds();
-        // bounds.extend(position)
         posts.forEach(({ location }) => bounds.extend(location));
         map.fitBounds(bounds);
     };
