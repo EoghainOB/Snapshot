@@ -1,0 +1,37 @@
+.delete__post {
+    width: 80%;
+    padding: .5em;
+    background-color: red;
+    color: white;
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.profile__greeting {
+    font-size: large;
+    align-self: flex-start;
+    margin-bottom: .7em;
+}
+
+.profile-container ul {
+    padding: 0px;
+}
+
+.profile__info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.profile__text {
+    font-size: small;
+    max-width: 80%;
+}
