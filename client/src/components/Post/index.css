@@ -52,3 +52,7 @@
     flex-direction: column;
     width: 80%;
 }
+
+.post__image {
+    border-radius: 5px;
+}

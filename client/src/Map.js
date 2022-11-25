@@ -49,7 +49,6 @@ function Map({ searchTerm, posts, position }) {
             key={id}
             position={location}
             onClick={() => handleActiveMarker(id)}
-            // icon={imageLink[0].replace(/upload\//, "upload/w_50,h_50,c_fill,r_max,b_rgb:3e2222/")}
           >
             {activeMarker === id ? (
               <InfoWindow onCloseClick={() => setActiveMarker(null)}>
@@ -62,10 +61,10 @@ function Map({ searchTerm, posts, position }) {
                           .replace(/upload\//, "upload/w_200,h_200,c_fill/")
                           .match(/.*\.(gif|jpe?g|bmp|png)$/)
                       ) {
-                        return <img style={ {width: "100%"}} key={x} src={x} alt={title} />;
+                        return <img style={ {width: "100%", borderRadius: '5px'}} key={x} src={x} alt={title} />;
                       }
                       return (
-                        <video key={x} width="100%" height="200px" controls>
+                        <video style={ {borderRadius: '5px'}} key={x} width="100%" height="200px" controls>
                           <source src={x} />
                         </video>
                       );

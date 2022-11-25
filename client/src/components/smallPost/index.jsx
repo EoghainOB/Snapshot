@@ -46,10 +46,10 @@ const SmallPost = ({ user, post }) => {
                   "upload/w_200,h_200,c_fill/"
                 );
                 if (thumbnail.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
-                  return <img key={thumbnail} src={thumbnail} alt={title} />;
+                  return <img style={{borderRadius: '5px'}} key={thumbnail} src={thumbnail} alt={title} />;
                 }
                 return (
-                  <video key={x} controls>
+                  <video style={{borderRadius: '5px'}} key={x} controls>
                     <source src={x} />
                   </video>
                 );
