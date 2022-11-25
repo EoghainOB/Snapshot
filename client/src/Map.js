@@ -36,12 +36,12 @@ function Map({ searchTerm, posts, position }) {
         >
             {posts.map(({ id, location, title, description, imageLink, date }) => {
                 const newDate = new Date(date);
-                return (            
+                return (       
                 <MarkerF
                     key={id}
                     position={location}
                     onClick={() => handleActiveMarker(id)}
-                    icon={imageLink[0].replace(/upload\//, "upload/w_50,h_50,c_fill,r_max/")}
+                    // icon={imageLink[0].replace(/upload\//, "upload/w_50,h_50,c_fill,r_max,b_rgb:3e2222/")}
                 >
                     {activeMarker === id ? (
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
@@ -67,7 +67,8 @@ function Map({ searchTerm, posts, position }) {
                             </div>
                         </InfoWindow>
                     ) : null}
-                </MarkerF>)      
+                </MarkerF>
+                )
             }
             )}
         </GoogleMap>
