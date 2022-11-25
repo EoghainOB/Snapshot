@@ -41,6 +41,7 @@ function Map({ searchTerm, posts, position }) {
                     key={id}
                     position={location}
                     onClick={() => handleActiveMarker(id)}
+                    icon={imageLink[0].replace(/upload\//, "upload/w_50,h_50,c_fill,r_max/")}
                 >
                     {activeMarker === id ? (
                         <InfoWindow onCloseClick={() => setActiveMarker(null)}>
