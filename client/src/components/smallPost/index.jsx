@@ -46,10 +46,17 @@ const SmallPost = ({ user, post }) => {
                   "upload/w_200,h_200,c_fill/"
                 );
                 if (thumbnail.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
-                  return <img style={{borderRadius: '5px'}} key={thumbnail} src={thumbnail} alt={title} />;
+                  return (
+                    <img
+                      style={{ borderRadius: "5px" }}
+                      key={thumbnail}
+                      src={thumbnail}
+                      alt={title}
+                    />
+                  );
                 }
                 return (
-                  <video style={{borderRadius: '5px'}} key={x} controls>
+                  <video style={{ borderRadius: "5px" }} key={x} controls>
                     <source src={x} />
                   </video>
                 );
@@ -61,21 +68,21 @@ const SmallPost = ({ user, post }) => {
       </div>
       <div className="dashboard__right">
         <div className="post__button-container">
-            <button
-              className="post__button__increase"
-              onClick={increaseHandler}
-              disabled={user ? false : true}
-            >
-              ▲
-            </button>
+          <button
+            className="post__button__increase"
+            onClick={increaseHandler}
+            disabled={user ? false : true}
+          >
+            ▲
+          </button>
           <b className="post__rank">{ranking}</b>
-            <button
-              className="post__button__decrease"
-              onClick={decreaseHandler}
-              disabled={user ? false : true}
-            >
-              ▼
-            </button>
+          <button
+            className="post__button__decrease"
+            onClick={decreaseHandler}
+            disabled={user ? false : true}
+          >
+            ▼
+          </button>
         </div>
       </div>
     </div>
