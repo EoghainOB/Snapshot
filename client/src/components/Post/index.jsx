@@ -41,31 +41,35 @@ const Post = ({user}) => {
     const newDate = new Date(post.date);
 
   return (
-      <div>
-        <p>Title: {post.title}</p>
-        {post.description !== 'undefined' && <p>Description: {post.description}</p>}
-        {post.tags[0] !== 'undefined' && <p>Tags: {post.tags}</p>}
-        <p>Author: {post.author}</p>
-        <p>Location: {post.address}</p>
-        <p>Date: {newDate.toLocaleString('nl')}</p>
-        <p>Views: {post.views}</p>
-        <div>
-          <p>Rank: {ranking}</p>
-          {user && <button onClick={increaseHandler}>+</button>}
-          {user && <button onClick={decreaseHandler}>-</button>}
-        </div>
+      <div className='post'>
+        <h1 className='post__title'>{post.title}</h1>
+        <p className='post__author'>Author: {post.author}</p>
         {post.imageLink.map(x => {
             if(x.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
-                return <img width="100%" key={x} src={x} alt={post.title}/>
+                return <img className='post__image' width="100%" key={x} src={x} alt={post.title}/>
             }
             return (
-                    <video key={x} width="100%" controls>
+                    <video className='post__video' key={x} width="100%" controls>
                         <source src={x}/>
                     </video>
                     )
                 }
             )
         }
+        {post.description !== 'undefined' && <p className='post__description'>{post.description}</p>}
+        <div className='post__bottom'>
+        <div className='post__left'>
+        {post.tags[0] !== 'undefined' && <span className='post__tags'>🏷  {post.tags}</span>}
+        <span className='post__location'>📍  {post.address}</span>
+        <span className='post__date'>📅  &nbsp;{newDate.toLocaleString('nl')}</span>
+        <span className='post__views'>👁  {post.views}</span>
+        </div>
+        <div className='post__button-container'>
+          {user && <button className='post__button__increase' onClick={increaseHandler}>▲</button>}
+          <b className='post__rank'>{ranking}</b>
+          {user && <button className='post__button__decrease'onClick={decreaseHandler}>▼</button>}
+        </div>
+        </div>
     </div>
   )
 }

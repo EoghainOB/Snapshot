@@ -30,11 +30,11 @@ const SmallPost = ({ user, post }) => {
       <Link to={`/posts/${post.id}`}>
         <p className="dashboard__post__title">{title}</p>
       </Link>
-      <span className="dashboard__post__location">
-        Location: {address?.replace(/^([^,]*,*)/, "")}
-      </span>
+      {address && <span className="dashboard__post__location">
+        📍 {address?.replace(/^([^,]*,*)/, "")}
+      </span>}
       <span className="dashboard__post__date">
-        Date: {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
+        📅 {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
       </span>
       <Link to={`/posts/${post.id}`}>
         <div className="dashboard__post__media-container">
@@ -54,15 +54,15 @@ const SmallPost = ({ user, post }) => {
           })}
         </div>
       </Link>
+    <span className="dashboard__post__views">👁 {views}</span>
     </li>
     </div>
     <div className="dashboard__right">
-    <span className="dashboard__post__views">Views: {views}</span>
-      <div className="dashboard__post__button-container">
-        {user && <button className="upvote-btn" onClick={increaseHandler}>+</button>}
-        <span className="dashboard__post__rank">Rank: {ranking}</span>
-        {user && <button className="downvote-btn" onClick={decreaseHandler}>-</button>}
-      </div>
+    <div className='post__button-container'>
+          {user && <button className='post__button__increase' onClick={increaseHandler}>▲</button>}
+          <b className='post__rank'>{ranking}</b>
+          {user && <button className='post__button__decrease'onClick={decreaseHandler}>▼</button>}
+        </div>
     </div>
     </div>
   );

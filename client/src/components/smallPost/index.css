@@ -77,12 +77,21 @@
     width:45%;
 }
 
-.dashboard__post__button-container {
-    display: flex;
+.post__button-container {
+    display:flex;
     flex-direction: column;
+    gap:.5em;
     align-items: center;
+    text-align: center;
 }
 
+.post__button-container button {
+    font-size: 2em;
+    height:2em;
+    width:2em;
+    border-radius: 50%;
+    background: none;
+}
 
 
 @media only screen and (min-width: 600px) {

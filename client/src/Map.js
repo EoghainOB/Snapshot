@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './App.css'
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
+import style  from './mapStyle'
 
 function Map({ searchTerm, posts, position }) {
     const [activeMarker, setActiveMarker] = useState(null);
@@ -25,6 +26,7 @@ function Map({ searchTerm, posts, position }) {
         }
     }, [searchTerm, map, posts])
 
+
     return (<GoogleMap
             center={position ? position : { lat: 52.341385609030034, lng: 4.823586345871511 }}
             zoom={position ? 9 : 5}
@@ -33,6 +35,9 @@ function Map({ searchTerm, posts, position }) {
             onLoad={handleOnLoad}
             onClick={() => setActiveMarker(null)}
             mapContainerStyle={{ width: "100%", height: "500px" }}
+             options={{
+                 styles: style,
+             }}
         >
             {posts.map(({ id, location, title, description, imageLink, date }) => {
                 const newDate = new Date(date);
