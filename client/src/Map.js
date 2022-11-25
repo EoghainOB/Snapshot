@@ -33,13 +33,14 @@ function Map({ searchTerm, posts, position }) {
           ? position
           : { lat: 52.341385609030034, lng: 4.823586345871511 }
       }
-      zoom={position ? 5 : 3}
+      zoom={position ? 9 : 5}
       mapTypeId="terrain"
       position={position}
       onLoad={handleOnLoad}
       onClick={() => setActiveMarker(null)}
       mapContainerStyle={{ width: "100%", height: "500px" }}
       options={{
+        maxZoom:'12',
         styles: style,
       }}
     >
