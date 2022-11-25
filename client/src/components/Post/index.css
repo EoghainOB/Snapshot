@@ -46,10 +46,6 @@
     font-size: 15px;
 }
 
-img {
-    border-radius: 10px;
-}
-
 .post__left {
     display: flex;
     gap: 0.5em;
