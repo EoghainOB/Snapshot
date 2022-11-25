@@ -22,8 +22,20 @@ const PostForm = ({setPosts, position, user}) => {
   const [description, setDescription] = useState();
   const [tags, setTags] = useState();
   const [address, setAddress] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return (<div className="container">
+    <div className="everlib-logo">
+    <i className="everlib-logo-first-bar"></i>
+    <i className="everlib-logo-second-bar"></i>
+    <i className="everlib-logo-third-bar"></i>
+    <i className="everlib-logo-fourth-bar"></i>
+    </div>
+    </div>)
+  }
 
   getLocation(position).then(data => setAddress(data));
 
@@ -45,6 +57,7 @@ const PostForm = ({setPosts, position, user}) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     file.map(x => formData.append('file', x))
     formData.append('title', title);
