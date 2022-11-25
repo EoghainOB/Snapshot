@@ -45,7 +45,7 @@ const SmallPost = ({ user, post }) => {
                   /upload\//,
                   "upload/w_200,h_200,c_fill/"
                 );
-                if (thumbnail.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
+                if (thumbnail.match(/.*\.(gif|jpe?g|bmp|png|HEIC)$/)) {
                   return (
                     <img
                       style={{ borderRadius: "5px" }}

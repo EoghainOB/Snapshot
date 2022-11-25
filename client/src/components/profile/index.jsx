@@ -25,7 +25,7 @@ const Profile = ({user, posts, setPosts}) => {
       <ul>
         {userPosts?.map((p,i) => 
           <li key={i}>
-          <SmallPost post={p} />
+          <SmallPost user={user} post={p} />
           <button className='delete__post' onClick={() => deleteHandler(p.id)}>Delete</button>
           </li>
         )}
