@@ -45,12 +45,13 @@ const Post = ({user}) => {
         <h1 className='post__title'>{post.title}</h1>
         <p className='post__author'>Author: {post.author}</p>
         {post.imageLink.map(x => {
-            if(x.match(/.*\.(gif|jpe?g|bmp|png)$/)) {
-                return <img className='post__image' width="100%" key={x} src={x} alt={post.title}/>
+            const heicFix = x.replace(/heic/, 'jpeg');
+            if(heicFix.match(/.*\.(gif|jpe?g|bmp|png|jpg)$/i)) {
+                return <img className='post__image' width="100%" key={heicFix} src={heicFix} alt={post.title}/>
             }
             return (
-                    <video className='post__video' key={x} width="100%" controls>
-                        <source src={x}/>
+                    <video className='post__video' key={heicFix} width="100%" controls>
+                        <source src={heicFix}/>
                     </video>
                     )
                 }

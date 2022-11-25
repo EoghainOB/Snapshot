@@ -44,8 +44,8 @@ const SmallPost = ({ user, post }) => {
                 const thumbnail = x.replace(
                   /upload\//,
                   "upload/w_200,h_200,c_fill/"
-                );
-                if (thumbnail.match(/.*\.(gif|jpe?g|bmp|png|HEIC)$/)) {
+                ).replace(/heic/, 'jpeg');
+                if (thumbnail.match(/.*\.(gif|jpe?g|bmp|png|jpg)$/)) {
                   return (
                     <img
                       style={{ borderRadius: "5px" }}
