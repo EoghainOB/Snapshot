@@ -6,8 +6,8 @@ import "./style.css";
 import io from "socket.io-client";
 import Chat from "../chat";
 
-const IS_PROD = process.env.NODE_ENV === "production";
-const URL = IS_PROD ? "https://hidden-falls-54168.herokuapp.com" : "http://localhost:3001";
+// const IS_PROD = process.env.NODE_ENV === "production";
+const URL = "https://hidden-falls-54168.herokuapp.com";
 const socket = io(URL);
 
 const Profile = ({ user, posts, setPosts }) => {
