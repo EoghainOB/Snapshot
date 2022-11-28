@@ -61,13 +61,12 @@ const Profile = ({ user, posts, setPosts }) => {
         <ul className="profile__text">
           <li>👤 {userData.name}</li>
           {isSameUser ? <li>✉️ {userData.email}</li> : ""}
-        </ul>
+       </ul>
       </div>
       <div className="App">
       {!showChat && user && user.googleId !== userData.googleId &&
       <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
-          <button onClick={joinRoom}>Join A Room</button>
+          <button onClick={joinRoom}>💬</button>
         </div>
       }
       {showChat && user && user.googleId !== userData.googleId && <Chat socket={socket} username={user?.name} room={room} />}
