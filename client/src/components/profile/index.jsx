@@ -8,7 +8,7 @@ import Chat from "../chat";
 
 // const IS_PROD = process.env.NODE_ENV === "production";
 const URL = "https://hidden-falls-54168.herokuapp.com";
-const socket = io(URL);
+const socket = io.connect(URL);
 
 const Profile = ({ user, posts, setPosts }) => {
   const [userData, setUserData] = useState([]);
