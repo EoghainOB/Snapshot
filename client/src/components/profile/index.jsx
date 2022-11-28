@@ -37,7 +37,7 @@ const Profile = ({ user, posts, setPosts }) => {
     if (!posts.length) {
       fetchPosts();
     }
-  }, [id]);
+  }, [id, posts.length, setPosts]);
 
   const isSameUser = user?.googleId === userData?.googleId;
 
@@ -64,13 +64,13 @@ const Profile = ({ user, posts, setPosts }) => {
         </ul>
       </div>
       <div className="App">
-      {!showChat && user &&
+      {!showChat && user && user.googleId !== userData.googleId &&
       <div className="joinChatContainer">
           <h3>Join A Chat</h3>
           <button onClick={joinRoom}>Join A Room</button>
         </div>
       }
-      {showChat && user && <Chat socket={socket} username={user?.name} room={room} />}
+      {showChat && user && user.googleId !== userData.googleId && <Chat socket={socket} username={user?.name} room={room} />}
     </div>
       <ul>
         {userPosts?.map((p, i) => (
