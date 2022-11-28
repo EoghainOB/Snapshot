@@ -201,10 +201,13 @@ app.delete('/api/posts/:id', async (req, res) => {
 })
 
 const PORT = process.env.PORT || 8000;
-  app.listen(PORT, () => {
+
+app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
 
-server.listen(PORT, () => {
+const newPORT = process.env.PORT || 8001;
+
+server.listen(newPORT, () => {
   console.log("SERVER RUNNING");
 });
