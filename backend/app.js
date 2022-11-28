@@ -54,7 +54,7 @@ app.use(express.static(path.join(__dirname, '../client/build')))
 
 const io = new Server(server, {
   cors: {
-    origin: ['https://hidden-falls-54168.herokuapp.com'],
+    origin: ["http://localhost:3000", 'https://hidden-falls-54168.herokuapp.com:3000'],
     methods: ["GET", "POST"],
   },
 });
@@ -201,13 +201,10 @@ app.delete('/api/posts/:id', async (req, res) => {
 })
 
 const PORT = process.env.PORT || 8000;
-
-app.listen(PORT, () => {
+  app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
 
-const newPORT = process.env.PORT || 8001;
-
-server.listen(newPORT, () => {
+server.listen(3001, () => {
   console.log("SERVER RUNNING");
 });
