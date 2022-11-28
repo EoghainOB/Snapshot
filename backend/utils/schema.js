@@ -24,7 +24,14 @@ const postSchema = new mongoose.Schema({
     comments: Array,
 })
 
+const chatSchema = new mongoose.Schema({
+    chatRoomId: String,
+    messages: Array,
+})
+
+
 const Users = mongoose.model('User', userSchema);
 const Posts = mongoose.model('Post', postSchema);
+const Chats = mongoose.model('Chats', chatSchema);
 
-module.exports = {Users, Posts};
+module.exports = {Users, Posts, Chats};
