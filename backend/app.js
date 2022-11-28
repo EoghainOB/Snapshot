@@ -90,7 +90,7 @@ app.get('/api/messages/:roomId', async(req, res) => {
   try {
     const { roomId } = req.params
     const room = await Chats.findOne({ chatRoomId: roomId})
-    res.status(200).json(room.messages ? room.messages : [])
+    res.status(200).json(room?.messages ? room.messages : [])
   } catch (err) {
     console.log(err)
   }

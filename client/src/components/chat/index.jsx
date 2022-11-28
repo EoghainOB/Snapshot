@@ -30,14 +30,14 @@ useEffect(() => {
         setMessageList(res.data);
     }
     fetchMessages()
-}, []);
+}, [room]);
 
   useEffect(() => {
     socket.on("receive_message", async (data) => {
         const res = await axios.get(`/api/messages/${room}`);
         setMessageList(res.data);
     });
-}, [socket]); 
+}, [socket, room]); 
 
   return (
     <div className="chat-window">
