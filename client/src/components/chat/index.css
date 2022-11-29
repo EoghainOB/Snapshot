@@ -33,8 +33,9 @@
     margin-left: 0.5em;
     margin-top: 1em;
     padding: 0.5em;
-    max-width: 70%;
+    max-width: 60%;
     text-align: left;
+    word-break: break-all;
     background-color: rgb(193, 191, 191);
 }
 
@@ -52,12 +53,12 @@
     background-color: rgb(53, 102, 248);
 }
 
-.messages__sent .message-content,  .messages__sent .message-meta{
+.messages__sent .messages-content,  .messages__sent .messages-meta{
     margin: 0;
     color: rgb(255, 255, 255);
 }
 
-.messages__recieved .message-content, .messages__recieved .message-meta{
+.messages__recieved .messages-content, .messages__recieved .messages-meta{
     text-align: justify;
     margin: 0;
 }
@@ -74,10 +75,16 @@
 }
 
 .chat__user2__name {
+    font-weight: bold;
     margin: 0.3em 0;
 }
 
 .chat__user2__img {
     border-radius: 20px;
     margin: 0;
+}
+
+.messages__recieved .messages-meta, .messages__sent .messages-meta {
+    font-size: small;
+    text-align: right;
 }

@@ -92,9 +92,8 @@ function Chat({ user, setMessageAlert, chatList }) {
                 id={user.name === messageContent.author ? "you" : "other"}
               >
                 <div>
-                    <p className="message-content">{messageContent.message}</p>
-                    <p className="message-meta" id="time">{messageContent.time}</p>
-                    <p className="message-meta"id="author">{messageContent.author}</p>
+                    <p className="messages-content">{messageContent.message}</p>
+                    <p className="messages-meta" id="time">{messageContent.time}</p>
                 </div>
               </div>
             );
