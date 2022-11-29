@@ -51,11 +51,13 @@ function App() {
     }
 
     const fetchNewMessages = async () => {
+      if (user) {
       const res = await axios.get(`/api/chats/${user.googleId}`);
       const filteredMessages = await res.data.map(chat => chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead))
       const eliminate = filteredMessages.filter(x => x.length > 0)
       setMessageAlert(eliminate.length);
     }
+  }
 
     fetchNewMessages()
     getLocation()

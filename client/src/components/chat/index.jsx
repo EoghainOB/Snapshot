@@ -8,15 +8,14 @@ const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD ? 'https://hidden-falls-54168.herokuapp.com' : 'http://localhost:8000';
 const socket = io.connect(URL);
 
-function Chat({ user, setUpdate, setMessageAlert }) {
+function Chat({ user, setMessageAlert }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [room, setRoom] = useState("");
 
   useEffect(() => {
-    setUpdate(prev => prev + 1)
     setMessageAlert(prev => prev - 1)
-  }, [])
+  }, [setMessageAlert])
 
   const {chatRoomId} = useParams(); 
 
@@ -28,7 +27,7 @@ function Chat({ user, setUpdate, setMessageAlert }) {
       }
     };
     joinRoom()
-  }, [])
+  }, [chatRoomId, room, user])
 
     useEffect(() => {
       const fetchMessages = async () => {
@@ -45,7 +44,7 @@ function Chat({ user, setUpdate, setMessageAlert }) {
           }
         }
       fetchMessages()
-  }, [socket,room]);
+  }, [room, user]);
   
   useEffect(() => {
       socket.on("receive_message", async (data) => {
