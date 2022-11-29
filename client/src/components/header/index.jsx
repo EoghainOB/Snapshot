@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Login from '../login'
 import { Link } from "react-router-dom";
 import './index.css'
+import axios from 'axios'
 
 const Header = ({setUser, user}) => {
+  const [messageAlert, setMessageAlert] = useState(null);
+
+  useEffect(() => {
+    const fetchNewMessages = async () => {
+      const res = await axios.get(`/api/chats/${user.googleId}`);
+      const filteredMessages = res.data.map(chat => chat.messages.filter(mes => !mes.isRead))
+        setMessageAlert(filteredMessages.length);
+    }
+    fetchNewMessages()
+}, [user]);
+
   return (
     <header>
         <Link className='header__title' to='/'>SnapShot</Link>
@@ -12,7 +24,9 @@ const Header = ({setUser, user}) => {
         <ul className='header__list'>
           <li className='header__item'>{user && <Link to={`/post`}>Upload</Link>}</li>
           <li className='header__item'><Link to={`/users/`}>Users</Link></li>
-          {user && <Link className='header__item' to='/chats/'>Chat</Link>}
+          {user && <Link className='header__item' to='/chats/'>Chat
+          {messageAlert > 0 && <span className='header__unread'>{messageAlert}</span>}
+          </Link>}
           <li className='header__item'><Login setUser={setUser} user={user}/></li>
         </ul>
         </nav>

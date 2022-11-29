@@ -62,7 +62,7 @@ const Profile = ({ user, posts, setPosts }) => {
        </ul>
       </div>
       <div className="App">
-      <Link to={`/chats/${+user?.googleId+ + +userData?.googleId}`}>Send DM</Link>
+      {user && user.googleId !== userData.googleId && <Link to={`/chats/${+user?.googleId+ + +userData?.googleId}`}>Send DM</Link>}
       {/* {!showChat && user && user.googleId !== userData.googleId &&
       <div className="joinChatContainer">
           <button onClick={joinRoom}>💬</button>

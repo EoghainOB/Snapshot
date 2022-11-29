@@ -37,3 +37,15 @@ header {
 .header__item :active {
     opacity: .5;
 }
+
+.header__unread {
+    display:inline-block;
+    font-size: .7em;
+    position:absolute;
+    color:white;
+    border-radius: 50%;
+    background-color: red;
+    width:15px;
+    height:15px;
+    text-align: center;
+}

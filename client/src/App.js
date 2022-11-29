@@ -21,8 +21,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
   const [sort, setSort] = useState('Top Rank');
-  // const [chatRooms, setChatRooms] = useState("");
-  // const [messageList, setMessageList] = useState([]);
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -33,14 +31,6 @@ function App() {
     }
   )
   }
-
-//   useEffect(() => {
-//     const fetchMessages = async () => {
-//         const res = await axios.get(`/api/messages/${room}`);
-//         setMessageList(res.data);
-//     }
-//     fetchMessages()
-// }, [room]);
 
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
