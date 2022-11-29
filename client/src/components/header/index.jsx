@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import './index.css'
 import axios from 'axios'
 
-const Header = ({setUser, user}) => {
+const Header = ({setUser, user, update}) => {
   const [messageAlert, setMessageAlert] = useState(null);
 
   useEffect(() => {
@@ -14,8 +14,9 @@ const Header = ({setUser, user}) => {
       const eliminate = filteredMessages.filter(x => x.length > 0)
       setMessageAlert(eliminate.length);
     }
+    console.log('fetching messages again')
     fetchNewMessages()
-}, [user]);
+}, [user, update]);
 
   return (
     <header>

@@ -8,10 +8,14 @@ const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD ? 'https://hidden-falls-54168.herokuapp.com' : 'http://localhost:8000';
 const socket = io.connect(URL);
 
-function Chat({ user }) {
+function Chat({ user, setUpdate, update }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [room, setRoom] = useState("");
+
+  useEffect(() => {
+    setUpdate(prev => !update)
+  }, [])
 
   const {chatRoomId} = useParams(); 
 
@@ -29,14 +33,13 @@ function Chat({ user }) {
       const fetchMessages = async () => {
         if (room) {
           const res = await axios.get(`/api/messages/${room}`);
-          // console.log(res.data)
-          // const readMessages = res.data.map(mes => { 
-          //   if (mes.authorId !== user.googleId) {
-          //     return {...mes, isRead: true }
-          //   }
-          //   return mes;
-          //   })
-          // await axios.patch(`/api/messages/${room}`, readMessages)
+          const readMessages = res.data.map(mes => { 
+            if (mes.authorId !== user.googleId) {
+              return {...mes, isRead: true }
+            }
+            return mes;
+            })
+          await axios.patch(`/api/messages/${room}`, readMessages)
           setMessageList(res.data);
         }
       }
@@ -46,7 +49,9 @@ function Chat({ user }) {
     useEffect(() => {
       socket.on("receive_message", async (data) => {
           const res = await axios.get(`/api/messages/${room}`);
+          if (res.data instanceof Array) {
           setMessageList(res.data);
+          }
       });
   }, [room]); 
 
@@ -77,7 +82,7 @@ function Chat({ user }) {
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {typeof messageList === 'object' && messageList.map((messageContent, i) => {
+          {messageList?.map((messageContent, i) => {
             return (
               <div
                 key={i}

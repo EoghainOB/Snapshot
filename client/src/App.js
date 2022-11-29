@@ -21,6 +21,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
   const [sort, setSort] = useState('Top Rank');
+  const [update, setUpdate] = useState(false)
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -72,7 +73,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header setUser={setUser} user={user}/>
+      <Header setUser={setUser} update={update} user={user}/>
     <Routes >
       <Route path='/' element={
         <>
@@ -85,7 +86,7 @@ function App() {
       {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
       <Route path='/posts/:postId' element={<Post posts={posts} user={user}/>} />
       <Route path='/chats/' element={<ChatList user={user}/>} />
-      <Route path='/chats/:chatRoomId' element={<Chat user={user}/>} />
+      <Route path='/chats/:chatRoomId' element={<Chat update={update} setUpdate={setUpdate} user={user}/>} />
       <Route path='/users/' element={<MemberList posts={posts} user={user}/>} />
       <Route path='*' element={ <PageNotFound />}/>
     </Routes>

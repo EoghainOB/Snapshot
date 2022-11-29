@@ -85,6 +85,7 @@ io.on("connection", (socket) => {+
     try {
       const chatRoom = await Chats.findOne({ chatRoomId: data.room });
       const existingMessages = chatRoom.messages;
+      console.log(data)
       await Chats.findOneAndUpdate(
         { chatRoomId: data.room },
         { messages: [...existingMessages, data] }
@@ -113,7 +114,7 @@ app.get("/api/messages/:roomId", async (req, res) => {
 app.patch("/api/messages/:roomId", async (req, res) => {
   try {
     await Chats.findOneAndUpdate(req.params, { messages: req.body });
-    res.status();
+    res.send('Successfully updated');
   } catch (err) {
     console.log(err);
   }
