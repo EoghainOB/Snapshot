@@ -69,10 +69,10 @@ io.on("connection", (socket) => {+
       if (!chatRoom && user) {
         const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 10)
         const id = new RegExp(bigId)
-        console.log("USERID", id)
         const user2 = await Users.findOne({ googleId: { $regex: id }  });
-        console.log("USER2", user2)
-        await Chats.create({ chatRoomId, messages: [], users: [user, user2] });
+        if (user2) {
+          await Chats.create({ chatRoomId, messages: [], users: [user, user2] });
+        }
       }
       socket.join(chatRoomId);
       console.log(`User with ID: ${socket.id} joined room: ${chatRoomId}`);
