@@ -48,11 +48,13 @@ function Chat({ user, setMessageAlert, chatList }) {
       }
     };
     fetchMessages();
-    setUser2(
+    if (chatList.length) {
+      setUser2(
       chatList
         .find((chat) => chat.chatRoomId === chatRoomId)
         .users.find((x) => x.googleId !== user.googleId)
-    );
+      );
+      }
   }, [room, user]);
 
   useEffect(() => {
@@ -110,9 +112,6 @@ function Chat({ user, setMessageAlert, chatList }) {
                   <p className="messages-content">{messageContent.message}</p>
                   <p className="messages-meta" id="time">
                     {messageContent.time}
-                  </p>
-                  <p className="messages-meta">
-                    {messageContent.isRead ? 'Recieved' : 'Sent'}
                   </p>
                 </div>
               </div>
