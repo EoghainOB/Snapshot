@@ -3,15 +3,17 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import {useParams} from 'react-router-dom';
 import io from 'socket.io-client'
 import axios from "axios";
+import './index.css'
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD ? 'https://hidden-falls-54168.herokuapp.com' : 'http://localhost:8000';
 const socket = io.connect(URL);
 
-function Chat({ user, setMessageAlert }) {
-  const [currentMessage, setCurrentMessage] = useState("");
+function Chat({ user, setMessageAlert, chatList }) {
+  const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState('');
+  const [user2, setUser2] = useState('')
 
   useEffect(() => {
     setMessageAlert(prev => prev - 1)
@@ -19,6 +21,7 @@ function Chat({ user, setMessageAlert }) {
 
   const {chatRoomId} = useParams(); 
 
+  
   useEffect(() => {
     const joinRoom = async () => {
       setRoom(chatRoomId)
@@ -27,7 +30,8 @@ function Chat({ user, setMessageAlert }) {
       }
     };
     joinRoom()
-  }, [chatRoomId, room, user])
+    setUser2(chatList.find(chat => chat.chatRoomId === chatRoomId).users.find(x => x.googleId !== user.googleId))
+  }, [chatRoomId, room, user, chatList])
 
     useEffect(() => {
       const fetchMessages = async () => {
@@ -75,7 +79,8 @@ function Chat({ user, setMessageAlert }) {
   return (
     <div className="chat-window">
       <div className="chat-header">
-        <p>Direct Messages</p>
+        {user2 && <img alt={user2.name} className={'chat__user2__img'} src={user2.imageUrl}/>}
+        <p className="chat__user2__name">{user2.name}</p>
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
@@ -83,25 +88,22 @@ function Chat({ user, setMessageAlert }) {
             return (
               <div
                 key={i}
-                className="message"
+                className={user.name === messageContent.author ? "messages__sent" : "messages__recieved"}
                 id={user.name === messageContent.author ? "you" : "other"}
               >
                 <div>
-                  <div className="message-content">
-                    <p>{messageContent.message}</p>
-                  </div>
-                  <div className="message-meta">
-                    <p id="time">{messageContent.time}</p>
-                    <p id="author">{messageContent.author}</p>
-                  </div>
+                    <p className="message-content">{messageContent.message}</p>
+                    <p className="message-meta" id="time">{messageContent.time}</p>
+                    <p className="message-meta"id="author">{messageContent.author}</p>
                 </div>
               </div>
             );
           })}
         </ScrollToBottom>
       </div>
-      <div className="chat-footer">
+      <div className="chat__footer">
         <input
+        className="chat__footer__input"
           type="text"
           value={currentMessage}
           placeholder="Hey..."
@@ -112,7 +114,7 @@ function Chat({ user, setMessageAlert }) {
             event.key === "Enter" && sendMessage();
           }}
         />
-        <button onClick={sendMessage}>&#9658;</button>
+        <button className='chat__footer__button' onClick={sendMessage}>Send</button>
       </div>
     </div>
   );

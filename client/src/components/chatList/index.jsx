@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const ChatList = ({ user, updateMessage }) => {
-  const [chatList, setChatList] = useState([]);
+const ChatList = ({ user, chatList, setChatList }) => {
 
   useEffect(() => {
     const fetchChatList = async () => {
@@ -11,7 +10,7 @@ const ChatList = ({ user, updateMessage }) => {
       setChatList(res.data);
     };
     fetchChatList();
-  }, [user, updateMessage]);
+  }, [user, setChatList]);
 
   return (
     <div>

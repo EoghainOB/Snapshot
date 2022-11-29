@@ -21,8 +21,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
   const [sort, setSort] = useState('Top Rank');
-  const [update, setUpdate] = useState(0)
   const [messageAlert, setMessageAlert] = useState(null);
+  const [chatList, setChatList] = useState([]);
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -40,7 +40,6 @@ function App() {
   });
 
   useEffect(() => {
-    
     const getData = async () => {
       try {
       const res = await axios.get('/api/posts');
@@ -49,7 +48,6 @@ function App() {
         console.log(err)
       }
     }
-
     const fetchNewMessages = async () => {
       if (user) {
       const res = await axios.get(`/api/chats/${user.googleId}`);
@@ -58,7 +56,6 @@ function App() {
       setMessageAlert(eliminate.length);
     }
   }
-
     fetchNewMessages()
     getLocation()
     getData()
@@ -85,7 +82,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header setUser={setUser} update={update} messageAlert={messageAlert} user={user}/>
+      <Header setUser={setUser} messageAlert={messageAlert} user={user}/>
     <Routes >
       <Route path='/' element={
         <>
@@ -97,8 +94,8 @@ function App() {
       <Route path='/users/:id' element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>
       {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
       <Route path='/posts/:postId' element={<Post posts={posts} user={user}/>} />
-      <Route path='/chats/' element={<ChatList user={user}/>} />
-      <Route path='/chats/:chatRoomId' element={<Chat setMessageAlert={setMessageAlert} update={update} setUpdate={setUpdate} user={user}/>} />
+      <Route path='/chats/' element={<ChatList chatList={chatList} setChatList={setChatList} user={user}/>} />
+      <Route path='/chats/:chatRoomId' element={<Chat chatList={chatList} setMessageAlert={setMessageAlert} user={user}/>} />
       <Route path='/users/' element={<MemberList posts={posts} user={user}/>} />
       <Route path='*' element={ <PageNotFound />}/>
     </Routes>
