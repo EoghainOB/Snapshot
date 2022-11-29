@@ -95,7 +95,7 @@ function App() {
       {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
       <Route path='/posts/:postId' element={<Post posts={posts} user={user}/>} />
       <Route path='/chats/' element={<ChatList chatList={chatList} setChatList={setChatList} user={user}/>} />
-      <Route path='/chats/:chatRoomId' element={<Chat chatList={chatList} setMessageAlert={setMessageAlert} user={user}/>} />
+      <Route path='/chats/:chatRoomId' element={<Chat chatList={chatList} setChatList={setChatList} setMessageAlert={setMessageAlert} user={user}/>} />
       <Route path='/users/' element={<MemberList posts={posts} user={user}/>} />
       <Route path='*' element={ <PageNotFound />}/>
     </Routes>

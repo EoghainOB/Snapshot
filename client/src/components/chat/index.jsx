@@ -11,7 +11,7 @@ const URL = IS_PROD
   : "http://localhost:8000";
 const socket = io.connect(URL);
 
-function Chat({ user, setMessageAlert, chatList }) {
+function Chat({ user, setMessageAlert, chatList, setChatList }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [room, setRoom] = useState("");
@@ -31,7 +31,7 @@ function Chat({ user, setMessageAlert, chatList }) {
       }
     };
     joinRoom();
-  }, [chatRoomId, room, user, chatList]);
+  }, [chatRoomId, room, user]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -45,16 +45,15 @@ function Chat({ user, setMessageAlert, chatList }) {
         });
         await axios.patch(`/api/messages/${room}`, readMessages);
         setMessageList(res.data);
+        setTimeout(async() => {
+          const chats = await axios.get(`/api/chats/${user.googleId}`);
+          setUser2(chats.data
+            .find((chat) => chat.chatRoomId === chatRoomId)
+            .users.find((x) => x.googleId !== user.googleId));
+        }, 200)
       }
     };
     fetchMessages();
-    if (chatList.length) {
-      setUser2(
-      chatList
-        .find((chat) => chat.chatRoomId === chatRoomId)
-        .users.find((x) => x.googleId !== user.googleId)
-      );
-      }
   }, [room, user]);
 
   useEffect(() => {
