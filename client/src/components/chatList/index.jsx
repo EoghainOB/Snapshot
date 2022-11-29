@@ -9,6 +9,7 @@ const ChatList = ({ user }) => {
     const fetchChatList = async () => {
       console.log(user);
       const res = await axios.get(`/api/chats/${user.googleId}`);
+      console.log(res.data)
       setChatList(res.data);
     };
     fetchChatList();
