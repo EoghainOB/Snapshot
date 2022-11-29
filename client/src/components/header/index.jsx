@@ -10,7 +10,7 @@ const Header = ({setUser, user, update}) => {
   useEffect(() => {
     const fetchNewMessages = async () => {
       const res = await axios.get(`/api/chats/${user.googleId}`);
-      const filteredMessages = res.data.map(chat => chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead))
+      const filteredMessages = await res.data.map(chat => chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead))
       const eliminate = filteredMessages.filter(x => x.length > 0)
       setMessageAlert(eliminate.length);
     }

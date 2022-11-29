@@ -21,7 +21,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
   const [sort, setSort] = useState('Top Rank');
-  const [update, setUpdate] = useState(false)
+  const [update, setUpdate] = useState(0)
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {

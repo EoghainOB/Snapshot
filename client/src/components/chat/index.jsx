@@ -14,7 +14,7 @@ function Chat({ user, setUpdate, update }) {
   const [room, setRoom] = useState("");
 
   useEffect(() => {
-    setUpdate(prev => !update)
+    setUpdate(prev => prev + 1)
   }, [])
 
   const {chatRoomId} = useParams(); 
@@ -51,8 +51,16 @@ function Chat({ user, setUpdate, update }) {
           const res = await axios.get(`/api/messages/${room}`);
           if (res.data instanceof Array) {
           setMessageList(res.data);
+          const readMessages = res.data.map(mes => { 
+            if (mes.authorId !== user.googleId) {
+              return {...mes, isRead: true }
+            }
+            return mes;
+            })
+          await axios.patch(`/api/messages/${room}`, readMessages)
           }
       });
+      setUpdate(prev => prev + 1)
   }, [room]); 
 
   const sendMessage = async () => {
