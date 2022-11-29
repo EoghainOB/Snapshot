@@ -223,6 +223,14 @@ app.get("/api/chats/:googleId", async (req, res) => {
   }
 });
 
+app.get("*", (req, res) => {
+  try {
+    res.redirect('/')
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 const PORT = process.env.PORT || 8000;
 
 server.listen(PORT, () => {
