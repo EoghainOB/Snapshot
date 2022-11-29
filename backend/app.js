@@ -67,7 +67,7 @@ io.on("connection", (socket) => {+
     try {
       const chatRoom = await Chats.findOne({ chatRoomId });
       if (!chatRoom && user) {
-        const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 6)
+        const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 10)
         const id = new RegExp(bigId)
         console.log("USERID", id)
         const user2 = await Users.findOne({ googleId: { $regex: id }  });
@@ -213,10 +213,10 @@ app.delete("/api/posts/:id", async (req, res) => {
   }
 });
 
-app.get("/api/chats/:userId", async (req, res) => {
+app.get("/api/chats/:googleId", async (req, res) => {
   try {
     const allChats = await Chats.find();
-    const chatList = allChats.filter(chat => chat.users[0].userId === req.params.userId || chat.users[1].userId === req.params.userId)
+    const chatList = allChats.filter(chat => chat.users[0].googleId === req.params.googleId || chat.users[1].googleId === req.params.googleId)
     res.status(200).json(chatList);
   } catch (err) {
     console.log(err);
