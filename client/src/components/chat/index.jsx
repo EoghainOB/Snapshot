@@ -8,13 +8,14 @@ const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD ? 'https://hidden-falls-54168.herokuapp.com' : 'http://localhost:8000';
 const socket = io.connect(URL);
 
-function Chat({ user, setUpdate, update }) {
+function Chat({ user, setUpdate, setMessageAlert }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [room, setRoom] = useState("");
 
   useEffect(() => {
     setUpdate(prev => prev + 1)
+    setMessageAlert(prev => prev - 1)
   }, [])
 
   const {chatRoomId} = useParams(); 
@@ -27,7 +28,7 @@ function Chat({ user, setUpdate, update }) {
       }
     };
     joinRoom()
-  }, [room, user, chatRoomId])
+  }, [])
 
     useEffect(() => {
       const fetchMessages = async () => {
@@ -39,29 +40,18 @@ function Chat({ user, setUpdate, update }) {
             }
             return mes;
             })
-          await axios.patch(`/api/messages/${room}`, readMessages)
-          setMessageList(res.data);
-        }
-      }
-      fetchMessages()
-  }, [room]);
-  
-    useEffect(() => {
-      socket.on("receive_message", async (data) => {
-          const res = await axios.get(`/api/messages/${room}`);
-          if (res.data instanceof Array) {
-          setMessageList(res.data);
-          const readMessages = res.data.map(mes => { 
-            if (mes.authorId !== user.googleId) {
-              return {...mes, isRead: true }
-            }
-            return mes;
-            })
-          await axios.patch(`/api/messages/${room}`, readMessages)
+            await axios.patch(`/api/messages/${room}`, readMessages)
+            setMessageList(res.data);
           }
+        }
+      fetchMessages()
+  }, [socket,room]);
+  
+  useEffect(() => {
+      socket.on("receive_message", async (data) => {
+          setMessageList((list) => [...list, data]);
       });
-      setUpdate(prev => prev + 1)
-  }, [room]); 
+  }, [socket]); 
 
   const sendMessage = async () => {
     if (currentMessage !== "") {

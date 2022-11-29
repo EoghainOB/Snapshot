@@ -2,21 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Login from '../login'
 import { Link } from "react-router-dom";
 import './index.css'
-import axios from 'axios'
 
-const Header = ({setUser, user, update}) => {
-  const [messageAlert, setMessageAlert] = useState(null);
-
-  useEffect(() => {
-    const fetchNewMessages = async () => {
-      const res = await axios.get(`/api/chats/${user.googleId}`);
-      const filteredMessages = await res.data.map(chat => chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead))
-      const eliminate = filteredMessages.filter(x => x.length > 0)
-      setMessageAlert(eliminate.length);
-    }
-    console.log('fetching messages again')
-    fetchNewMessages()
-}, [user, update]);
+const Header = ({messageAlert, setUser, user, update}) => {
 
   return (
     <header>

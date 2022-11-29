@@ -22,6 +22,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState(null);
   const [sort, setSort] = useState('Top Rank');
   const [update, setUpdate] = useState(0)
+  const [messageAlert, setMessageAlert] = useState(null);
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -48,9 +49,18 @@ function App() {
         console.log(err)
       }
     }
+
+    const fetchNewMessages = async () => {
+      const res = await axios.get(`/api/chats/${user.googleId}`);
+      const filteredMessages = await res.data.map(chat => chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead))
+      const eliminate = filteredMessages.filter(x => x.length > 0)
+      setMessageAlert(eliminate.length);
+    }
+
+    fetchNewMessages()
     getLocation()
     getData()
-  },[])
+  },[user])
 
   const filteredAndSorted = () => {
     const filtered = searchTerm ? posts.filter(p => p.address?.toLowerCase().includes(searchTerm.toLowerCase())): posts ;
@@ -73,7 +83,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header setUser={setUser} update={update} user={user}/>
+      <Header setUser={setUser} update={update} messageAlert={messageAlert} user={user}/>
     <Routes >
       <Route path='/' element={
         <>
@@ -86,7 +96,7 @@ function App() {
       {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
       <Route path='/posts/:postId' element={<Post posts={posts} user={user}/>} />
       <Route path='/chats/' element={<ChatList user={user}/>} />
-      <Route path='/chats/:chatRoomId' element={<Chat update={update} setUpdate={setUpdate} user={user}/>} />
+      <Route path='/chats/:chatRoomId' element={<Chat setMessageAlert={setMessageAlert} update={update} setUpdate={setUpdate} user={user}/>} />
       <Route path='/users/' element={<MemberList posts={posts} user={user}/>} />
       <Route path='*' element={ <PageNotFound />}/>
     </Routes>
