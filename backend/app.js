@@ -211,7 +211,7 @@ app.delete("/api/posts/:id", async (req, res) => {
 app.get("/api/chats/:userId", async (req, res) => {
   try {
     const allChats = await Chats.find();
-    const chatList = allChats.filter(chat => chat.users.map(user => user.userId === req.params.userId))
+    const chatList = allChats.filter(chat => chat.users[0].userId === req.params.userId || chat.users[1].userId === req.params.userId)
     res.status(200).json(chatList);
   } catch (err) {
     console.log(err);

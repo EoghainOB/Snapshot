@@ -7,15 +7,12 @@ const ChatList = ({ user }) => {
 
   useEffect(() => {
     const fetchChatList = async () => {
-      console.log(user);
       const res = await axios.get(`/api/chats/${user.googleId}`);
-      console.log(res.data)
       setChatList(res.data);
     };
     fetchChatList();
   }, [user]);
-
-  console.log(chatList);
+  
   return (
     <div>
       <h1>Chat List</h1>
