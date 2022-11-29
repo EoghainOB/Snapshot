@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const ChatList = ({ user }) => {
+const ChatList = ({ user, updateMessage }) => {
   const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const ChatList = ({ user }) => {
       setChatList(res.data);
     };
     fetchChatList();
-  }, [user]);
+  }, [user, updateMessage]);
 
   return (
     <div>
@@ -22,6 +22,7 @@ const ChatList = ({ user }) => {
             <Link to={`/chats/${chat.chatRoomId}`}>
             <img alt={i} src={chat.users.find(x => x.name !== user.name).imageUrl}/>
             <p>{chat.users.find(x => x.name !== user.name).name}</p>
+            <span>{chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead).length}</span>
             </Link>
         </li> 
         )}

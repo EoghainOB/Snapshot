@@ -26,6 +26,7 @@ const postSchema = new mongoose.Schema({
 
 const chatSchema = new mongoose.Schema({
     chatRoomId: String,
+    authorId: String,
     messages: Array,
     users: Array,
     isRead: Boolean,

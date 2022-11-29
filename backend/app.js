@@ -110,6 +110,15 @@ app.get("/api/messages/:roomId", async (req, res) => {
   }
 });
 
+app.patch("/api/messages/:roomId", async (req, res) => {
+  try {
+    await Chats.findOneAndUpdate(req.params, { messages: req.body });
+    res.status();
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.get("/api/users", async (req, res) => {
   try {
     const users = await Users.find();

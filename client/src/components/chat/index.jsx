@@ -29,6 +29,14 @@ function Chat({ user }) {
       const fetchMessages = async () => {
         if (room) {
           const res = await axios.get(`/api/messages/${room}`);
+          // console.log(res.data)
+          // const readMessages = res.data.map(mes => { 
+          //   if (mes.authorId !== user.googleId) {
+          //     return {...mes, isRead: true }
+          //   }
+          //   return mes;
+          //   })
+          // await axios.patch(`/api/messages/${room}`, readMessages)
           setMessageList(res.data);
         }
       }
@@ -47,6 +55,7 @@ function Chat({ user }) {
       const messageData = {
         room: room,
         author: user.name,
+        authorId: user.googleId,
         message: currentMessage,
         isRead: false,
         time:
@@ -68,7 +77,7 @@ function Chat({ user }) {
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent, i) => {
+          {typeof messageList === 'object' && messageList.map((messageContent, i) => {
             return (
               <div
                 key={i}
