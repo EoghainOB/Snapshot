@@ -27,8 +27,10 @@ function Chat({ user }) {
 
     useEffect(() => {
       const fetchMessages = async () => {
+        if (room) {
           const res = await axios.get(`/api/messages/${room}`);
           setMessageList(res.data);
+        }
       }
       fetchMessages()
   }, [room]);
