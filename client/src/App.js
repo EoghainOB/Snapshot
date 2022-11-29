@@ -12,6 +12,8 @@ import SearchBar from './components/SearchBar';
 import Post from './components/Post';
 import MemberList from './components/memberList';
 import PageNotFound from './components/pageNotFound';
+import Chat from './components/chat';
+import ChatList from './components/chatList';
 
 function App() {
   const [position, setPosition] = useState(null)
@@ -19,6 +21,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
   const [sort, setSort] = useState('Top Rank');
+  // const [chatRooms, setChatRooms] = useState("");
+  // const [messageList, setMessageList] = useState([]);
 
   const getLocation = () => { navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -30,6 +34,13 @@ function App() {
   )
   }
 
+//   useEffect(() => {
+//     const fetchMessages = async () => {
+//         const res = await axios.get(`/api/messages/${room}`);
+//         setMessageList(res.data);
+//     }
+//     fetchMessages()
+// }, [room]);
 
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
@@ -83,6 +94,8 @@ function App() {
       <Route path='/users/:id' element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>
       {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
       <Route path='/posts/:postId' element={<Post posts={posts} user={user}/>} />
+      <Route path='/chats/' element={<ChatList user={user}/>} />
+      <Route path='/chats/:chatRoomId' element={<Chat user={user}/>} />
       <Route path='/users/' element={<MemberList posts={posts} user={user}/>} />
       <Route path='*' element={ <PageNotFound />}/>
     </Routes>

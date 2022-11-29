@@ -6,23 +6,20 @@ import "./style.css";
 import io from "socket.io-client";
 import Chat from "../chat";
 
-const IS_PROD = process.env.NODE_ENV === "production";
-const URL = IS_PROD ? 'https://hidden-falls-54168.herokuapp.com' : 'http://localhost:8000';
-const socket = io.connect(URL);
-
 const Profile = ({ user, posts, setPosts }) => {
   const [userData, setUserData] = useState([]);
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   const { id } = useParams();
 
-  const joinRoom = async () => {
-    setRoom(+user?.googleId + +userData?.googleId)
+/*   const joinRoom = async () => {
+    setRoom(+user?.googleId+ + +userData?.googleId)
     if (userData.name && room !== "") {
-      await socket.emit("join_room", room);
+      const users = [{userId: user?.googleId, name: user.name, img: user.imageUrl}, {userId: userData?.googleId, name: userData.name, img: userData.imageUrl}]
+      await socket.emit("join_room", room,  users);
       setShowChat(true);
     }
-  };
+  }; */
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -64,12 +61,12 @@ const Profile = ({ user, posts, setPosts }) => {
        </ul>
       </div>
       <div className="App">
-      {!showChat && user && user.googleId !== userData.googleId &&
+      {/* {!showChat && user && user.googleId !== userData.googleId &&
       <div className="joinChatContainer">
           <button onClick={joinRoom}>💬</button>
         </div>
       }
-      {showChat && user && user.googleId !== userData.googleId && <Chat socket={socket} username={user?.name} room={room} />}
+      {showChat && user && user.googleId !== userData.googleId && <Chat socket={socket} username={user?.name} room={room} />} */}
     </div>
       <ul>
         {userPosts?.map((p, i) => (

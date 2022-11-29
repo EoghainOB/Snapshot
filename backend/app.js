@@ -1,84 +1,93 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const connect = require('./utils/mongoose')
-const {Users, Posts, Chats} = require('./utils/schema')
-const cloudinary = require('./utils/cloudinary')
-const path = require('path')
-const fileUpload = require('express-fileupload')
-const streamifier = require('streamifier');
-const { v4: uuidv4 } = require('uuid');
-const http = require('http');
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const connect = require("./utils/mongoose");
+const { Users, Posts, Chats } = require("./utils/schema");
+const cloudinary = require("./utils/cloudinary");
+const path = require("path");
+const fileUpload = require("express-fileupload");
+const streamifier = require("streamifier");
+const { v4: uuidv4 } = require("uuid");
+const http = require("http");
 const server = http.createServer(app);
-const io = require('socket.io')(server, {
+const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:3000", 'https://hidden-falls-54168.herokuapp.com'],
+    origin: [
+      "http://localhost:3000",
+      "https://hidden-falls-54168.herokuapp.com",
+    ],
     methods: ["GET", "POST"],
   },
 });
-// const { Server } = require("socket.io");
-require('dotenv').config()
+require("dotenv").config();
 
 const uploadFile = (file, id) => {
   return new Promise((resolve, reject) => {
-    let stream = cloudinary.uploader.upload_stream (
+    let stream = cloudinary.uploader.upload_stream(
       {
-        resource_type: file.mimetype.includes('video') ? 'video' : '',
-        folder: 'SnapShot',
-        public_id: id
+        resource_type: file.mimetype.includes("video") ? "video" : "",
+        folder: "SnapShot",
+        public_id: id,
       },
       (error, result) => {
         if (result) {
           resolve(result);
         } else {
-          console.log(error)
+          console.log(error);
           reject(error);
         }
       }
     );
     streamifier.createReadStream(file.data).pipe(stream);
   });
+};
+
+const getImageLinks = async (file, uniqueId) => {
+  const imageLink = [];
+  for (let i = 0; i < file.length; i++) {
+    const uploaded = await uploadFile(file[i]);
+    imageLink.push(uploaded.secure_url);
   }
-  
-  const getImageLinks = async (file, uniqueId) => {
-    const imageLink = [];
-    for (let i = 0; i < file.length; i++) {
-      const uploaded = await uploadFile(file[i])
-      imageLink.push(uploaded.secure_url)
-    }
-    return imageLink;
-  }
+  return imageLink;
+};
 
 connect();
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(fileUpload());
-app.use(express.static(path.join(__dirname, '../client/build')))
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  socket.on("join_room", async (chatRoomId, users) => {
+    try {
+      const chatRoom = await Chats.findOne({ chatRoomId });
+      if (!chatRoom && users) {
+        await Chats.create({ chatRoomId, messages: [], users });
+      }
+      socket.join(chatRoomId);
+      console.log(`User with ID: ${socket.id} joined room: ${chatRoomId}`);
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   socket.on("send_message", async (data) => {
     try {
-    const chatRoom = await Chats.findOne({ chatRoomId: data.room })
-    if (!chatRoom) {
-      await Chats.create({ chatRoomId: data.room, messages: [data]})
+      const chatRoom = await Chats.findOne({ chatRoomId: data.room });
+      const existingMessages = chatRoom.messages;
+      await Chats.findOneAndUpdate(
+        { chatRoomId: data.room },
+        { messages: [...existingMessages, data] }
+      );
       return socket.to(data.room).emit("receive_message", data);
+    } catch (err) {
+      console.log(err);
     }
-    const existingMessages = chatRoom.messages;
-    await Chats.findOneAndUpdate({chatRoomId: data.room}, {messages: [...existingMessages, data]})
-    return socket.to(data.room).emit("receive_message", data);
-  } catch (err) {
-    console.log(err)
-  }
   });
 
   socket.on("disconnect", () => {
@@ -86,85 +95,85 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get('/api/messages/:roomId', async(req, res) => {
+app.get("/api/messages/:roomId", async (req, res) => {
   try {
-    const { roomId } = req.params
-    const room = await Chats.findOne({ chatRoomId: roomId})
-    res.status(200).json(room?.messages ? room.messages : [])
+    const { roomId } = req.params;
+    const room = await Chats.findOne({ chatRoomId: roomId });
+    res.status(200).json(room?.messages ? room.messages : []);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-})
+});
 
-app.get('/api/users', async(req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
-  const users = await Users.find()
-  res.status(200).json(users)
+    const users = await Users.find();
+    res.status(200).json(users);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-})
+});
 
-app.post('/api/users', async (req, res) => {
+app.post("/api/users", async (req, res) => {
   try {
-  const {googleId} = req.body;
-  const user = await Users.find({ googleId })
-  if (user.length) {
-    console.log('user found')
-    return res.json(user);
-  }
-  await Users.create(req.body);
-  console.log('user created')
-  const newUser = await Users.find({ googleId })
-  return res.json(newUser);
-} catch (err) {
-  console.log(err)
-}
-})
-
-app.get('/api/users/:id', async (req, res) => {
-  try {
-  const { id } = req.params
-  const user = await Users.findOne( { googleId: id} )
-  res.json(user)
-} catch (err) {
-  console.log(err)
-}
-})
-
-app.get('/api/posts', async(req, res) => {
-  try {
-  const posts = await Posts.find();
-  res.json(posts)
-} catch (err) {
-  console.log(err)
-}
-})
-
-app.get('/api/posts/:id', async (req, res) => {
-  try {
-  const post = await Posts.findOne(req.params)
-  res.json(post)
-} catch (err) {
-  console.log(err)
-}
-})
-
-app.post('/api/posts', async(req, res) => {
-  try {
-    let {file} = req.files;
-    if(!Array.isArray(file)) {
-      file = [file]
+    const { googleId } = req.body;
+    const user = await Users.find({ googleId });
+    if (user.length) {
+      console.log("user found");
+      return res.json(user);
     }
-    const {title, description, tags, author, address} = req.body;
-    const location = JSON.parse(req.body.location)
+    await Users.create(req.body);
+    console.log("user created");
+    const newUser = await Users.find({ googleId });
+    return res.json(newUser);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/api/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await Users.findOne({ googleId: id });
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/api/posts", async (req, res) => {
+  try {
+    const posts = await Posts.find();
+    res.json(posts);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/api/posts/:id", async (req, res) => {
+  try {
+    const post = await Posts.findOne(req.params);
+    res.json(post);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/api/posts", async (req, res) => {
+  try {
+    let { file } = req.files;
+    if (!Array.isArray(file)) {
+      file = [file];
+    }
+    const { title, description, tags, author, address } = req.body;
+    const location = JSON.parse(req.body.location);
     const uniqueId = uuidv4();
-    const imageLink = await getImageLinks(file, uniqueId)
+    const imageLink = await getImageLinks(file, uniqueId);
     const newPost = {
       id: uniqueId,
       title,
       description,
-      tags: tags.split(','),
+      tags: tags.split(","),
       author,
       imageLink,
       location,
@@ -173,37 +182,44 @@ app.post('/api/posts', async(req, res) => {
       rank: 0,
       date: new Date(),
       comments: [],
-  }
-    Posts.create(newPost)
-    res.status(200).send('successful')
+    };
+    Posts.create(newPost);
+    res.status(200).send("successful");
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-})
+});
 
-app.patch('/api/posts/:id', async (req, res) => {
+app.patch("/api/posts/:id", async (req, res) => {
   try {
-  await Posts.findOneAndUpdate(req.params, req.body)
-  res.json('Updated')
-} catch (err) {
-  console.log(err)
-}
-})
+    await Posts.findOneAndUpdate(req.params, req.body);
+    res.json("Updated");
+  } catch (err) {
+    console.log(err);
+  }
+});
 
-app.delete('/api/posts/:id', async (req, res) => {
+app.delete("/api/posts/:id", async (req, res) => {
   try {
-  await Posts.findOneAndDelete(req.params)
-  res.json('Deleted')
-} catch (err) {
-  console.log(err)
-}
-})
+    await Posts.findOneAndDelete(req.params);
+    res.json("Deleted");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/api/chats/:userId", async (req, res) => {
+  try {
+    const allChats = await Chats.find();
+    const chatList = allChats.filter(chat => chat.users.map(user => user.userId === req.params.userId))
+    res.status(200).json(chatList);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 const PORT = process.env.PORT || 8000;
-//   app.listen(PORT, () => {
-//   console.log(`Server started on port ${PORT}`);
-// });
 
 server.listen(PORT, () => {
-  console.log("SERVER RUNNING");
+  console.log(`Server started on port ${PORT}`);
 });
