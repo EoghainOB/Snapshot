@@ -31,11 +31,6 @@ function Chat({ user, setMessageAlert, chatList }) {
       }
     };
     joinRoom();
-    setUser2(
-      chatList
-        .find((chat) => chat.chatRoomId === chatRoomId)
-        .users.find((x) => x.googleId !== user.googleId)
-    );
   }, [chatRoomId, room, user, chatList]);
 
   useEffect(() => {
@@ -53,6 +48,11 @@ function Chat({ user, setMessageAlert, chatList }) {
       }
     };
     fetchMessages();
+    setUser2(
+      chatList
+        .find((chat) => chat.chatRoomId === chatRoomId)
+        .users.find((x) => x.googleId !== user.googleId)
+    );
   }, [room, user]);
 
   useEffect(() => {
