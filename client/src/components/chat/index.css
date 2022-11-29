@@ -85,6 +85,6 @@
 }
 
 .messages__recieved .messages-meta, .messages__sent .messages-meta {
-    font-size: small;
+    font-size: x-small;
     text-align: right;
 }
