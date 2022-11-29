@@ -3,29 +3,15 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import SmallPost from "../smallPost";
 import "./style.css";
-// import io from "socket.io-client";
-// import Chat from "../chat";
 
 const Profile = ({ user, posts, setPosts }) => {
   const [userData, setUserData] = useState([]);
-  
-  // const [room, setRoom] = useState("");
-  // const [showChat, setShowChat] = useState(false);
   const { id } = useParams();
-  
-  /*   const joinRoom = async () => {
-    setRoom(+user?.googleId+ + +userData?.googleId)
-    if (userData.name && room !== "") {
-      await socket.emit("join_room", room,  users);
-      setShowChat(true);
-    }
-  }; */
   
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/api/users/${id}`);
       setUserData(res.data);
-      // const users = [{userId: user?.googleId, name: user.name, img: user.imageUrl}, {userId: userData?.googleId, name: userData.name, img: userData.imageUrl}]
     };
     const fetchPosts = async () => {
       const res = await axios.get("/api/posts");
@@ -63,12 +49,6 @@ const Profile = ({ user, posts, setPosts }) => {
       </div>
       <div className="App">
       {user && user.googleId !== userData.googleId && <Link to={`/chats/${+user?.googleId+ + +userData?.googleId}`}>Send DM</Link>}
-      {/* {!showChat && user && user.googleId !== userData.googleId &&
-      <div className="joinChatContainer">
-          <button onClick={joinRoom}>💬</button>
-        </div>
-      }
-      {showChat && user && user.googleId !== userData.googleId && <Chat socket={socket} username={user?.name} room={room} />} */}
     </div>
       <ul>
         {userPosts?.map((p, i) => (
