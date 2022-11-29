@@ -21,7 +21,7 @@ const ChatList = ({ user }) => {
         {chatList.map((chat, i) => 
         <li key={i}>
             <Link to={`/chats/${chat.chatRoomId}`}>
-            <img alt={i} src={chat.users.find(x => x.name !== user.name).img}/>
+            <img alt={i} src={chat.users.find(x => x.name !== user.name).imageUrl}/>
             <p>{chat.users.find(x => x.name !== user.name).name}</p>
             </Link>
         </li> 
