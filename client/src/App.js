@@ -31,7 +31,7 @@ function App() {
         lng: position.coords.longitude
       })
     }
-  )
+    )
   }
 
   const { isLoaded } = useLoadScript({
