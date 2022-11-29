@@ -19,7 +19,7 @@ function Chat({ user }) {
     const joinRoom = async () => {
       setRoom(chatRoomId)
       if (user && room !== "") {
-        await socket.emit("join_room", room);
+        await socket.emit("join_room", room, user);
       }
     };
     joinRoom()
@@ -48,6 +48,7 @@ function Chat({ user }) {
         room: room,
         author: user.name,
         message: currentMessage,
+        isRead: false,
         time:
           new Date(Date.now()).getHours() +
           ":" +

@@ -60,14 +60,19 @@ app.use(cors());
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-io.on("connection", (socket) => {
+io.on("connection", (socket) => {+
   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", async (chatRoomId, users) => {
+  socket.on("join_room", async (chatRoomId, user) => {
     try {
       const chatRoom = await Chats.findOne({ chatRoomId });
-      if (!chatRoom && users) {
-        await Chats.create({ chatRoomId, messages: [], users });
+      if (!chatRoom && user) {
+        const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 6)
+        const id = new RegExp(bigId)
+        console.log("USERID", id)
+        const user2 = await Users.findOne({ googleId: { $regex: id }  });
+        console.log("USER2", user2)
+        await Chats.create({ chatRoomId, messages: [], users: [user, user2] });
       }
       socket.join(chatRoomId);
       console.log(`User with ID: ${socket.id} joined room: ${chatRoomId}`);

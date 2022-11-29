@@ -28,6 +28,7 @@ const chatSchema = new mongoose.Schema({
     chatRoomId: String,
     messages: Array,
     users: Array,
+    isRead: Boolean,
 })
 
 
