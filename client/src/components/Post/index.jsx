@@ -11,27 +11,53 @@ import {
 import Comments from "../comments";
 
 const Post = ({ user }) => {
-  const [post, setPost] = useState(null);
   const { postId } = useParams();
+  const [post, setPost] = useState(null);
 
-  const [upvote, setUpvote] = useState([])
-  const [downvote, setDownvote] = useState([])
+  const [upvote, setUpvote] = useState()
+  const [downvote, setDownvote] = useState()
   const [ranking, setRanking] = useState('');
-  const [updateUp, setUpdateUp] = useState(true)
-  const [updateDown, setUpdateDown] = useState(true)
+  const [updateUp, setUpdateUp] = useState(false)
+  const [update, setUpdate] = useState(true)
+  const [updateDown, setUpdateDown] = useState(false)
+
+  // useEffect(() => {
+  //   const setUpvotes = async() => {
+  //     setUpdateUp(res.data.upvotes.includes(user.googleId))
+  //     setUpdateDown(res.data.downvotes.includes(user.googleId))
+  //   }
+  // })
+  // }
+
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get(`/api/posts/${postId}`);
+      setPost(res.data);
+      await axios.patch(`/api/posts/${postId}`, { views: res.data.views + 1 });
+      setTimeout(() => {
+        setUpvote(res.data.upvotes)
+        setDownvote(res.data.downvotes)
+        setUpdateUp(res.data.upvotes.includes(user.googleId))
+        setUpdateDown(res.data.downvotes.includes(user.googleId))
+        setRanking(res.data.upvotes.length - res.data.downvotes.length)
+      }, 1000)
+    };
+    getPost();
+  }, [postId]);
+
 
   const increaseHandler = (e) => {
     e.preventDefault();
     if(!upvote.includes(user.googleId) && !downvote.includes(user.googleId)) {
     setUpvote(prev => [...prev, user.googleId])
-    setUpdateUp(!updateUp)
+    setUpdateUp(true)
+    setUpdate(!update)
     } else if(upvote.includes(user.googleId)) {
     const index = upvote.indexOf(user.googleId)
     upvote.splice(index, 1)
     setUpvote(upvote)
-    setUpdateUp(!updateUp)
-    } else if(downvote.includes(user.googleId)){
-      console.log("nothing")
+    setUpdateUp(false)
+    setUpdate(!update)
     }
   };
 
@@ -39,14 +65,14 @@ const Post = ({ user }) => {
     e.preventDefault();
     if(!downvote.includes(user.googleId) && !upvote.includes(user.googleId)) {
       setDownvote(prev => [...prev, user.googleId])
-      setUpdateDown(!updateDown)
+      setUpdateDown(true)
+      setUpdate(!update)
     } else if(downvote.includes(user.googleId)){
     const index = downvote.indexOf(user.googleId)
     downvote.splice(index, 1)
     setDownvote(downvote)
-    setUpdateDown(!updateDown)
-    } else if(upvote.includes(user.googleId)) {
-      console.log("nothing")
+    setUpdateDown(false)
+    setUpdate(!update)
     }
   };
 
@@ -56,7 +82,7 @@ const Post = ({ user }) => {
     }
     fetchUpvotes()
     setRanking(upvote?.length - downvote?.length)
-  }, [updateUp])
+  }, [updateUp, update])
 
   useEffect(() => {
     const fetchDownvotes = async() => {
@@ -64,19 +90,7 @@ const Post = ({ user }) => {
     }
     fetchDownvotes()
     setRanking(upvote?.length - downvote?.length)
-  }, [updateDown])
-
-  useEffect(() => {
-    const getPost = async () => {
-      const res = await axios.get(`/api/posts/${postId}`);
-      setPost(res.data);
-      setUpvote(res.data.upvotes)
-      setDownvote(res.data.downvotes)
-      await axios.patch(`/api/posts/${postId}`, { views: res.data.views + 1 });
-    };
-    setRanking(upvote?.length - downvote?.length)
-    getPost();
-  }, [postId]);
+  }, [updateDown, update])
 
   if (!post) {
     return null;
@@ -127,7 +141,7 @@ const Post = ({ user }) => {
         <div className="post__button-container">
           {user && (
             <button
-              className="post__button__increase--clicked"
+              className={updateUp ? "post__button__increase--clicked" : "post__button__increase"}
               onClick={increaseHandler}
             >
               ▲
@@ -136,7 +150,7 @@ const Post = ({ user }) => {
           <b className="post__rank">{ranking}</b>
           {user && (
             <button
-              className="post__button__decrease--clicked"
+              className={updateDown ? "post__button__decrease--clicked" : "post__button__decrease"}
               onClick={decreaseHandler}
             >
               ▼

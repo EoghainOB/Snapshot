@@ -10,21 +10,29 @@ const SmallPost = ({ user, post }) => {
   const [upvote, setUpvote] = useState(upvotes)
   const [downvote, setDownvote] = useState(downvotes)
   const [ranking, setRanking] = useState(upvotes?.length - downvotes?.length);
-  const [updateUp, setUpdateUp] = useState(true)
-  const [updateDown, setUpdateDown] = useState(true)
+  const [updateUp, setUpdateUp] = useState(false)
+  const [update, setUpdate] = useState(true)
+  const [updateDown, setUpdateDown] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUpdateUp(upvote.includes(user?.googleId))
+      setUpdateDown(downvote.includes(user?.googleId))
+    }, 500)
+  }, [user])
 
   const increaseHandler = (e) => {
     e.preventDefault();
     if(!upvote.includes(user.googleId) && !downvote.includes(user.googleId)) {
     setUpvote(prev => [...prev, user.googleId])
-    setUpdateUp(!updateUp)
+    setUpdateUp(true)
+    setUpdate(!update)
     } else if(upvote.includes(user.googleId)) {
     const index = upvote.indexOf(user.googleId)
     upvote.splice(index, 1)
     setUpvote(upvote)
-    setUpdateUp(!updateUp)
-    } else if(downvote.includes(user.googleId)){
-      console.log("nothing")
+    setUpdateUp(false)
+    setUpdate(!update)
     }
   };
 
@@ -32,32 +40,34 @@ const SmallPost = ({ user, post }) => {
     e.preventDefault();
     if(!downvote.includes(user.googleId) && !upvote.includes(user.googleId)) {
       setDownvote(prev => [...prev, user.googleId])
-      setUpdateDown(!updateDown)
+      setUpdateDown(true)
+      setUpdate(!update)
     } else if(downvote.includes(user.googleId)){
     const index = downvote.indexOf(user.googleId)
     downvote.splice(index, 1)
     setDownvote(downvote)
-    setUpdateDown(!updateDown)
-    } else if(upvote.includes(user.googleId)) {
-      console.log("nothing")
+    setUpdateDown(false)
+    setUpdate(!update)
     }
   };
 
   useEffect(() => {
     const fetchUpvotes = async() => {
       await axios.patch(`/api/posts/${id}`, {upvotes: upvote})
+      console.log('updated up')
     }
     fetchUpvotes()
     setRanking(upvote?.length - downvote?.length)
-  }, [updateUp])
+  }, [updateUp, update])
 
   useEffect(() => {
     const fetchDownvotes = async() => {
       await axios.patch(`/api/posts/${id}`, {downvotes: downvote})
+      console.log('updated down')
     }
     fetchDownvotes()
     setRanking(upvote?.length - downvote?.length)
-  }, [updateDown])
+  }, [updateDown, update])
 
   const newDate = new Date(date);
   return (
@@ -98,7 +108,7 @@ const SmallPost = ({ user, post }) => {
         </div>
         <div className="small-post__button-container">
           <button
-            className="small-post__button__increase--clicked"
+            className={updateUp ? "small-post__button__increase--clicked" : "small-post__button__increase"}
             onClick={increaseHandler}
             disabled={user ? false : true}
           >
@@ -106,7 +116,7 @@ const SmallPost = ({ user, post }) => {
           </button>
           <b className="post__rank">{ranking}</b>
           <button
-            className="small-post__button__decrease--clicked"
+            className={updateDown ? "small-post__button__decrease--clicked" : "small-post__button__decrease"}
             onClick={decreaseHandler}
             disabled={user ? false : true}
           >
