@@ -41,7 +41,7 @@ const Profile = ({ user, posts, setPosts }) => {
         ""
       )}
       <div className="profile__info">
-        <img width="50px" height="50px" src={userData.imageUrl} alt="Profile" />
+        <img className="profile__image" src={userData.imageUrl} alt="Profile" />
         <ul className="profile__text">
           <li>👤 {userData.name}</li>
           {isSameUser ? <li>✉️ {userData.email}</li> : ""}

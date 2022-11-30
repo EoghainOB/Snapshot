@@ -45,3 +45,8 @@
     background-color: rgb(0, 42, 255);
     color: white;
 }
+
+.profile__image {
+    width: 50px;
+    border-radius: 50%;
+}
