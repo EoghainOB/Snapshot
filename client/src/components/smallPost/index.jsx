@@ -65,7 +65,7 @@ const SmallPost = ({ user, post }) => {
             onClick={increaseHandler}
             disabled={user ? false : true}
           >
-            +
+            ▲
           </button>
           <b className="post__rank">{ranking}</b>
           <button
@@ -73,7 +73,7 @@ const SmallPost = ({ user, post }) => {
             onClick={decreaseHandler}
             disabled={user ? false : true}
           >
-            -
+            ▼
           </button>
         </div>
       </div>
