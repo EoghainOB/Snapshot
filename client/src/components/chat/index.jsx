@@ -11,7 +11,7 @@ const URL = IS_PROD
   : "http://localhost:8000";
 const socket = io.connect(URL);
 
-function Chat({ user, setMessageAlert, chatList, setChatList }) {
+function Chat({ user, setMessageAlert }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [room, setRoom] = useState("");

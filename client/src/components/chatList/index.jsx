@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const ChatList = ({ user, chatList, setChatList }) => {
+const ChatList = ({ user }) => {
+  const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
     const fetchChatList = async () => {
@@ -16,7 +17,9 @@ const ChatList = ({ user, chatList, setChatList }) => {
     <div>
       <h1>Chat List</h1>
       <ul>
-        {chatList.map((chat, i) => 
+        {chatList
+        .sort((a, b) => b.messages.sort((c, d) => d.time - c.time)[0] - a.messages.sort((c, d) => d.time - c.time)[0])
+        .map((chat, i) => 
         <li key={i}>
             <Link to={`/chats/${chat.chatRoomId}`}>
             <img alt={i} src={chat.users.find(x => x.name !== user.name).imageUrl}/>
