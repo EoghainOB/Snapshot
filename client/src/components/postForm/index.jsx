@@ -63,6 +63,7 @@ const PostForm = ({setPosts, position, user}) => {
     formData.append('title', title);
     formData.append('description', description);
     formData.append('author', user.name);
+    formData.append('googleId', user.googleId);
     formData.append('tags', tags);
     formData.append('location', JSON.stringify(position));
     formData.append('address', address);

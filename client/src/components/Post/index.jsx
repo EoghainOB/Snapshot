@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import "./index.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendar,
+  faEye,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Post = ({ user }) => {
   const [post, setPost] = useState(null);
@@ -43,7 +49,9 @@ const Post = ({ user }) => {
   return (
     <div className="post">
       <h1 className="post__title">{post.title}</h1>
-      <p className="post__author">Author: {post.author}</p>
+      <Link to={`/users/${post.googleId}`}>
+        <p className="post__author">Author: {post.author}</p>
+      </Link>
       {post.imageLink.map((x) => {
         const heicFix = x.replace(/heic/, "jpeg");
         if (heicFix.match(/.*\.(gif|jpe?g|bmp|png|jpg)$/i)) {
@@ -67,20 +75,21 @@ const Post = ({ user }) => {
         <p className="post__description">{post.description}</p>
       )}
       <div className="post__bottom">
-        <div className="post__left">
-          {post.tags[0] !== "undefined" && (
-            <span className="post__tags">🏷 {post.tags}</span>
-          )}
-          <span className="post__location">📍 {post.address}</span>
-          <span className="post__date">
-            📅 &nbsp;{newDate.toLocaleString("nl")}
-          </span>
-          <span className="post__views">👁 {post.views}</span>
+        <div className="post__bottom-info">
+          <p>
+            <FontAwesomeIcon icon={faLocationDot} /> {post.address}
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faCalendar} /> {newDate.toLocaleString("nl")}
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faEye} /> {post.views}
+          </p>
         </div>
         <div className="post__button-container">
           {user && (
             <button
-              className="post__button__increase"
+              className="post__button__increase--clicked"
               onClick={increaseHandler}
             >
               ▲
@@ -89,7 +98,7 @@ const Post = ({ user }) => {
           <b className="post__rank">{ranking}</b>
           {user && (
             <button
-              className="post__button__decrease"
+              className="post__button__decrease--clicked"
               onClick={decreaseHandler}
             >
               ▼

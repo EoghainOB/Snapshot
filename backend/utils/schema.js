@@ -15,6 +15,7 @@ const postSchema = new mongoose.Schema({
     description: String,
     tags: Array,
     author: String,
+    googleId: String,
     imageLink: Array,
     location: Object,
     address: String,

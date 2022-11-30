@@ -4,6 +4,9 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@googlemaps/markerclusterer": "^2.0.13",
     "@react-google-maps/api": "^2.17.0",
     "@testing-library/jest-dom": "^5.16.5",

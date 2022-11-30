@@ -8,6 +8,7 @@
     flex-direction: column;
     justify-content: space-between;
     border-radius: 8px;
+    position: relative;
 }
 
 .dashboard__post__title {
@@ -24,7 +25,7 @@
 
 .dashboard__post img,
 .dashboard__post video {
-    width:90%;
+    width:95%;
 }
 
 .small-post__button-container {
@@ -84,3 +85,9 @@ hr {
         flex-direction: row;
     }
   }
+
+.dashboard__post__views {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+}

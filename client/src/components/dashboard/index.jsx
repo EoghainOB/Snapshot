@@ -21,12 +21,12 @@ const Dashboard = ({user, sort, setSort, posts}) => {
     </div>
     <h2 className='dashboard__title'>{sort}</h2>
     <ul className='dashboard__list'>
-    {posts.map(p => {
+    {posts.map((p, i) => {
       return (
-        <>
+        <div key={i}>
         <SmallPost user={user} key={p.id} post={p}/>
         <hr />
-        </>
+        </div>
       )
     })}
     </ul>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./index.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar, faEye, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const SmallPost = ({ user, post }) => {
   const { id, title, address, date, imageLink, views, rank } = post;
@@ -50,13 +52,14 @@ const SmallPost = ({ user, post }) => {
           </Link>
           {address && (
             <span className="dashboard__post__location">
-              Location {address?.replace(/^([^,]*,*)/, "")}
+              <FontAwesomeIcon icon={faLocationDot} />
+              {address?.replace(/^([^,]*,*)/, "")}
             </span>
           )}
           <span className="dashboard__post__date">
-            Date {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
+          <FontAwesomeIcon icon={faCalendar} />  {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
           </span>
-          <span className="dashboard__post__views">Views {views}</span>
+          <span className="dashboard__post__views"><FontAwesomeIcon icon={faEye} />  {views}</span>
         </div>
 
         <div className="small-post__button-container">
