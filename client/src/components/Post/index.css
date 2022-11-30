@@ -1,6 +1,6 @@
 .post__bottom {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 1em;
     padding: 1em;
 }
@@ -49,10 +49,13 @@
 }
 
 .post__title,
-.post__author,
-.post__description {
+.post__author {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.post__description {
+    padding: 0 1em;
 }
 
 .post__title {
