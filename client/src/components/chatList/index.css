@@ -1,0 +1,49 @@
+.chat-list h2 {
+    margin-top:1.2em;
+    text-align: center;
+}
+
+.chat-list__list {
+    padding: 0px;
+}
+
+.chat-list__list__item-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1em;
+    list-style: none;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.chat-list__image {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.chat-list__username{
+    max-width: 100px;
+    align-self: center;
+}
+
+.chat__header__read {
+    background-color: white;
+    color: white
+}
+
+.chat__header__unread {
+    display:inline-block;
+    font-size: .7em;
+    font-weight: bold;
+    color:white;
+    border-radius: 50%;
+    background-color: red;
+    width:15px;
+    height:15px;
+    text-align: center;
+}

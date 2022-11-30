@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import io from "socket.io-client";
 import axios from "axios";
 import "./index.css";
@@ -87,12 +87,16 @@ function Chat({ user, setMessageAlert }) {
   return !isLoading && (
     <div className="chat-window">
       <div className="chat-header">
+      <Link className={"chat__user2__img"} to={`/users/${user2.googleId}`}>
           <img
             alt={user2.name}
             className={"chat__user2__img"}
             src={user2.imageUrl}
           />
+        </Link>
+        <Link to={`/users/${user2.googleId}`}>
         <p className="chat__user2__name">{user2.name}</p>
+        </Link>
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
