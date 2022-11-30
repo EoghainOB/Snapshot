@@ -25,26 +25,26 @@ const SmallPost = ({ user, post }) => {
 
   return (
     <>
+      <Link to={`/posts/${post.id}`}>
+        <p className="dashboard__post__title">{title}</p>
+      </Link>
       <div className="dashboard__container">
         <div className="dashboard__post">
           <Link to={`/posts/${post.id}`}>
-            <p className="dashboard__post__title">{title}</p>
-          </Link>
-          <Link to={`/posts/${post.id}`}>
             <div className="dashboard__post__media-container">
-              {imageLink.slice(0,2).map((x) => {
+              {imageLink.slice(0, 2).map((x) => {
                 const thumbnail = x
-                 .replace(/MP4|MOV|WMV|AVI|AVCHD|FLV|MKV|WEBM|MPEG-2/ig, 'jpg')
+                  .replace(/MP4|MOV|WMV|AVI|AVCHD|FLV|MKV|WEBM|MPEG-2/gi, "jpg")
                   .replace(/upload\//, "upload/w_400,h_400,c_fill/")
                   .replace(/heic/, "jpeg");
-                  return (
-                    <img
-                      style={{ borderRadius: "5px" }}
-                      key={thumbnail}
-                      src={thumbnail}
-                      alt={title}
-                    />
-                  )
+                return (
+                  <img
+                    style={{ borderRadius: "5px" }}
+                    key={thumbnail}
+                    src={thumbnail}
+                    alt={title}
+                  />
+                );
               })}
             </div>
           </Link>
@@ -54,7 +54,7 @@ const SmallPost = ({ user, post }) => {
             </span>
           )}
           <span className="dashboard__post__date">
-           Date {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
+            Date {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
           </span>
           <span className="dashboard__post__views">Views {views}</span>
         </div>

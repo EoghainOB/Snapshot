@@ -7,18 +7,15 @@
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    padding:1em;
-    margin:1em 0;
     border-radius: 8px;
 }
 
 .dashboard__post__title {
     font-size: 1.2em;
     font-weight: 700;
-    margin:
+    margin: 1em, 0
 }
 
-.dashboard__post__title,
 .dashboard__post__author,
 .dashboard__post__location,
 .dashboard__post__date,
@@ -42,7 +39,6 @@
 
 .small-post__button-container {
     display:flex;
-    margin-top:2em;
     flex-direction: column;
     align-items: center;
     text-align: center;
