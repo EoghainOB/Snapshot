@@ -1,58 +1,21 @@
 .dashboard__container {
     width: 100%;
     display: flex;
-    /* background-color: green */
-}
-.dashboard__right {
-    margin-left:.5em;
-    width: 20%;
-    text-align: center;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap:1em;
-    font-size: .9em;
 }
 
-.dashboard__right button {
-    font-size: 2em;
-    height:2em;
-    width:2em;
-    border-radius: 50%;
-    background: none;
-}
-
-.upvote-btn {
-    border: 2px solid green;
-    color:green;
-}
-
-.downvote-btn {
-    border: 2px solid red;
-    color: red;
-}
-
-.dashboard__left{
-    width: 80%;
-    /* background-color: green; */
-}
 .dashboard__post {
-    /* width: 100%; */
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     padding:1em;
     margin:1em 0;
     border-radius: 8px;
-    text-align: center;
-    box-shadow: 0px 2px 5px rgb(212, 212, 212);
 }
 
 .dashboard__post__title {
     font-size: 1.2em;
     font-weight: 700;
+    margin:
 }
 
 .dashboard__post__title,
@@ -65,34 +28,56 @@
 }
 
 
-.dashboard__post__media-container {
+/* .dashboard__post__media-container {
     margin:1em 0;
     width:100%;
     display:flex;
     justify-content: space-evenly;
-}
+} */
 
 .dashboard__post img,
 .dashboard__post video {
-    width:45%;
+    width:90%;
 }
 
-.post__button-container {
+.small-post__button-container {
     display:flex;
+    margin-top:2em;
     flex-direction: column;
-    gap:.5em;
     align-items: center;
     text-align: center;
+    height:100%;
 }
 
-.post__button-container button {
-    font-size: 2em;
+.small-post__button-container button {
+    font-size: 1.5em;
     height:2em;
     width:2em;
-    border-radius: 50%;
     background: none;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(183, 183, 183);
+}
+.small-post__button__increase {
+    color:white;
 }
 
+.small-post__button__increase--clicked {
+    color: rgb(45, 85, 230);
+}
+
+.small-post__button__decrease {
+    color: white;
+}
+
+.small-post__button__decrease--clicked {
+    color: rgb(125, 125, 125);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
 
 @media only screen and (min-width: 600px) {
     .dashboard__post {

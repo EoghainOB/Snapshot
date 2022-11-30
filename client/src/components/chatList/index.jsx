@@ -21,8 +21,8 @@ const ChatList = ({ user, setMessageAlert }) => {
     <div className='chat-list'><h2>Chats</h2>
       <ul className='chat-list__list'>
         {chatList.map((chat, i) => 
-        <>
-        <li className='chat-list__list__item-container' key={i}>
+        <div key={i}>
+        <li className='chat-list__list__item-container'>
             <Link to={`/chats/${chat.chatRoomId}`}>
             <img className='chat-list__image' alt={i} src={chat.users.find(x => x.name !== user.name).imageUrl}/>
             </Link>
@@ -32,7 +32,7 @@ const ChatList = ({ user, setMessageAlert }) => {
             <span className={chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead).length > 0 ? 'chat__header__unread' : 'chat__header__read'}>{(chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead)).length}</span>
         </li> 
         <hr/>
-        </>
+        </div>
         )}
       </ul>
     </div>

@@ -14,7 +14,7 @@ const Header = ({messageAlert, setUser, user, update}) => {
           <li className='header__item'>{user && <Link to={`/post`}>Upload</Link>}</li>
           <li className='header__item'><Link to={`/users/`}>Users</Link></li>
           {user && <Link className='header__item' to='/chats/'>Chat
-          {messageAlert > 0 && <span className='header__unread'>{messageAlert}</span>}
+          {messageAlert > 0 && <span className='header__unread'></span>}
           </Link>}
           <li className='header__item'><Login setUser={setUser} user={user}/></li>
         </ul>

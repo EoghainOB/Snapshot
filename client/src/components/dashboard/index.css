@@ -2,6 +2,10 @@
     padding:1em;
 }
 
+.dashboard__title {
+    text-align: center;
+}
+
 .dashboard__list {
     padding:0;
 }

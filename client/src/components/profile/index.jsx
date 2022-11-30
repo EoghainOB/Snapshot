@@ -46,10 +46,8 @@ const Profile = ({ user, posts, setPosts }) => {
           <li>👤 {userData.name}</li>
           {isSameUser ? <li>✉️ {userData.email}</li> : ""}
        </ul>
+      {user && user.googleId !== userData.googleId && <Link className='profile__send-message' to={`/chats/${+user?.googleId+ + +userData?.googleId}`}>Chat</Link>}
       </div>
-      <div className="App">
-      {user && user.googleId !== userData.googleId && <Link to={`/chats/${+user?.googleId+ + +userData?.googleId}`}>Send DM</Link>}
-    </div>
       <ul>
         {userPosts?.map((p, i) => (
           <li key={i}>

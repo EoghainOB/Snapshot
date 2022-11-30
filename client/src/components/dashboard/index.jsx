@@ -19,7 +19,7 @@ const Dashboard = ({user, sort, setSort, posts}) => {
         <option value="Oldest">Oldest</option>
     </select>
     </div>
-    <h1>{sort}</h1>
+    <h2 className='dashboard__title'>{sort}</h2>
     <ul className='dashboard__list'>
     {posts.map(p => {
       return (

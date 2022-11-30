@@ -24,28 +24,19 @@ const SmallPost = ({ user, post }) => {
   const newDate = new Date(date);
 
   return (
-    <div className="dashboard__container">
-      <div className="dashboard__left">
+    <>
+      <div className="dashboard__container">
         <div className="dashboard__post">
           <Link to={`/posts/${post.id}`}>
             <p className="dashboard__post__title">{title}</p>
           </Link>
-          {address && (
-            <span className="dashboard__post__location">
-              📍 {address?.replace(/^([^,]*,*)/, "")}
-            </span>
-          )}
-          <span className="dashboard__post__date">
-            📅 {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
-          </span>
           <Link to={`/posts/${post.id}`}>
             <div className="dashboard__post__media-container">
-              {imageLink.map((x) => {
-                const thumbnail = x.replace(
-                  /upload\//,
-                  "upload/w_200,h_200,c_fill/"
-                ).replace(/heic/, 'jpeg');
-                if (thumbnail.match(/.*\.(gif|jpe?g|bmp|png|jpg)$/)) {
+              {imageLink.slice(0,2).map((x) => {
+                const thumbnail = x
+                 .replace(/MP4|MOV|WMV|AVI|AVCHD|FLV|MKV|WEBM|MPEG-2/ig, 'jpg')
+                  .replace(/upload\//, "upload/w_400,h_400,c_fill/")
+                  .replace(/heic/, "jpeg");
                   return (
                     <img
                       style={{ borderRadius: "5px" }}
@@ -53,23 +44,24 @@ const SmallPost = ({ user, post }) => {
                       src={thumbnail}
                       alt={title}
                     />
-                  );
-                }
-                return (
-                  <video style={{ borderRadius: "5px" }} key={x} controls>
-                    <source src={x} />
-                  </video>
-                );
+                  )
               })}
             </div>
           </Link>
-          <span className="dashboard__post__views">👁 {views}</span>
+          {address && (
+            <span className="dashboard__post__location">
+              Location {address?.replace(/^([^,]*,*)/, "")}
+            </span>
+          )}
+          <span className="dashboard__post__date">
+           Date {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
+          </span>
+          <span className="dashboard__post__views">Views {views}</span>
         </div>
-      </div>
-      <div className="dashboard__right">
-        <div className="post__button-container">
+
+        <div className="small-post__button-container">
           <button
-            className="post__button__increase"
+            className="small-post__button__increase--clicked"
             onClick={increaseHandler}
             disabled={user ? false : true}
           >
@@ -77,7 +69,7 @@ const SmallPost = ({ user, post }) => {
           </button>
           <b className="post__rank">{ranking}</b>
           <button
-            className="post__button__decrease"
+            className="small-post__button__decrease--clicked"
             onClick={decreaseHandler}
             disabled={user ? false : true}
           >
@@ -85,7 +77,8 @@ const SmallPost = ({ user, post }) => {
           </button>
         </div>
       </div>
-    </div>
+      <hr />
+    </>
   );
 };
 

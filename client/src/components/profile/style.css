@@ -35,3 +35,13 @@
     font-size: small;
     max-width: 80%;
 }
+
+.profile__send-message {
+    font-size: small;
+    font-weight: bold;
+    padding: 0.5em 1.5em;
+    width: fit-content;
+    border-radius: 8px;
+    background-color: rgb(0, 42, 255);
+    color: white;
+}
