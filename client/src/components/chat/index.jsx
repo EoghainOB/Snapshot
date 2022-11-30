@@ -16,10 +16,7 @@ function Chat({ user, setMessageAlert, chatList, setChatList }) {
   const [messageList, setMessageList] = useState([]);
   const [room, setRoom] = useState("");
   const [user2, setUser2] = useState("");
-
-  useEffect(() => {
-    setMessageAlert((prev) => prev - 1);
-  }, [setMessageAlert]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { chatRoomId } = useParams();
 
@@ -50,7 +47,12 @@ function Chat({ user, setMessageAlert, chatList, setChatList }) {
           setUser2(chats.data
             .find((chat) => chat.chatRoomId === chatRoomId)
             .users.find((x) => x.googleId !== user.googleId));
-        }, 200)
+            const res = await axios.get(`/api/chats/${user.googleId}`);
+            const filteredMessages = await res.data.map(chat => chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead))
+            const eliminate = filteredMessages.filter(x => x.length > 0)
+            setMessageAlert(eliminate.length);
+            setIsLoading(false)
+        }, 100) 
       }
     };
     fetchMessages();
@@ -82,16 +84,14 @@ function Chat({ user, setMessageAlert, chatList, setChatList }) {
     }
   };
 
-  return (
+  return !isLoading && (
     <div className="chat-window">
       <div className="chat-header">
-        {user2 && (
           <img
             alt={user2.name}
             className={"chat__user2__img"}
             src={user2.imageUrl}
           />
-        )}
         <p className="chat__user2__name">{user2.name}</p>
       </div>
       <div className="chat-body">
