@@ -16,21 +16,11 @@
     margin: 1em, 0
 }
 
-.dashboard__post__author,
 .dashboard__post__location,
 .dashboard__post__date,
-.dashboard__post__views,
-.dashboard__post__rank {
+.dashboard__post__views{
     margin: .5em 0;
 }
-
-
-/* .dashboard__post__media-container {
-    margin:1em 0;
-    width:100%;
-    display:flex;
-    justify-content: space-evenly;
-} */
 
 .dashboard__post img,
 .dashboard__post video {
@@ -41,6 +31,7 @@
     display:flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
     height:100%;
 }
