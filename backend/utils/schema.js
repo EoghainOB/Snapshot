@@ -23,6 +23,8 @@ const postSchema = new mongoose.Schema({
     views: Number,
     rank: Number,
     comments: Array,
+    upvotes: Array,
+    downvotes: Array,
 })
 
 const chatSchema = new mongoose.Schema({

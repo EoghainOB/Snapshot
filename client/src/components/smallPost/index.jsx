@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./index.css";
 import { Link } from "react-router-dom";
@@ -6,25 +6,60 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faEye, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const SmallPost = ({ user, post }) => {
-  const { id, title, address, date, imageLink, views, rank } = post;
-  const [ranking, setRanking] = useState(rank);
+  const { id, title, address, date, imageLink, views, upvotes, downvotes } = post;
+  const [upvote, setUpvote] = useState(upvotes)
+  const [downvote, setDownvote] = useState(downvotes)
+  const [ranking, setRanking] = useState(upvotes?.length - downvotes?.length);
+  const [updateUp, setUpdateUp] = useState(true)
+  const [updateDown, setUpdateDown] = useState(true)
 
   const increaseHandler = (e) => {
     e.preventDefault();
-    let newRank = ranking + 1;
-    setRanking(newRank);
-    axios.patch(`/api/posts/${id}`, { rank: newRank });
+    if(!upvote.includes(user.googleId) && !downvote.includes(user.googleId)) {
+    setUpvote(prev => [...prev, user.googleId])
+    setUpdateUp(!updateUp)
+    } else if(upvote.includes(user.googleId)) {
+    const index = upvote.indexOf(user.googleId)
+    upvote.splice(index, 1)
+    setUpvote(upvote)
+    setUpdateUp(!updateUp)
+    } else if(downvote.includes(user.googleId)){
+      console.log("nothing")
+    }
   };
 
   const decreaseHandler = (e) => {
     e.preventDefault();
-    let newRank = ranking - 1;
-    setRanking(newRank);
-    axios.patch(`/api/posts/${id}`, { rank: newRank });
+    if(!downvote.includes(user.googleId) && !upvote.includes(user.googleId)) {
+      setDownvote(prev => [...prev, user.googleId])
+      setUpdateDown(!updateDown)
+    } else if(downvote.includes(user.googleId)){
+    const index = downvote.indexOf(user.googleId)
+    downvote.splice(index, 1)
+    setDownvote(downvote)
+    setUpdateDown(!updateDown)
+    } else if(upvote.includes(user.googleId)) {
+      console.log("nothing")
+    }
   };
 
-  const newDate = new Date(date);
+  useEffect(() => {
+    const fetchUpvotes = async() => {
+      await axios.patch(`/api/posts/${id}`, {upvotes: upvote})
+    }
+    fetchUpvotes()
+    setRanking(upvote?.length - downvote?.length)
+  }, [updateUp])
 
+  useEffect(() => {
+    const fetchDownvotes = async() => {
+      await axios.patch(`/api/posts/${id}`, {downvotes: downvote})
+    }
+    fetchDownvotes()
+    setRanking(upvote?.length - downvote?.length)
+  }, [updateDown])
+
+  const newDate = new Date(date);
   return (
     <>
       <Link to={`/posts/${post.id}`}>
@@ -52,16 +87,15 @@ const SmallPost = ({ user, post }) => {
           </Link>
           {address && (
             <span className="dashboard__post__location">
-              <FontAwesomeIcon icon={faLocationDot} />
+              <FontAwesomeIcon className='font-awesome__icon' icon={faLocationDot} />
               {address?.replace(/^([^,]*,*)/, "")}
             </span>
           )}
           <span className="dashboard__post__date">
-          <FontAwesomeIcon icon={faCalendar} />  {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
+          <FontAwesomeIcon className='font-awesome__icon' icon={faCalendar} />  {newDate.toLocaleString("nl").match(/^[\d|-]*/)}
           </span>
-          <span className="dashboard__post__views"><FontAwesomeIcon icon={faEye} />  {views}</span>
+          <span className="dashboard__post__views"><FontAwesomeIcon className='font-awesome__icon' icon={faEye} />  {views}</span>
         </div>
-
         <div className="small-post__button-container">
           <button
             className="small-post__button__increase--clicked"

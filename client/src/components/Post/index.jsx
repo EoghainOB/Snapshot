@@ -12,38 +12,75 @@ import Comments from "../comments";
 
 const Post = ({ user }) => {
   const [post, setPost] = useState(null);
-  const [ranking, setRanking] = useState(null);
   const { postId } = useParams();
+
+  const [upvote, setUpvote] = useState([])
+  const [downvote, setDownvote] = useState([])
+  const [ranking, setRanking] = useState('');
+  const [updateUp, setUpdateUp] = useState(true)
+  const [updateDown, setUpdateDown] = useState(true)
+
+  const increaseHandler = (e) => {
+    e.preventDefault();
+    if(!upvote.includes(user.googleId) && !downvote.includes(user.googleId)) {
+    setUpvote(prev => [...prev, user.googleId])
+    setUpdateUp(!updateUp)
+    } else if(upvote.includes(user.googleId)) {
+    const index = upvote.indexOf(user.googleId)
+    upvote.splice(index, 1)
+    setUpvote(upvote)
+    setUpdateUp(!updateUp)
+    } else if(downvote.includes(user.googleId)){
+      console.log("nothing")
+    }
+  };
+
+  const decreaseHandler = (e) => {
+    e.preventDefault();
+    if(!downvote.includes(user.googleId) && !upvote.includes(user.googleId)) {
+      setDownvote(prev => [...prev, user.googleId])
+      setUpdateDown(!updateDown)
+    } else if(downvote.includes(user.googleId)){
+    const index = downvote.indexOf(user.googleId)
+    downvote.splice(index, 1)
+    setDownvote(downvote)
+    setUpdateDown(!updateDown)
+    } else if(upvote.includes(user.googleId)) {
+      console.log("nothing")
+    }
+  };
+
+  useEffect(() => {
+    const fetchUpvotes = async() => {
+      await axios.patch(`/api/posts/${postId}`, {upvotes: upvote})
+    }
+    fetchUpvotes()
+    setRanking(upvote?.length - downvote?.length)
+  }, [updateUp])
+
+  useEffect(() => {
+    const fetchDownvotes = async() => {
+      await axios.patch(`/api/posts/${postId}`, {downvotes: downvote})
+    }
+    fetchDownvotes()
+    setRanking(upvote?.length - downvote?.length)
+  }, [updateDown])
 
   useEffect(() => {
     const getPost = async () => {
       const res = await axios.get(`/api/posts/${postId}`);
       setPost(res.data);
-      setRanking(res.data.rank);
+      setUpvote(res.data.upvotes)
+      setDownvote(res.data.downvotes)
       await axios.patch(`/api/posts/${postId}`, { views: res.data.views + 1 });
     };
+    setRanking(upvote?.length - downvote?.length)
     getPost();
   }, [postId]);
 
   if (!post) {
     return null;
   }
-
-  const increaseHandler = async (e, rank) => {
-    e.preventDefault();
-    let newRank = ranking + 1;
-    setRanking(newRank);
-    await axios.patch(`/api/posts/${post.id}`, { rank: newRank });
-  };
-
-  const decreaseHandler = (e) => {
-    e.preventDefault();
-    if (ranking) {
-      let newRank = ranking - 1;
-      setRanking(newRank);
-      axios.patch(`/api/posts/${post.id}`, { rank: newRank });
-    }
-  };
 
   const newDate = new Date(post.date);
 
