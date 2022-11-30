@@ -25,18 +25,19 @@ const Comments = ({ user, post }) => {
       message: comment,
       date: new Date()
     };
+    axios.patch(`/api/posts/${post.id}`, { comments: [...commentList, newComment]} )
     setCommentList((prev) => [...prev, newComment]);
     e.target[0].value = ''
   };
 
-  useEffect(() => {
-    const patchComment = async () => {
-      if (commentList.length) {
-        await axios.patch(`/api/posts/${post.id}`, { comments: commentList} );
-      }
-    };
-    patchComment();
-  }, [commentList]);
+  // useEffect(() => {
+  //   const patchComment = async () => {
+  //     if (commentList.length) {
+  //       await axios.patch(`/api/posts/${post.id}`, { comments: commentList} );
+  //     }
+  //   };
+  //   patchComment();
+  // }, [commentList]);
 
   return (
     <>

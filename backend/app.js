@@ -10,6 +10,7 @@ const fileUpload = require("express-fileupload");
 const streamifier = require("streamifier");
 const { v4: uuidv4 } = require("uuid");
 const http = require("http");
+const { runInNewContext } = require("vm");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -206,6 +207,7 @@ app.post("/api/posts", async (req, res) => {
 });
 
 app.patch("/api/posts/:id", async (req, res) => {
+  console.log(req.body)
   try {
     await Posts.findOneAndUpdate(req.params, req.body);
     res.json("Updated");
