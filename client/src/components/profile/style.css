@@ -1,11 +1,12 @@
 .delete__post {
-    width: 80%;
-    padding: .5em;
-    background-color: red;
+    font-size: small;
+    font-weight: bold;
+    padding: 0.5em 1.5em;
+    margin: 1em 0 1em 0;
+    width: fit-content;
+    border-radius: 8px;
+    background-color: rgb(255, 0, 0);
     color: white;
-    border: none;
-    text-align: center;
-    border-radius: 5px;
 }
 
 .profile-container {

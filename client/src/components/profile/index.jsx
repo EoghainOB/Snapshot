@@ -62,6 +62,7 @@ const Profile = ({ user, posts, setPosts }) => {
             ) : (
               ""
             )}
+            <hr />
           </li>
         ))}
       </ul>

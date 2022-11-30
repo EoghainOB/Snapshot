@@ -23,7 +23,10 @@ const Dashboard = ({user, sort, setSort, posts}) => {
     <ul className='dashboard__list'>
     {posts.map(p => {
       return (
+        <>
         <SmallPost user={user} key={p.id} post={p}/>
+        <hr />
+        </>
       )
     })}
     </ul>

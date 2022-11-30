@@ -23,7 +23,7 @@ const ChatList = ({ user, setMessageAlert }) => {
         {chatList.map((chat, i) => 
         <div key={i}>
         <li className='chat-list__list__item-container'>
-            <Link to={`/chats/${chat.chatRoomId}`}>
+            <Link className="chat-list__image-container" to={`/chats/${chat.chatRoomId}`}>
             <img className='chat-list__image' alt={i} src={chat.users.find(x => x.name !== user.name).imageUrl}/>
             </Link>
             <Link to={`/chats/${chat.chatRoomId}`}>

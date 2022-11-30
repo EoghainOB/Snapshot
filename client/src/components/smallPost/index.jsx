@@ -77,7 +77,6 @@ const SmallPost = ({ user, post }) => {
           </button>
         </div>
       </div>
-      <hr />
     </>
   );
 };

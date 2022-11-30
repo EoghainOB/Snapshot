@@ -15,6 +15,11 @@
     list-style: none;
 }
 
+.chat-list__image-container {
+    display: flex;
+    align-items: center;
+}
+
 hr {
     border: 0;
     height: 1px;
