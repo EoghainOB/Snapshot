@@ -198,7 +198,6 @@ const Post = ({ user }) => {
           </p>
         </div>
         <div className="post__button-container">
-          {user && (
             <button
               className={
                 updateUp
@@ -206,12 +205,11 @@ const Post = ({ user }) => {
                   : "post__button__increase"
               }
               onClick={increaseHandler}
+              disabled={user ? false : true}
             >
               ▲
             </button>
-          )}
           <b className="post__rank">{ranking}</b>
-          {user && (
             <button
               className={
                 updateDown
@@ -219,10 +217,10 @@ const Post = ({ user }) => {
                   : "post__button__decrease"
               }
               onClick={decreaseHandler}
+              disabled={user ? false : true}
             >
               ▼
             </button>
-          )}
         </div>
       </div>
       <Comments user={user} post={post} />
