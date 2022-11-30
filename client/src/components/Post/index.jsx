@@ -8,6 +8,7 @@ import {
   faEye,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
+import Comments from "../comments";
 
 const Post = ({ user }) => {
   const [post, setPost] = useState(null);
@@ -77,7 +78,7 @@ const Post = ({ user }) => {
       <div className="post__bottom">
         <div className="post__bottom-info">
           <p>
-            <FontAwesomeIcon icon={faLocationDot} /> {post.address}
+            <FontAwesomeIcon icon={faLocationDot} /> {post.address?.replace(/^([^,]*,*)/, "")}
           </p>
           <p>
             <FontAwesomeIcon icon={faCalendar} /> {newDate.toLocaleString("nl")}
@@ -106,6 +107,7 @@ const Post = ({ user }) => {
           )}
         </div>
       </div>
+      <Comments user={user} post={post}/>
     </div>
   );
 };
