@@ -18,7 +18,6 @@ const ChatList = ({ user }) => {
       <h1>Chat List</h1>
       <ul>
         {chatList
-        .sort((a, b) => b.messages.sort((c, d) => d.time - c.time)[0] - a.messages.sort((c, d) => d.time - c.time)[0])
         .map((chat, i) => 
         <li key={i}>
             <Link to={`/chats/${chat.chatRoomId}`}>
