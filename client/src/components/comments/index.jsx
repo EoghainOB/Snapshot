@@ -30,15 +30,6 @@ const Comments = ({ user, post }) => {
     e.target[0].value = ''
   };
 
-  // useEffect(() => {
-  //   const patchComment = async () => {
-  //     if (commentList.length) {
-  //       await axios.patch(`/api/posts/${post.id}`, { comments: commentList} );
-  //     }
-  //   };
-  //   patchComment();
-  // }, [commentList]);
-
   return (
     <>
       <h2 className="comments__title">Comments</h2>

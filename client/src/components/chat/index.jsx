@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import io from "socket.io-client";
 import axios from "axios";
 import "./index.css";
+import moment from 'moment'
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD
@@ -72,10 +73,7 @@ function Chat({ user, setMessageAlert }) {
         authorId: user.googleId,
         message: currentMessage,
         isRead: false,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: new Date()
       };
 
       await socket.emit("send_message", messageData);
@@ -114,7 +112,7 @@ function Chat({ user, setMessageAlert }) {
                 <div>
                   <p className="messages-content">{messageContent.message}</p>
                   <p className="messages-meta" id="time">
-                    {messageContent.time}
+                    {moment(messageContent?.time).fromNow()}
                   </p>
                 </div>
               </div>
