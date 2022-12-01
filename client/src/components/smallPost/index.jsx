@@ -41,27 +41,12 @@ const SmallPost = ({ user, post }) => {
     getPost();
   }, [post])
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setUpdateUp(upvotes.includes(user.googleId));
-  //     setUpdateDown(downvotes.includes(user.googleId));
-  //     console.log(post.upvotes.includes(user.googleId))
-  //   }
-  // }, [user, post]);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setUpdateUp(upvote.includes(user?.googleId))
-  //     setUpdateDown(downvote.includes(user?.googleId))
-  //   }, 500)
-  // }, [user])
 
   const increaseHandler = (e) => {
     e.preventDefault();
     if (!upvote.includes(user.googleId) && !downvote.includes(user.googleId)) {
       axios.patch(`/api/posts/${id}`, { upvotes: [...upvote, user.googleId] });
       setUpvote((prev) => [...prev, user.googleId]);
-      console.log("upvoted");
       axios.patch(`/api/posts/${id}`, { rank: ranking + 1 });
       setRanking((prev) => prev + 1);
       setUpdateUp(true);
@@ -70,19 +55,9 @@ const SmallPost = ({ user, post }) => {
       upvote.splice(index, 1);
       axios.patch(`/api/posts/${id}`, { upvotes: upvote });
       setUpvote(upvote);
-      console.log("un upvoted");
       axios.patch(`/api/posts/${id}`, { rank: ranking - 1 });
       setRanking((prev) => prev - 1);
       setUpdateUp(false);
-      // setUpvote(prev => [...prev, user.googleId])
-      // setUpdateUp(true)
-      // setUpdate(!update)
-      // } else if(upvote.includes(user.googleId)) {
-      // const index = upvote.indexOf(user.googleId)
-      // upvote.splice(index, 1)
-      // setUpvote(upvote)
-      // setUpdateUp(false)
-      // setUpdate(!update)
     }
   };
 
@@ -93,7 +68,6 @@ const SmallPost = ({ user, post }) => {
         downvotes: [...downvote, user.googleId],
       });
       setDownvote((prev) => [...prev, user.googleId]);
-      console.log("downvoted");
       axios.patch(`/api/posts/${id}`, { rank: ranking - 1 });
       setRanking((prev) => prev - 1);
       setUpdateDown(true);
@@ -102,46 +76,11 @@ const SmallPost = ({ user, post }) => {
       downvote.splice(index, 1);
       axios.patch(`/api/posts/${id}`, { downvotes: downvote });
       setDownvote(downvote);
-      console.log("un downvoted");
       axios.patch(`/api/posts/${id}`, { rank: ranking + 1 });
       setRanking((prev) => prev + 1);
       setUpdateDown(false);
-      //   setDownvote(prev => [...prev, user.googleId])
-      //   setUpdateDown(true)
-      //   setUpdate(!update)
-      // } else if(downvote.includes(user.googleId)){
-      // const index = downvote.indexOf(user.googleId)
-      // downvote.splice(index, 1)
-      // setDownvote(downvote)
-      // setUpdateDown(false)
-      // setUpdate(!update)
     }
   };
-
-  // useEffect(() => {
-  //   const fetchUpvotes = async() => {
-  //     await axios.patch(`/api/posts/${id}`, {upvotes: upvote})
-  //     console.log('updated up')
-  //   }
-  //   fetchUpvotes()
-  //   setRanking(upvote?.length - downvote?.length)
-  // }, [update])
-
-  // useEffect(() => {
-  //   const fetchDownvotes = async() => {
-  //     await axios.patch(`/api/posts/${id}`, {downvotes: downvote})
-  //     console.log('updated down')
-  //   }
-  //   fetchDownvotes()
-  //   setRanking(upvote?.length - downvote?.length)
-  // }, [update])
-
-  // useEffect(() => {
-  //   const fetchRanking = async() => {
-  //     await axios.patch(`/api/posts/${id}`, {rank: ranking})
-  //   }
-  //   fetchRanking()
-  // }, [ranking])
 
   const newDate = new Date(date);
   return (

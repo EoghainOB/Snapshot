@@ -20,9 +20,12 @@ function Map({ searchTerm, posts, position }) {
 
   useEffect(() => {
     if (searchTerm) {
+      const regex = new RegExp(searchTerm, 'i')
+      if(posts.map(post => regex.test(post.address)).length) {
       const bounds = new window.google.maps.LatLngBounds();
       posts.forEach(({ location }) => bounds.extend(location));
       map.fitBounds(bounds);
+      }
     }
   }, [searchTerm, map, posts]);
 

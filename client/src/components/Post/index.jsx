@@ -28,20 +28,9 @@ const Post = ({ user }) => {
       setUpdateDown(post.downvotes.includes(user.googleId));
     }
     if (post) {
-      console.log("setting rank", post.rank);
       setRanking(post.rank);
     }
   }, [user, post]);
-
-  // useEffect(() => {
-  //   const setUpvotes = () => {
-  //     if(user && post) {
-  //     setUpdateUp(post.upvotes.includes(user.googleId))
-  //     setUpdateDown(post.downvotes.includes(user.googleId))
-  //     }
-  //   }
-  //   setUpvotes()
-  // }, [post, user])
 
   useEffect(() => {
     const getPost = async () => {
@@ -59,7 +48,6 @@ const Post = ({ user }) => {
         upvotes: [...upvote, user.googleId],
       });
       setUpvote((prev) => [...prev, user.googleId]);
-      console.log("upvoted");
       axios.patch(`/api/posts/${postId}`, { rank: ranking + 1 });
       setRanking((prev) => prev + 1);
       setUpdateUp(true);
@@ -68,7 +56,6 @@ const Post = ({ user }) => {
       upvote.splice(index, 1);
       axios.patch(`/api/posts/${postId}`, { upvotes: upvote });
       setUpvote(upvote);
-      console.log("un upvoted");
       axios.patch(`/api/posts/${postId}`, { rank: ranking - 1 });
       setRanking((prev) => prev - 1);
       setUpdateUp(false);
@@ -82,7 +69,6 @@ const Post = ({ user }) => {
         downvotes: [...downvote, user.googleId],
       });
       setDownvote((prev) => [...prev, user.googleId]);
-      console.log("downvoted");
       axios.patch(`/api/posts/${postId}`, { rank: ranking - 1 });
       setRanking((prev) => prev - 1);
       setUpdateDown(true);
@@ -91,64 +77,11 @@ const Post = ({ user }) => {
       downvote.splice(index, 1);
       axios.patch(`/api/posts/${postId}`, { downvotes: downvote });
       setDownvote(downvote);
-      console.log("un downvoted");
       axios.patch(`/api/posts/${postId}`, { rank: ranking + 1 });
       setRanking((prev) => prev + 1);
       setUpdateDown(false);
     }
   };
-
-  // const increaseHandler = (e) => {
-  //   e.preventDefault();
-  //   if(!upvote.includes(user.googleId) && !downvote.includes(user.googleId)) {
-  //   setUpvote(prev => [...prev, user.googleId])
-  //   setUpdateUp(true)
-  //   setUpdate(!update)
-  //   } else if(upvote.includes(user.googleId)) {
-  //   const index = upvote.indexOf(user.googleId)
-  //   upvote.splice(index, 1)
-  //   setUpvote(upvote)
-  //   setUpdateUp(false)
-  //   setUpdate(!update)
-  //   }
-  // };
-
-  // const decreaseHandler = (e) => {
-  //   e.preventDefault();
-  //   if(!downvote.includes(user.googleId) && !upvote.includes(user.googleId)) {
-  //     setDownvote(prev => [...prev, user.googleId])
-  //     setUpdateDown(true)
-  //     setUpdate(!update)
-  //   } else if(downvote.includes(user.googleId)){
-  //   const index = downvote.indexOf(user.googleId)
-  //   downvote.splice(index, 1)
-  //   setDownvote(downvote)
-  //   setUpdateDown(false)
-  //   setUpdate(!update)
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const fetchUpvotes = async() => {
-  //     if(post) {
-  //     await axios.patch(`/api/posts/${postId}`, {upvotes: upvote})
-  //     console.log('upvoted')
-  //     }
-  //   }
-  //   fetchUpvotes()
-  //   setRanking(upvote?.length - downvote?.length)
-  // }, [update])
-
-  // useEffect(() => {
-  //   const fetchDownvotes = async() => {
-  //     if(post) {
-  //     console.log('downvoted')
-  //     await axios.patch(`/api/posts/${postId}`, {downvotes: downvote})
-  //   }
-  //   }
-  //   fetchDownvotes()
-  //   setRanking(upvote?.length - downvote?.length)
-  // }, [update])
 
   if (!post) {
     return null;
