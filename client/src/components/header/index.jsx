@@ -13,7 +13,7 @@ const Header = ({ messageAlert, setUser, user }) => {
         <ul className="header__list">
           {user && (
             <li className="header__item">
-              <Link to={`/post`}>Upload</Link>
+              <Link to={`/post/`}>Upload</Link>
             </li>
           )}
           <li className="header__item">
