@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../comments";
 
-const Post = ({ user }) => {
+const Post = ({ setSearchTerm, user }) => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
 
@@ -21,6 +21,7 @@ const Post = ({ user }) => {
   const [updateDown, setUpdateDown] = useState(false);
 
   useEffect(() => {
+    setSearchTerm('')
     if (user && post) {
       setUpvote(post.upvotes);
       setDownvote(post.downvotes);

@@ -86,13 +86,13 @@ function App() {
       <Route path='/' element={
         <>
         <SearchBar setSearchTerm={setSearchTerm}/>
-        {isLoaded && posts.length && <Map searchTerm={searchTerm} posts={filteredAndSorted()} position={position}/>}
+        {isLoaded && posts.length && <Map setSearchTerm={setSearchTerm} searchTerm={searchTerm} posts={filteredAndSorted()} position={position}/>}
         <Dashboard user={user} sort={sort} setSort={setSort} posts={filteredAndSorted()}/>
         </>} 
       />
       <Route path='/users/:id' element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>
       {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
-      <Route path='/posts/:postId' element={<Post posts={posts} user={user}/>} />
+      <Route path='/posts/:postId' element={<Post setSearchTerm={setSearchTerm} posts={posts} user={user}/>} />
       <Route path='/chats/' element={<ChatList setMessageAlert={setMessageAlert} user={user}/>} />
       <Route path='/chats/:chatRoomId' element={<Chat setMessageAlert={setMessageAlert} user={user}/>} />
       <Route path='/users/' element={<MemberList posts={posts} user={user}/>} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 import style from "./mapStyle";
+import { Link } from "react-router-dom";
 
 function Map({ searchTerm, posts, position }) {
   const [activeMarker, setActiveMarker] = useState(null);
@@ -21,7 +22,7 @@ function Map({ searchTerm, posts, position }) {
   useEffect(() => {
     if (searchTerm) {
       const regex = new RegExp(searchTerm, 'i')
-      if(posts.map(post => regex.test(post.address)).length) {
+      if(searchTerm && posts.map(post => regex.test(post.address)).length) {
       const bounds = new window.google.maps.LatLngBounds();
       posts.forEach(({ location }) => bounds.extend(location));
       map.fitBounds(bounds);
@@ -56,6 +57,7 @@ function Map({ searchTerm, posts, position }) {
           >
             {activeMarker === id ? (
               <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+              <Link to={`/posts/${id}`}>
                 <div className='map__container'>
                   <h2 className="map__title">
                     <p>{title}</p>
@@ -75,6 +77,7 @@ function Map({ searchTerm, posts, position }) {
                     })}
                   </h2>
                 </div>
+              </Link>
               </InfoWindow>
             ) : null}
           </MarkerF>
