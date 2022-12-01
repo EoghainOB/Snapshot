@@ -32,7 +32,7 @@ function App() {
     }
     )
     if (!position) {
-      setPosition({lat: 52.341366, lng: 3.8231805})
+      setPosition({lat: 52.341366, lng: 4.8231805})
     }
   }
 
