@@ -81,9 +81,7 @@ function App() {
         return filtered.sort((a, b) => b.rank - a.rank);
     }
   } 
-
-  console.log(position)
-
+  
   return (
     <div className="App">
       <Header setUser={setUser} messageAlert={messageAlert} user={user}/>
