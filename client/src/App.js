@@ -31,6 +31,9 @@ function App() {
       })
     }
     )
+    if (!position) {
+      setPosition({lat: 52.341366, lng: 3.8231805})
+    }
   }
 
   const { isLoaded } = useLoadScript({
@@ -79,6 +82,8 @@ function App() {
     }
   } 
 
+  console.log(position)
+
   return (
     <div className="App">
       <Header setUser={setUser} messageAlert={messageAlert} user={user}/>
@@ -91,7 +96,7 @@ function App() {
         </>} 
       />
       <Route path='/users/:id' element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>
-      {user && position && <Route path={`/post`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
+      {user && <Route path={`/post/`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
       <Route path='/posts/:postId' element={<Post setSearchTerm={setSearchTerm} posts={posts} user={user}/>} />
       <Route path='/chats/' element={<ChatList setMessageAlert={setMessageAlert} user={user}/>} />
       <Route path='/chats/:chatRoomId' element={<Chat setMessageAlert={setMessageAlert} user={user}/>} />
