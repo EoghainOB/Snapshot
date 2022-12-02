@@ -64,6 +64,15 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 io.on("connection", (socket) => {+
   console.log(`User Connected: ${socket.id}`);
 
+  socket.on("disconnect_room", async(chatRoomId, user) => {
+    console.log('hello', socket.rooms)
+    for (const item of socket.rooms.values()) {
+      socket.rooms.delete(item)
+    }
+    console.log('hello2', socket.rooms)
+    // socket.rooms.size === 0
+  });
+
   socket.on("join_room", async (chatRoomId, user) => {
     try {
       const chatRoom = await Chats.findOne({ chatRoomId });

@@ -52,7 +52,7 @@ const Profile = ({ user, posts, setPosts }) => {
         {userPosts?.map((p, i) => (
           <li key={i}>
             {/* FIX ME user not equal userData*/}
-            <SmallPost user={userData} post={p} /> 
+            <SmallPost user={user} post={p} /> 
             {isSameUser ? (
               <button
                 className="delete__post"
