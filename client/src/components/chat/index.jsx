@@ -28,7 +28,7 @@ function Chat({ user, setMessageAlert }) {
         await socket.emit("join_room", room, user);
       }
     };
-    socket.emit('disconnect_room', room, socket.uid)
+    // socket.emit('disconnect_room', room, socket.uid)
     joinRoom();
   }, [chatRoomId, room, user]);
 
@@ -62,7 +62,10 @@ function Chat({ user, setMessageAlert }) {
 
   useEffect(() => {
     socket.on("receive_message", async (data) => {
+      console.log(socket)
+      if(data.room === room) {
       setMessageList((list) => [...list, data]);
+      }
     });
   }, [socket]);
 
