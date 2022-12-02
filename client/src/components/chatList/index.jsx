@@ -8,11 +8,15 @@ const ChatList = ({ user, setMessageAlert }) => {
 
   useEffect(() => {
     const fetchChatList = async () => {
+      try {
       const res = await axios.get(`/api/chats/${user.googleId}`);
       const filteredMessages = await res.data.map(chat => chat.messages.filter(mes => mes.authorId !== user.googleId && !mes.isRead))
       const eliminate = filteredMessages.filter(x => x.length > 0)
       setMessageAlert(eliminate.length);
       setChatList(res.data);
+    } catch (err) {
+      console.log(err)
+    }
     };
     fetchChatList();
   }, [user, setChatList]);
