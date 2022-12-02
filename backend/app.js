@@ -71,6 +71,7 @@ io.on("connection", (socket) => {+
         const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 10)
         const id = new RegExp(bigId)
         const user2 = await Users.findOne({ googleId: { $regex: id }  });
+        
         if (user2) {
           await Chats.create({ chatRoomId, messages: [], users: [user, user2] });
         }
