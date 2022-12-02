@@ -62,8 +62,7 @@ function Chat({ user, setMessageAlert }) {
 
   useEffect(() => {
     socket.on("receive_message", async (data) => {
-      console.log(socket)
-      if(data.room === room) {
+      if(data.room === chatRoomId) {
       setMessageList((list) => [...list, data]);
       }
     });
