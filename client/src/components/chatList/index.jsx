@@ -21,6 +21,7 @@ const ChatList = ({ user, setMessageAlert }) => {
     <div className='chat-list'><h2>Chats</h2>
       <ul className='chat-list__list'>
         {chatList.map((chat, i) => 
+        chat.messages.length > 0 && (
         <div key={i}>
         <li className='chat-list__list__item-container'>
             <Link className="chat-list__image-container" to={`/chats/${chat.chatRoomId}`}>
@@ -33,6 +34,7 @@ const ChatList = ({ user, setMessageAlert }) => {
         </li> 
         <hr/>
         </div>
+        )
         )}
       </ul>
     </div>
