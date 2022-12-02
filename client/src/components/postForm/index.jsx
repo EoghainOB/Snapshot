@@ -83,7 +83,7 @@ const PostForm = ({setPosts, position, user}) => {
       <input className='upload__input' id='tags' type='text' placeholder='cats, dogs, ...' onChange={changeTagsHandler}/>
       <label htmlFor='selectFiles'>Select Files</label>
       <input className='upload__input' type='file' htmlFor='fileUpload' onChange={changeFileHandler} required multiple/>
-      <button onClick={submitHandler} className='upload__submit__btn' id='fileUpload' type='submit' disabled={!position ? false : true}>Submit</button>
+      <button onSubmit={submitHandler} className='upload__submit__btn' id='fileUpload' type='submit' disabled={position ? false : true}>Submit</button>
       {!position && <p className='alert'>Please, share your location</p>}
     </form>
   )
