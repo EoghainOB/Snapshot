@@ -27,10 +27,9 @@ function Chat({ user, setMessageAlert }) {
       setRoom(chatRoomId);
       if (user && room !== "") {
         await socket.emit("join_room", room, user);
-        console.log(socket.rooms)
       }
     };
-    socket.emit('disconnect_room', room)
+    socket.emit('disconnect_room', room, socket.uid)
     joinRoom();
   }, [chatRoomId, room, user]);
 
