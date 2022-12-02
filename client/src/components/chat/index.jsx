@@ -11,7 +11,6 @@ const URL = IS_PROD
   ? "https://hidden-falls-54168.herokuapp.com"
   : "http://localhost:8000";
   const socket = io.connect(URL);
-// const socket = io.connect(URL);
 
 function Chat({ user, setMessageAlert }) {
   const [currentMessage, setCurrentMessage] = useState("");
