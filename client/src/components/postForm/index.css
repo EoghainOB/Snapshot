@@ -76,6 +76,11 @@
       background: #00bfff;
       animation-delay: -4.9s;
     }
+
+    .alert {
+      color: red;
+      text-align: center;
+    }
   
   
   @keyframes equalize {
