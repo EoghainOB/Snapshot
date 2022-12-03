@@ -32,15 +32,14 @@ const SmallPost = ({ user, post }) => {
       const res = await axios.get(`/api/posts/${id}`);
       setRanking(res.data.rank);
       setTimeout(() => {
-        if(user) {
-        setUpdateUp(res.data.upvotes.includes(user.googleId))
-        setUpdateDown(res.data.downvotes.includes(user.googleId))
+        if (user) {
+          setUpdateUp(res.data.upvotes.includes(user.googleId));
+          setUpdateDown(res.data.downvotes.includes(user.googleId));
         }
-      }, 300)
+      }, 300);
     };
     getPost();
-  }, [post])
-
+  }, [post]);
 
   const increaseHandler = (e) => {
     e.preventDefault();
