@@ -8,7 +8,6 @@ import './index.css'
 const Login = ({user, setUser}) => {
   
 const clientId = process.env.REACT_APP_API_GOOGLE_OAUTH_CLIENT_ID;
-console.log(process.env.REACT_APP_API_GOOGLE_OAUTH_CLIENT_ID)
 
 const navigate = useNavigate();
 
