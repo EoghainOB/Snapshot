@@ -23,16 +23,22 @@ function Chat({ user, setMessageAlert }) {
   
   useEffect(() => {
     const joinRoom = async () => {
+      try {
       setRoom(chatRoomId);
       if (user && room !== "") {
         await socket.emit("join_room", room, user);
       }
+    } catch (err) {
+      console.log(err)
+    }
     };
     joinRoom();
   }, [chatRoomId, room, user]);
 
   useEffect(() => {
     const fetchMessages = async () => {
+      try{
+      
       if (room) {
         const res = await axios.get(`/api/messages/${room}`);
         const readMessages = res.data.map((mes) => {
@@ -55,6 +61,9 @@ function Chat({ user, setMessageAlert }) {
             setIsLoading(false)
         }, 100) 
       }
+    } catch (err) {
+      console.log(err)
+    }
     };
     fetchMessages();
   }, [room, user]);
@@ -68,6 +77,7 @@ function Chat({ user, setMessageAlert }) {
   }, [socket]);
 
   const sendMessage = async () => {
+    try{
     if (currentMessage !== "") {
       const messageData = {
         room: room,
@@ -82,6 +92,9 @@ function Chat({ user, setMessageAlert }) {
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage("");
     }
+  } catch (err) {
+    console.log(err)
+  }
   };
 
   return !isLoading && (
