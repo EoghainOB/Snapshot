@@ -94,7 +94,7 @@ function App() {
         </>} 
       />
       <Route path='/users/:id' element={<Profile setPosts={setPosts} posts={posts} user={user}/>}/>
-      {user && <Route path={`/post/`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
+      {user && position && <Route path={`/post/`} element={<PostForm setPosts={setPosts} user={user} position={position}/>}/>}
       <Route path='/posts/:postId' element={<Post setSearchTerm={setSearchTerm} posts={posts} user={user}/>} />
       <Route path='/chats/' element={<ChatList setMessageAlert={setMessageAlert} user={user}/>} />
       <Route path='/chats/:chatRoomId' element={<Chat setMessageAlert={setMessageAlert} user={user}/>} />
