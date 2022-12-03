@@ -40,7 +40,9 @@ const uploadFile = (file, id) => {
         }
       }
     );
-    streamifier.createReadStream(file.data).pipe(stream);
+    streamifier
+      .createReadStream(file.data)
+      .pipe(stream);
   });
 };
 
@@ -61,7 +63,7 @@ app.use(cors());
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-io.on("connection", (socket) => {+
+io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", async (chatRoomId, user) => {
