@@ -207,7 +207,6 @@ app.post("/api/posts", async (req, res) => {
 });
 
 app.patch("/api/posts/:id", async (req, res) => {
-  console.log(req.body)
   try {
     await Posts.findOneAndUpdate(req.params, req.body);
     res.json("Updated");

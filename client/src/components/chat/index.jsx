@@ -28,7 +28,6 @@ function Chat({ user, setMessageAlert }) {
         await socket.emit("join_room", room, user);
       }
     };
-    // socket.emit('disconnect_room', room, socket.uid)
     joinRoom();
   }, [chatRoomId, room, user]);
 
