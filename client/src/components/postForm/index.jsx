@@ -6,7 +6,7 @@ import './index.css';
 
 const getLocation = (location) => {
     Geocode.setApiKey(process.env.REACT_APP_API_GOOGLE_API);
-    return Geocode.fromLatLng(location?.lat, location?.lng).then(
+    return Geocode.fromLatLng(location.lat, location.lng).then(
     (response) => {
       return response.results[0].formatted_address;
     },
