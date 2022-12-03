@@ -11,7 +11,7 @@ const getLocation = (location) => {
       return response.results[0].formatted_address;
     },
     (error) => {
-      // console.error(error);
+      console.error(error);
     }
   );
 }

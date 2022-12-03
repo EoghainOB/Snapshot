@@ -29,6 +29,9 @@ function App() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       })
+      if (!position) {
+        setPosition({lat: 52.341366, lng: 4.8231805})
+      }
     }
     )
   }
@@ -86,7 +89,7 @@ function App() {
       <Route path='/' element={
         <>
         <SearchBar setSearchTerm={setSearchTerm}/>
-        {isLoaded && posts.length > 0 && <Map setSearchTerm={setSearchTerm} searchTerm={searchTerm} posts={filteredAndSorted()} position={position}/>}
+        {isLoaded && posts.length && <Map setSearchTerm={setSearchTerm} searchTerm={searchTerm} posts={filteredAndSorted()} position={position}/>}
         <Dashboard user={user} sort={sort} setSort={setSort} posts={filteredAndSorted()}/>
         </>} 
       />
