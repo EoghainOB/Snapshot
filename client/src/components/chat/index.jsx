@@ -8,7 +8,7 @@ import moment from "moment";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD
-  ? "https://hidden-falls-54168.herokuapp.com"
+  ? "https://snapshot-depicklers.herokuapp.com"
   : "http://localhost:8000";
 const socket = io.connect(URL);
 

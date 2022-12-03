@@ -16,7 +16,7 @@ const io = require("socket.io")(server, {
   cors: {
     origin: [
       "http://localhost:3000",
-      "https://hidden-falls-54168.herokuapp.com",
+      "https://snapshot-depicklers.herokuapp.com",
     ],
     methods: ["GET", "POST"],
   },
