@@ -51,7 +51,6 @@ const Profile = ({ user, posts, setPosts }) => {
       <ul>
         {userPosts?.map((p, i) => (
           <li key={i}>
-            {/* FIX ME user not equal userData*/}
             <SmallPost user={user} post={p} /> 
             {isSameUser ? (
               <button
