@@ -34,6 +34,11 @@ header {
     text-decoration: none;
 }
 
+.header__item__bold {
+    font-weight: 100;
+    text-decoration: none;
+}
+
 .header__item :active {
     opacity: .5;
 }

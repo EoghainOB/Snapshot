@@ -27,9 +27,7 @@ const Header = ({ messageAlert, setUser, user }) => {
           )}
           {user && (
             <li className="header__item">
-              <Link to={`/users/${user.googleId}`}>
-                Profile
-              </Link>
+              <Link to={`/users/${user.googleId}`}>Profile</Link>
             </li>
           )}
           <li className="header__item">
