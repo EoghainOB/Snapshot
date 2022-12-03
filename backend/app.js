@@ -40,9 +40,7 @@ const uploadFile = (file, id) => {
         }
       }
     );
-    streamifier
-      .createReadStream(file.data)
-      .pipe(stream);
+    streamifier.createReadStream(file.data).pipe(stream);
   });
 };
 
@@ -70,11 +68,15 @@ io.on("connection", (socket) => {
     try {
       const chatRoom = await Chats.findOne({ chatRoomId });
       if (!chatRoom && user) {
-        const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 10)
-        const id = new RegExp(bigId)
-        const user2 = await Users.findOne({ googleId: { $regex: id }  });
+        const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 10);
+        const id = new RegExp(bigId);
+        const user2 = await Users.findOne({ googleId: { $regex: id } });
         if (user2) {
-          await Chats.create({ chatRoomId, messages: [], users: [user, user2] });
+          await Chats.create({
+            chatRoomId,
+            messages: [],
+            users: [user, user2],
+          });
         }
       }
       socket.join(chatRoomId);
@@ -115,7 +117,10 @@ app.get("/api/messages/:roomId", async (req, res) => {
 
 app.patch("/api/messages/:roomId", async (req, res) => {
   try {
-    const data = await Chats.findOneAndUpdate({ chatRoomId: req.params.roomId }, { messages: req.body });
+    const data = await Chats.findOneAndUpdate(
+      { chatRoomId: req.params.roomId },
+      { messages: req.body }
+    );
     res.json(data);
   } catch (err) {
     console.log(err);
@@ -229,7 +234,11 @@ app.delete("/api/posts/:id", async (req, res) => {
 app.get("/api/chats/:googleId", async (req, res) => {
   try {
     const allChats = await Chats.find();
-    const chatList = allChats.filter(chat => chat.users[0].googleId === req.params.googleId || chat.users[1].googleId === req.params.googleId)
+    const chatList = allChats.filter(
+      (chat) =>
+        chat.users[0].googleId === req.params.googleId ||
+        chat.users[1].googleId === req.params.googleId
+    );
     res.status(200).json(chatList);
   } catch (err) {
     console.log(err);
@@ -238,7 +247,7 @@ app.get("/api/chats/:googleId", async (req, res) => {
 
 app.get("*", (req, res) => {
   try {
-    res.redirect('/')
+    res.redirect("/");
   } catch (err) {
     console.log(err);
   }
