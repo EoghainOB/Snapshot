@@ -95,7 +95,7 @@ function App() {
           element={
             <>
               <SearchBar setSearchTerm={setSearchTerm} />
-              {isLoaded && posts.length && (
+              {isLoaded && posts.length > 0 && (
                 <Map
                   setSearchTerm={setSearchTerm}
                   searchTerm={searchTerm}
