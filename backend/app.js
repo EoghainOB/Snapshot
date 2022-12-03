@@ -61,49 +61,49 @@ app.use(cors());
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-// io.on("connection", (socket) => {
-//   console.log(`User Connected: ${socket.id}`);
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
 
-//   socket.on("join_room", async (chatRoomId, user) => {
-//     try {
-//       const chatRoom = await Chats.findOne({ chatRoomId });
-//       if (!chatRoom && user) {
-//         const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 10);
-//         const id = new RegExp(bigId);
-//         const user2 = await Users.findOne({ googleId: { $regex: id } });
-//         if (user2) {
-//           await Chats.create({
-//             chatRoomId,
-//             messages: [],
-//             users: [user, user2],
-//           });
-//         }
-//       }
-//       socket.join(chatRoomId);
-//       console.log(`User with ID: ${socket.id} joined room: ${chatRoomId}`);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   });
+  socket.on("join_room", async (chatRoomId, user) => {
+    try {
+      const chatRoom = await Chats.findOne({ chatRoomId });
+      if (!chatRoom && user) {
+        const bigId = (+chatRoomId - +user.googleId).toString().slice(0, 10);
+        const id = new RegExp(bigId);
+        const user2 = await Users.findOne({ googleId: { $regex: id } });
+        if (user2) {
+          await Chats.create({
+            chatRoomId,
+            messages: [],
+            users: [user, user2],
+          });
+        }
+      }
+      socket.join(chatRoomId);
+      console.log(`User with ID: ${socket.id} joined room: ${chatRoomId}`);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
-//   socket.on("send_message", async (data) => {
-//     try {
-//       const chatRoom = await Chats.findOne({ chatRoomId: data.room });
-//       const existingMessages = chatRoom.messages;
-//       await Chats.findOneAndUpdate(
-//         { chatRoomId: data.room },
-//         { messages: [...existingMessages, data] }
-//       );
-//       return socket.to(data.room).emit("receive_message", data);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   });
+  socket.on("send_message", async (data) => {
+    try {
+      const chatRoom = await Chats.findOne({ chatRoomId: data.room });
+      const existingMessages = chatRoom.messages;
+      await Chats.findOneAndUpdate(
+        { chatRoomId: data.room },
+        { messages: [...existingMessages, data] }
+      );
+      return socket.to(data.room).emit("receive_message", data);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
-//   socket.on("disconnect", () => {
-//     console.log("User Disconnected", socket.id);
-//   });
-// });
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
 
 app.get("/api/messages/:roomId", async (req, res) => {
   try {
