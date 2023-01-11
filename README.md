@@ -8,6 +8,8 @@ For Snapshot we used the MERN stack. We used Mongoose alongside MongoDB to allow
 
 https://snapshot-depicklers.herokuapp.com/
 
+<img width="800" alt="snapshot" src="https://user-images.githubusercontent.com/110406695/211791159-59d37603-df04-460a-ae03-b47638b79178.png">
+
 <i>This project is made using:</i>
 
 <div>
