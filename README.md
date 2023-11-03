@@ -6,8 +6,6 @@ Our project is called Snapshot. It is a mobile first web application that allows
 
 For Snapshot we used the MERN stack. We used Mongoose alongside MongoDB to allow us to use schemas, Express on the backend, React for the front end and NodeJS. For the messenger we utilized socket.io and for hosting and media storage we used Heroku and Cloudinary respectively. In terms of external APIs we used Google authentication and Google maps.
 
-https://snapshot-depicklers.herokuapp.com/
-
 <img width="800" alt="snapshot" src="https://user-images.githubusercontent.com/110406695/211791159-59d37603-df04-460a-ae03-b47638b79178.png">
 
 <i>This project is made using:</i>
